@@ -1,0 +1,49 @@
+
+
+//[
+// Any LookupList that is fully contained in an ANNIE Person is removed
+// by this grammar.
+// The number of removed annotations is counted in the document feature
+// filter-prescoring.nrRemovedByAnniePerson
+//]
+
+
+Imports: { 
+import gate.trendminer.lodie.utils.LodieUtils;
+import static gate.Utils.*;
+}
+
+
+Phase: filterByAnniePerson
+Input: LookupList Person
+Options: control = appelt
+
+Rule: filterByAnniePerson_R01
+( {Person contains {LookupList}} ):person
+-->
+:person{
+  final String FN = "filter-prescoring.nrRemovedByAnniePerson";
+  Integer count = (Integer)doc.getFeatures().get(FN);
+  if(count == null) { count = 0; }
+  Annotation person = getOnlyAnn(personAnnots);
+  AnnotationSet persontokens = getContainedAnnotations(inputAS,person,"Token");
+  // we ignore all Person annotations here which do not consist of at least
+  // two tokens.
+  if(persontokens.size() < 2) { return; }
+  int lperson = length(person);
+  AnnotationSet lls = getContainedAnnotations(inputAS,person,"LookupList");
+  // For now we remove all LookupList and linked Lookup annotations where
+  // the LookupList is fully contained within the person annotation and 
+  // does not in turn contain more than one token.
+  for(Annotation ll : lls) {
+    if(length(ll) < lperson) {
+      AnnotationSet tokens = getContainedAnnotations(inputAS,ll,"Token");
+      if(tokens.size() < 2) {
+        //System.out.println("Removing from within Person: "+doc.getName()+"/"+cleanStringFor(doc,ll)+"/"+ll);
+        count += LodieUtils.removeListAnns(inputAS,ll);
+      }
+    }
+  }
+  doc.getFeatures().put(FN,count);
+}
+

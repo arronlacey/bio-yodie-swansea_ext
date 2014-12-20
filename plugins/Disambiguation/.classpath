@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="classes/|dbpedia/|doc/javadoc/|lib/|resources/|doc/|src/" kind="src" path=""/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/LarKC_Molecules.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-gaz.jar"/>
+	<classpathentry kind="lib" path="lib/semanticvectors-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/simmetrics-1.6.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/niraj/work/gate-top/externals/gate/bin/gate.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

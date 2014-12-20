@@ -1,0 +1,76 @@
+<project name="lucene-gazetteer" default="jar" basedir="." >
+
+  <property file="build.properties" />
+
+  <property name="src.dir" location="src" />
+  <property name="classes.dir" location="classes" />
+  <property name="jar.location" location="lucene-gaz.jar" />
+  <property name="lib.dir" value="lib"/>
+
+  <!-- Make environment variables available -->
+  <property environment="env" />
+
+  <!-- If gate.home is not set from build.properties or the 
+       environment variable GATE_HOME, assume that this
+       plugin is in GATE Developer's plugin directory -->
+  <property name="gate.home" location="../../../../../gate" />
+
+  <!-- location of GATE lib directory - should be inferred from gate.home -->
+  <property name="gate.lib" location="${gate.home}/lib" />
+
+  <!-- location of gate.jar - should be inferred from gate.home -->
+  <property name="gate.jar" location="${gate.home}/bin/gate.jar" />
+
+  <!-- compile classpath -->	
+  <path id="compile.classpath">
+    <pathelement location="${gate.jar}" />
+    <fileset dir="${gate.lib}">
+      <include name="**/*.jar" />
+      <include name="**/*.zip" />
+    </fileset>
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+      <include name="**/*.zip" />
+    </fileset>
+  </path>
+  	
+	
+  <!-- create build directory structure -->
+  <target name="prepare" depends="clean.classes">
+    <mkdir dir="${classes.dir}" />
+  </target>
+
+  <!-- compile the source -->
+  <target name="compile" depends="prepare">
+    <javac classpathref="compile.classpath"
+           srcdir="${src.dir}"
+           destdir="${classes.dir}"
+           encoding="UTF-8"
+           debug="true"
+           debuglevel="lines,source"
+           source="1.5" target="1.5">
+    </javac>
+    <copy todir="${classes.dir}">
+      <fileset dir="${src.dir}"
+             includes="**/*.xml,**/*.properties,**/*.txt,**/*.ico" />
+    </copy>
+  </target>
+
+  <!-- create the JAR file -->
+  <target name="jar" depends="compile" >
+    <jar destfile="${jar.location}"
+         update="true"
+         basedir="${classes.dir}" 
+	/>
+  </target>
+
+  <!-- remove the generated .class files -->
+  <target name="clean.classes" >
+    <delete dir="${classes.dir}" />
+  </target>
+
+  <!-- Clean up - remove .class and .jar files -->
+  <target name="clean" depends="clean.classes" >
+    <delete file="${jar.location}" />
+  </target>
+</project>

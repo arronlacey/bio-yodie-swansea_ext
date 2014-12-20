@@ -1,0 +1,13 @@
+<!-- creole.xml Lucene Gaz PR -->
+<!--  niraj, 28/03//2012 -->
+
+<!--
+This file just references the JAR file that contains the compiled resource.
+Configuration is contained in the @CreoleResource annotation on 
+gate.creole.disambiguation.DisambiguatePR.
+-->
+
+<CREOLE-DIRECTORY>
+  <JAR SCAN="true">lucene-gaz.jar</JAR>
+  <JAR>lib/lucene-queryparser-3.5.0.jar</JAR>
+</CREOLE-DIRECTORY>

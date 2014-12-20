@@ -1,0 +1,157 @@
+<gate.util.persistence.GateApplication>
+  <urlList class="gate.util.persistence.CollectionPersistence">
+    <localList>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$gatehome$plugins/Groovy/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$gatehome$plugins/ANNIE/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+    </localList>
+    <collectionType>java.util.ArrayList</collectionType>
+  </urlList>
+  <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+    <strategiesList class="gate.util.persistence.CollectionPersistence">
+      <localList>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>setsToKeep</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Key</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Mention</string>
+                    </localList>
+                    <collectionType>java.util.Arrays$ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>setsToRemove</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Shef</string>
+                    </localList>
+                    <collectionType>java.util.Arrays$ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
+            <resourceName>remove-shef</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>outputASName</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>scriptParams</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <string>Mallet</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.groovy.ScriptPR</resourceType>
+            <resourceName>select-best-candidate</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>scriptURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$groovy/SelectBestCandidate.groovy</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+      </localList>
+      <collectionType>java.util.ArrayList</collectionType>
+    </strategiesList>
+    <prList class="gate.util.persistence.CollectionPersistence">
+      <localList>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[2]/pr"/>
+      </localList>
+      <collectionType>java.util.ArrayList</collectionType>
+    </prList>
+    <resourceType>gate.creole.ConditionalSerialAnalyserController</resourceType>
+    <resourceName>re-threshold</resourceName>
+    <initParams class="gate.util.persistence.MapPersistence">
+      <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+      <localMap/>
+    </initParams>
+    <features class="gate.util.persistence.MapPersistence">
+      <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+      <localMap/>
+    </features>
+  </application>
+</gate.util.persistence.GateApplication>

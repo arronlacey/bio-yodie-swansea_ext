@@ -1,0 +1,47 @@
+/*
+*  clean-annie.jape
+*
+* Copyright (c) 1998-2004, The University of Sheffield.
+*
+*  This file is part of GATE (see http://gate.ac.uk/), and is free
+*  software, licenced under the GNU Library General Public License,
+*  Version 2, June 1991 (in the distribution as file licence.html,
+*  and also available at http://gate.ac.uk/gate/licence.html).
+*
+*  Danica Damljanovic, 02 March 2012
+* 
+*/
+
+phase: RemoveUknownNEs
+Input: Organization Person Location
+options: control = all
+
+
+// remove all annotations with NMRule="Unknown"
+
+Rule:    removeUknownOrganizations
+({Organization.NMRule=="Unknown"}):lookup
+-->
+{
+  gate.AnnotationSet lookup = (gate.AnnotationSet) bindings.get("lookup");
+  gate.Annotation ann = (gate.Annotation) lookup.iterator().next();
+  inputAS.remove(ann);
+}
+
+Rule:    removeUknownPersons
+({Person.NMRule=="Unknown"}):lookup
+-->
+{
+  gate.AnnotationSet lookup = (gate.AnnotationSet) bindings.get("lookup");
+  gate.Annotation ann = (gate.Annotation) lookup.iterator().next();
+  inputAS.remove(ann);
+}
+
+Rule:    removeUknownLocations
+({Location.NMRule=="Unknown"}):lookup
+-->
+{
+  gate.AnnotationSet lookup = (gate.AnnotationSet) bindings.get("lookup");
+  gate.Annotation ann = (gate.Annotation) lookup.iterator().next();
+  inputAS.remove(ann);
+}

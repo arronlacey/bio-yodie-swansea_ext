@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/lucene-core.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/media/data1_/data/work/gate-top/externals/gate/bin/gate.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

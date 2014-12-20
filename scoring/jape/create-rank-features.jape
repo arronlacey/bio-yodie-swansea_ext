@@ -1,0 +1,1134 @@
+Phase: CreateRankFeatures 
+Input: LookupList
+Options: control = all debug = true  
+
+
+Rule: ContextualSimilarityLuceneSRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("contextualSimilarityLuceneS")!=null){
+   feat = ((Float)lu.getFeatures().get("contextualSimilarityLuceneS")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("contextualSimilarityLuceneS")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityLuceneS")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("contextualSimilarityLuceneS")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityLuceneS")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("contextualSimilarityLuceneSRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+Rule: ContextualSimilarityLuceneRRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("contextualSimilarityLuceneR")!=null){
+   feat = ((Float)lu.getFeatures().get("contextualSimilarityLuceneR")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("contextualSimilarityLuceneR")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityLuceneR")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("contextualSimilarityLuceneR")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityLuceneR")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("contextualSimilarityLuceneRRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+
+
+
+
+
+Rule: ContextualSimilarityVectorRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("contextualSimilarityVector")!=null){
+   feat = ((Float)lu.getFeatures().get("contextualSimilarityVector")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("contextualSimilarityVector")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityVector")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("contextualSimilarityVector")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityVector")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("contextualSimilarityVectorRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+
+
+Rule: ContextualSimilarityRDFDirectRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("contextualSimilarityRDFDirect")!=null){
+   feat = ((Float)lu.getFeatures().get("contextualSimilarityRDFDirect")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("contextualSimilarityRDFDirect")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityRDFDirect")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("contextualSimilarityRDFDirect")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityRDFDirect")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("contextualSimilarityRDFDirectRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+
+
+Rule: ContextualSimilarityRDFIndirectRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("contextualSimilarityRDFIndirect")!=null){
+   feat = ((Float)lu.getFeatures().get("contextualSimilarityRDFIndirect")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("contextualSimilarityRDFIndirect")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityRDFIndirect")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("contextualSimilarityRDFIndirect")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("contextualSimilarityRDFIndirect")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("contextualSimilarityRDFIndirectRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+Rule: RelLabelFreqByUriInWpRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("relLabelFreqByUriInWp")!=null){
+   feat = ((Double)lu.getFeatures().get("relLabelFreqByUriInWp")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("relLabelFreqByUriInWp")!=null){
+    thislistfeat = ((Double)thislistelement.getFeatures().get("relLabelFreqByUriInWp")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("relLabelFreqByUriInWp")!=null){
+   thisfeat = ((Double)thislistelement.getFeatures().get("relLabelFreqByUriInWp")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("relLabelFreqByUriInWpRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+Rule: RelUriFreqByLabelInWpRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("relUriFreqByLabelInWp")!=null){
+   feat = ((Double)lu.getFeatures().get("relUriFreqByLabelInWp")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("relUriFreqByLabelInWp")!=null){
+    thislistfeat = ((Double)thislistelement.getFeatures().get("relUriFreqByLabelInWp")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+ int prevAbsoluteRank = -1;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("relUriFreqByLabelInWp")!=null){
+   thisfeat = ((Double)thislistelement.getFeatures().get("relUriFreqByLabelInWp")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  int absoluteRank = -1;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+   absoluteRank = prevAbsoluteRank;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+   absoluteRank = 0;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+   absoluteRank = i+1;
+  }
+
+  lis.get(i).getFeatures().put("relUriFreqByLabelInWpRank", rankFeat);
+  lis.get(i).getFeatures().put("relUriFreqByLabelInWpAbsoluteRank", absoluteRank);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+  prevAbsoluteRank = absoluteRank;
+ }
+}
+
+
+
+Rule: StringSimilarityBestLabelRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("stringSimilarityBestLabel")!=null){
+   feat = ((Float)lu.getFeatures().get("stringSimilarityBestLabel")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("stringSimilarityBestLabel")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("stringSimilarityBestLabel")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("stringSimilarityBestLabel")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("stringSimilarityBestLabel")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("stringSimilarityBestLabelRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+Rule: StructSimV2CombinedRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("structSimV2Combined")!=null){
+   feat = ((Float)lu.getFeatures().get("structSimV2Combined")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("structSimV2Combined")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("structSimV2Combined")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("structSimV2Combined")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("structSimV2Combined")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("structSimV2CombinedRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+Rule: StructSimV2RelatednessRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  float feat = 0.0F;
+  if(lu.getFeatures().get("structSimV2Relatedness")!=null){
+   feat = ((Float)lu.getFeatures().get("structSimV2Relatedness")).floatValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   float thislistfeat = 0.0F;
+   if(thislistelement.getFeatures().get("structSimV2Relatedness")!=null){
+    thislistfeat = ((Float)thislistelement.getFeatures().get("structSimV2Relatedness")).floatValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  float thisfeat = 0.0F;
+  if(thislistelement.getFeatures().get("structSimV2Relatedness")!=null){
+   thisfeat = ((Float)thislistelement.getFeatures().get("structSimV2Relatedness")).floatValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("structSimV2RelatednessRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+Rule: LabelFreqInWpRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  int feat = 0;
+  if(lu.getFeatures().get("labelFreqInWp")!=null){
+   feat = ((Integer)lu.getFeatures().get("labelFreqInWp")).intValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   int thislistfeat = 0;
+   if(thislistelement.getFeatures().get("labelFreqInWp")!=null){
+    thislistfeat = ((Integer)thislistelement.getFeatures().get("labelFreqInWp")).intValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+ int prevAbsoluteRank = -1;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  int thisfeat = 0;
+  if(thislistelement.getFeatures().get("labelFreqInWp")!=null){
+   thisfeat = ((Integer)thislistelement.getFeatures().get("labelFreqInWp")).intValue();
+  }
+
+  float rankFeat = 0.0F;
+  int absoluteRank = -1;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+   absoluteRank = prevAbsoluteRank;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+   absoluteRank = 0;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+   absoluteRank = i+1;
+  }
+
+  lis.get(i).getFeatures().put("labelFreqInWpRank", rankFeat);
+  lis.get(i).getFeatures().put("labelFreqInWpAbsoluteRank", absoluteRank);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+  prevAbsoluteRank = absoluteRank;
+ }
+}
+
+
+
+
+
+
+
+Rule: LabelUriFreqInWpRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  int feat = 0;
+  if(lu.getFeatures().get("labelUriFreqInWp")!=null){
+   feat = ((Integer)lu.getFeatures().get("labelUriFreqInWp")).intValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   int thislistfeat = 0;
+   if(thislistelement.getFeatures().get("labelUriFreqInWp")!=null){
+    thislistfeat = ((Integer)thislistelement.getFeatures().get("labelUriFreqInWp")).intValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ int prevfeat = -1;
+ float prevrankfeat = -1.0F;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  int thisfeat = 0;
+  if(thislistelement.getFeatures().get("labelUriFreqInWp")!=null){
+   thisfeat = ((Integer)thislistelement.getFeatures().get("labelUriFreqInWp")).intValue();
+  }
+
+  float rankFeat = 0.0F;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+  }
+
+  lis.get(i).getFeatures().put("labelUriFreqInWpRank", rankFeat);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+ }
+}
+
+
+
+
+
+
+
+Rule: UriFreqInWpRank
+(  
+ {LookupList} 
+)  
+:match  
+--> 
+{
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation ll = matches.iterator().next();
+ 
+ AnnotationSet lus = gate.Utils.getCoextensiveAnnotations(inputAS, ll, "Lookup");
+
+ Iterator<Annotation> it = lus.iterator();
+
+ LinkedList<Annotation> lis = new LinkedList();
+
+ if(it.hasNext()){
+  Annotation first = (Annotation)it.next();
+  lis.add(first);
+ }
+
+ while(it.hasNext()){
+  Annotation lu = it.next();
+
+  //Insert this lookup into the list at the correct point
+
+  int feat = 0;
+  if(lu.getFeatures().get("uriFreqInWp")!=null){
+   feat = ((Integer)lu.getFeatures().get("uriFreqInWp")).intValue();
+  }
+
+  boolean islessthan = true;
+  int pos = 0;
+  while(pos<lis.size() && islessthan==true){
+   Annotation thislistelement = (Annotation)lis.get(pos);
+   int thislistfeat = 0;
+   if(thislistelement.getFeatures().get("uriFreqInWp")!=null){
+    thislistfeat = ((Integer)thislistelement.getFeatures().get("uriFreqInWp")).intValue();
+   }
+   if(feat>thislistfeat){
+    islessthan = false;
+   } else {
+    pos++;
+   }
+  }
+
+  //So now we have found the element that the current lookup
+  //needs to precede, so we insert it in that position
+
+  lis.add(pos, lu);
+ }
+
+ //Now we have an ordered list. So write the rank feature on.
+ int listlen = lis.size();
+
+ float prevfeat = -1.0F;
+ float prevrankfeat = -1.0F;
+ int prevAbsoluteRank = -1;
+
+ for(int i=0;i<listlen;i++){
+  Annotation thislistelement = (Annotation)lis.get(i);
+
+  int thisfeat = 0;
+  if(thislistelement.getFeatures().get("uriFreqInWp")!=null){
+   thisfeat = ((Integer)thislistelement.getFeatures().get("uriFreqInWp")).intValue();
+  }
+
+  float rankFeat = 0.0F;
+  int absoluteRank = -1;
+  if(thisfeat==prevfeat){
+   rankFeat = prevrankfeat;
+   absoluteRank = prevAbsoluteRank;
+  } else if(thisfeat==0){
+   rankFeat = 0.0F;
+   absoluteRank = 0;
+  } else {
+   rankFeat = ((float)listlen-i)/(float)listlen;
+   absoluteRank = i+1;
+  }
+
+  lis.get(i).getFeatures().put("uriFreqInWpRank", rankFeat);
+  lis.get(i).getFeatures().put("uriFreqInWpAbsoluteRank", absoluteRank);
+  prevrankfeat = rankFeat;
+  prevfeat = thisfeat;
+  prevAbsoluteRank = absoluteRank;
+ }
+}
+
+
+

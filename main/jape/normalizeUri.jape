@@ -1,0 +1,36 @@
+// This normalizes the URI in an "inst" feature of 
+// all "Lookup" annotations in the inputAS
+//
+// Normalization is done by "decoding" the URI as much 
+// as possible and allowed. This is because encoding can
+// be in different ways and it is therefore never possible
+// to make sure that two "encoded" URIs match, since 
+// a URI may always be partially encoded.
+// This uses the canonical URI methods for decoding the 
+// host, path, query and fragment parts of a URI. Note
+// that any URI that will contain additional parts (e.g.
+// authorization or port numbers will be MODIFIED!!!!)
+// If the string in an inst feature is not a syntactically
+// valid URI it will be left untouched.
+
+Phase: normalizeUri
+Input: Lookup
+Options: control = all
+
+Rule: normalizeUri_01
+({Lookup}):label
+-->
+:label{
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  String inst = (String)lookup.getFeatures().get("inst");
+  if(inst != null) {
+    try {
+      lookup.getFeatures().put("instOrig",inst);
+      java.net.URI u = new java.net.URI(inst);
+      inst = new java.net.URI(u.getScheme(),u.getHost(),u.getPath(),u.getQuery(),u.getFragment()).toString();
+      lookup.getFeatures().put("inst",inst);
+    } catch(Exception ex) {
+      // do nothing
+    }
+  }
+}

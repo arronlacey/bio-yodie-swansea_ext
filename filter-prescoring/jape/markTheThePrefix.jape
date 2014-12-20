@@ -1,0 +1,62 @@
+
+
+//[
+// Create temporary annotations to find lookups that match other 
+// lookups prefixed with "the " 
+//]
+Phase: markLookupListPrefixedByThe
+Input: LookupList Token
+Options: control = all
+
+
+Rule: markLookupListPrefixedByThe_R01
+(
+  ({Token.string=="The"}|{Token.string=="the"})
+  ({LookupList}):ll
+):label
+-->
+{
+  Annotation ll = gate.Utils.getOnlyAnn(bindings.get("ll"));
+  ll.getFeatures().put("hasPrefixThe",true);
+  int llId = ll.getId();
+  FeatureMap newfm = Factory.newFeatureMap();
+  newfm.put("llId",llId);
+  gate.Utils.addAnn(outputAS,bindings.get("label"),"LookupListPrefixedWithThe",newfm);
+}
+
+
+
+Phase: markLookupListContainingThe
+Input: LookupList LookupListPrefixedWithThe
+Options: control = all
+
+
+Rule: markLookupListContainingThe_R01
+(
+  {LookupList contains LookupListPrefixedWithThe}
+):label
+-->
+{
+  Annotation llOuter = gate.Utils.getOnlyAnn(bindings.get("label"));
+  llOuter.getFeatures().put("containsPrefixThe",true);
+  AnnotationSet llthes = gate.Utils.getContainedAnnotations(inputAS,llOuter,"LookupListPrefixedWithThe");
+  // only keep the coextensive ones
+  Iterator<Annotation> llthesIterator = llthes.iterator();
+  while(llthesIterator.hasNext()) {
+    Annotation llthe = llthesIterator.next();
+    if(!llthe.coextensive(llOuter)) {
+      llthesIterator.remove();
+    }
+  }
+  if(llthes.size() == 1) {
+    Annotation llthe = gate.Utils.getOnlyAnn(llthes);
+    Annotation llInner =  inputAS.get((Integer)llthe.getFeatures().get("llId"));
+    llOuter.getFeatures().put("llInner",llInner.getId());
+    FeatureMap fm = Factory.newFeatureMap();
+    fm.put("llInner",llInner.getId());
+    fm.put("llOuter",llOuter.getId());
+    gate.Utils.addAnn(outputAS,llOuter,"LookupListWithPrefixThe",fm);
+  } 
+}
+
+

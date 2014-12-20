@@ -1,0 +1,479 @@
+Phase: ApplyAnnieClassMatch 
+Input: Lookup
+Options: control = all debug = true  
+
+
+Rule: ApplyAnnieClassMatch1 
+(  
+ {Lookup} 
+)  
+:match  
+--> 
+{
+ String[] persons = {
+	"dbpo:Person",
+	"dbpo:Ambassador",
+	"dbpo:Archeologist",
+	"dbpo:Architect",
+	"dbpo:Aristocrat",
+	"dbpo:Artist",
+	"dbpo:Actor",
+	"dbpo:AdultActor",
+	"dbpo:VoiceActor",
+	"dbpo:Comedian",
+	"dbpo:ComicsCreator",
+	"dbpo:Dancer",
+	"dbpo:FashionDesigner",
+	"dbpo:Humorist",
+	"dbpo:MusicalArtist",
+	"dbpo:BackScene",
+	"dbpo:ClassicalMusicArtist",
+	"dbpo:Instrumentalist",
+	"dbpo:Guitarist",
+	"dbpo:Painter",
+	"dbpo:Photographer",
+	"dbpo:Sculptor",
+	"dbpo:Writer",
+	"dbpo:Poet",
+	"dbpo:ScreenWriter",
+	"dbpo:Astronaut",
+	"dbpo:Athlete",
+	"dbpo:AustralianRulesFootballPlayer",
+	"dbpo:BadmintonPlayer",
+	"dbpo:BaseballPlayer",
+	"dbpo:BasketballPlayer",
+	"dbpo:Bodybuilder",
+	"dbpo:Boxer",
+	"dbpo:AmateurBoxer",
+	"dbpo:BullFighter",
+	"dbpo:Canoeist",
+	"dbpo:ChessPlayer",
+	"dbpo:Cricketer",
+	"dbpo:Curler",
+	"dbpo:Cyclist",
+	"dbpo:DartsPlayer",
+	"dbpo:Fencer",
+	"dbpo:FigureSkater",
+	"dbpo:GaelicGamesPlayer",
+	"dbpo:GolfPlayer",
+	"dbpo:GridironFootballPlayer",
+	"dbpo:AmericanFootballPlayer",
+	"dbpo:CanadianFootballPlayer",
+	"dbpo:Gymnast",
+	"dbpo:HandballPlayer",
+	"dbpo:HorseRider",
+	"dbpo:IceHockeyPlayer",
+	"dbpo:Jockey",
+	"dbpo:LacrossePlayer",
+	"dbpo:MartialArtist",
+	"dbpo:MotorsportRacer",
+	"dbpo:MotorcycleRider",
+	"dbpo:SpeedwayRider",
+	"dbpo:RacingDriver",
+	"dbpo:FormulaOneRacer",
+	"dbpo:MotocycleRacer",
+	"dbpo:NascarDriver",
+	"dbpo:RallyDriver",
+	"dbpo:NationalCollegiateAthleticAssociationAthlete",
+	"dbpo:NetballPlayer",
+	"dbpo:PokerPlayer",
+	"dbpo:Rower",
+	"dbpo:RugbyPlayer",
+	"dbpo:Skater",
+	"dbpo:Skier",
+	"dbpo:SnookerPlayer",
+	"dbpo:SnookerChamp",
+	"dbpo:SoccerPlayer",
+	"dbpo:SquashPlayer",
+	"dbpo:Surfer",
+	"dbpo:Swimmer",
+	"dbpo:TableTennisPlayer",
+	"dbpo:TeamMember",
+	"dbpo:TennisPlayer",
+	"dbpo:VolleyballPlayer",
+	"dbpo:BeachVolleyballPlayer",
+	"dbpo:Wrestler",
+	"dbpo:SumoWrestler",
+	"dbpo:BeautyQueen",
+	"dbpo:Bullfighter",
+	"dbpo:BusinessPerson",
+	"dbpo:Celebrity",
+	"dbpo:Chef",
+	"dbpo:Cleric",
+	"dbpo:Cardinal",
+	"dbpo:ChristianBishop",
+	"dbpo:ChristianPatriarch",
+	"dbpo:Pope",
+	"dbpo:Priest",
+	"dbpo:Saint",
+	"dbpo:Vicar",
+	"dbpo:Coach",
+	"dbpo:AmericanFootballCoach",
+	"dbpo:CollegeCoach",
+	"dbpo:VolleyballCoach",
+	"dbpo:Criminal",
+	"dbpo:Murderer",
+	"dbpo:SerialKiller",
+	"dbpo:Economist",
+	"dbpo:Egyptologist",
+	"dbpo:Engineer",
+	"dbpo:Farmer",
+	"dbpo:FictionalCharacter",
+	"dbpo:ComicsCharacter",
+	"dbpo:AnimangaCharacter",
+	"dbpo:DisneyCharacter",
+	"dbpo:NarutoCharacter",
+	"dbpo:SoapCharacter",
+	"dbpo:Historian",
+	"dbpo:HorseTrainer",
+	"dbpo:Journalist",
+	"dbpo:Judge",
+	"dbpo:Linguist",
+	"dbpo:MilitaryPerson",
+	"dbpo:Model",
+	"dbpo:Monarch",
+	"dbpo:MythologicalFigure",
+	"dbpo:Noble",
+	"dbpo:OfficeHolder",
+	"dbpo:OrganisationMember",
+	"dbpo:SportsTeamMember",
+	"dbpo:Philosopher",
+	"dbpo:PlayboyPlaymate",
+	"dbpo:Politician",
+	"dbpo:Chancellor",
+	"dbpo:Congressman",
+	"dbpo:Deputy",
+	"dbpo:Governor",
+	"dbpo:Lieutenant",
+	"dbpo:Mayor",
+	"dbpo:MemberOfParliament",
+	"dbpo:President",
+	"dbpo:PrimeMinister",
+	"dbpo:Senator",
+	"dbpo:VicePresident",
+	"dbpo:VicePrimeMinister",
+	"dbpo:PoliticianSpouse",
+	"dbpo:Presenter",
+	"dbpo:RadioHost",
+	"dbpo:TelevisionHost",
+	"dbpo:Psychologist",
+	"dbpo:Referee",
+	"dbpo:Religious",
+	"dbpo:RomanEmperor",
+	"dbpo:Royalty",
+	"dbpo:BritishRoyalty",
+	"dbpo:Baronet",
+	"dbpo:PolishKing",
+	"dbpo:Scientist",
+	"dbpo:Entomologist",
+	"dbpo:Medician",
+	"dbpo:Professor",
+	"dbpo:SportsManager",
+	"dbpo:SoccerManager",
+	"dbpo:TelevisionPersonality",
+	"dbpo:Host"};
+
+
+
+ String[] locations = {
+	"dbpo:Place", 
+	"dbpo:ArchitecturalStructure", 
+	"dbpo:Building", 
+	"dbpo:AmusementParkAttraction", 
+	"dbpo:RollerCoaster", 
+	"dbpo:WaterRide", 
+	"dbpo:Arena", 
+	"dbpo:Casino", 
+	"dbpo:Castle", 
+	"dbpo:Factory", 
+	"dbpo:HistoricBuilding", 
+	"dbpo:Hospital", 
+	"dbpo:Hotel", 
+	"dbpo:Lighthouse", 
+	"dbpo:MilitaryStructure", 
+	"dbpo:Mill", 
+	"dbpo:Treadmill", 
+	"dbpo:Watermill", 
+	"dbpo:WindMotor", 
+	"dbpo:Windmill", 
+	"dbpo:Museum", 
+	"dbpo:Prison", 
+	"dbpo:ReligiousBuilding", 
+	"dbpo:Abbey", 
+	"dbpo:Church", 
+	"dbpo:Monastery", 
+	"dbpo:Mosque", 
+	"dbpo:Shrine", 
+	"dbpo:Synagogue", 
+	"dbpo:Temple", 
+	"dbpo:Airport", 
+	"dbpo:LaunchPad", 
+	"dbpo:PowerStation", 
+	"dbpo:NuclearPowerStation", 
+	"dbpo:RouteOfTransportation", 
+	"dbpo:Bridge", 
+	"dbpo:PublicTransitSystem", 
+	"dbpo:RailwayLine", 
+	"dbpo:Road", 
+	"dbpo:RoadJunction", 
+	"dbpo:Tunnel", 
+	"dbpo:RailwayTunnel", 
+	"dbpo:RoadTunnel", 
+	"dbpo:WaterwayTunnel", 
+	"dbpo:Station", 
+	"dbpo:MetroStation", 
+	"dbpo:RailwayStation", 
+	"dbpo:NoteworthyPartOfBuilding", 
+	"dbpo:Park", 
+	"dbpo:Cemetery", 
+	"dbpo:Community", 
+	"dbpo:HistoricPlace", 
+	"dbpo:HotSpring", 
+	"dbpo:Monument", 
+	"dbpo:Memorial", 
+	"dbpo:NaturalPlace", 
+	"dbpo:BodyOfWater", 
+	"dbpo:Lake", 
+	"dbpo:Sea", 
+	"dbpo:Stream", 
+	"dbpo:Canal", 
+	"dbpo:River", 
+	"dbpo:Cave", 
+	"dbpo:Crater", 
+	"dbpo:LunarCrater", 
+	"dbpo:Glacier", 
+	"dbpo:Mountain", 
+	"dbpo:MountainPass", 
+	"dbpo:MountainRange", 
+	"dbpo:Valley", 
+	"dbpo:Volcano", 
+	"dbpo:PopulatedPlace", 
+	"dbpo:Agglomeration", 
+	"dbpo:Continent", 
+	"dbpo:Country", 
+	"dbpo:Department", 
+	"dbpo:OverseasDepartment", 
+	"dbpo:Intercommunality", 
+	"dbpo:Island", 
+	"dbpo:Atoll", 
+	"dbpo:Locality", 
+	"dbpo:Prefecture", 
+	"dbpo:Region", 
+	"dbpo:AdministrativeRegion", 
+	"dbpo:ClericalAdministrativeRegion", 
+	"dbpo:Deanery", 
+	"dbpo:Diocese", 
+	"dbpo:Parish", 
+	"dbpo:GovernmentalAdministrativeRegion", 
+	"dbpo:District", 
+	"dbpo:DistrictWaterBoard", 
+	"dbpo:Municipality", 
+	"dbpo:FormerMunicipality", 
+	"dbpo:Province", 
+	"dbpo:Regency", 
+	"dbpo:SubMunicipality", 
+	"dbpo:NaturalRegion", 
+	"dbpo:Settlement", 
+	"dbpo:City", 
+	"dbpo:CityDistrict", 
+	"dbpo:Town", 
+	"dbpo:Village", 
+	"dbpo:State", 
+	"dbpo:Street", 
+	"dbpo:Territory", 
+	"dbpo:OldTerritory", 
+	"dbpo:ProtectedArea", 
+	"dbpo:SiteOfSpecialScientificInterest", 
+	"dbpo:SkiArea", 
+	"dbpo:SkiResort", 
+	"dbpo:SportFacility", 
+	"dbpo:CricketGround", 
+	"dbpo:GolfCourse", 
+	"dbpo:RaceTrack", 
+	"dbpo:Racecourse", 
+	"dbpo:Stadium", 
+	"dbpo:WineRegion", 
+	"dbpo:WorldHeritageSite"};
+
+
+
+ String[] organizations = {
+	"dbpo:Organisation", 
+	"dbpo:Band", 
+	"dbpo:Broadcaster", 
+	"dbpo:BroadcastNetwork", 
+	"dbpo:RadioStation", 
+	"dbpo:TelevisionStation", 
+	"dbpo:ClericalOrder", 
+	"dbpo:ComedyGroup", 
+	"dbpo:Company", 
+	"dbpo:Airline", 
+	"dbpo:Brewery", 
+	"dbpo:BusCompany", 
+	"dbpo:LawFirm", 
+	"dbpo:Publisher", 
+	"dbpo:RecordLabel", 
+	"dbpo:Winery", 
+	"dbpo:EducationalInstitution", 
+	"dbpo:College", 
+	"dbpo:Library", 
+	"dbpo:School", 
+	"dbpo:University", 
+	"dbpo:GeopoliticalOrganisation", 
+	"dbpo:GovernmentAgency", 
+	"dbpo:Group", 
+	"dbpo:Legislature", 
+	"dbpo:MilitaryUnit", 
+	"dbpo:Non-ProfitOrganisation", 
+	"dbpo:RecordOffice", 
+	"dbpo:Parliament", 
+	"dbpo:PoliticalParty", 
+	"dbpo:SambaSchool", 
+	"dbpo:SportsLeague", 
+	"dbpo:AmericanFootballLeague", 
+	"dbpo:AustralianFootballLeague", 
+	"dbpo:AutoRacingLeague", 
+	"dbpo:BaseballLeague", 
+	"dbpo:BasketballLeague", 
+	"dbpo:BowlingLeague", 
+	"dbpo:BoxingLeague", 
+	"dbpo:CanadianFootballLeague", 
+	"dbpo:CricketLeague", 
+	"dbpo:CurlingLeague", 
+	"dbpo:CyclingLeague", 
+	"dbpo:FieldHockeyLeague", 
+	"dbpo:FormulaOneRacing", 
+	"dbpo:GolfLeague", 
+	"dbpo:HandballLeague", 
+	"dbpo:IceHockeyLeague", 
+	"dbpo:InlineHockeyLeague", 
+	"dbpo:LacrosseLeague", 
+	"dbpo:MixedMartialArtsLeague", 
+	"dbpo:MotorcycleRacingLeague", 
+	"dbpo:PaintballLeague", 
+	"dbpo:PoloLeague", 
+	"dbpo:RadioControlledRacingLeague", 
+	"dbpo:RugbyLeague", 
+	"dbpo:SoccerLeague", 
+	"dbpo:SoftballLeague", 
+	"dbpo:SpeedwayLeague", 
+	"dbpo:TennisLeague", 
+	"dbpo:VideogamesLeague", 
+	"dbpo:VolleyballLeague", 
+	"dbpo:SportsTeam", 
+	"dbpo:AmericanFootballTeam", 
+	"dbpo:AustralianFootballTeam", 
+	"dbpo:BaseballTeam", 
+	"dbpo:BasketballTeam", 
+	"dbpo:CanadianFootballTeam", 
+	"dbpo:CricketTeam", 
+	"dbpo:CyclingTeam", 
+	"dbpo:FormulaOneTeam", 
+	"dbpo:HandballTeam", 
+	"dbpo:HockeyTeam", 
+	"dbpo:RugbyClub", 
+	"dbpo:SoccerClub", 
+	"dbpo:NationalSoccerClub", 
+	"dbpo:SpeedwayTeam", 
+	"dbpo:TermOfOffice", 
+	"dbpo:TradeUnion"};
+
+ AnnotationSet matches = bindings.get("match");  
+ Annotation lu = matches.iterator().next();
+ 
+ String lucl = (String)lu.getFeatures().get("airpSpecificClass");
+ String[] luclarray = lucl.split("\\|");
+
+ boolean lookupisperson = false;
+ boolean lookupislocation = false;
+ boolean lookupisorganization = false;
+ boolean lookupisother = false;
+ for(int i=0;i<persons.length;i++){
+  for(int j=0;j<luclarray.length;j++){
+   if(persons[i].equals(luclarray[j])){
+    lookupisperson = true;
+   }
+  }
+ }
+ for(int i=0;i<locations.length;i++){
+  for(int j=0;j<luclarray.length;j++){
+   if(locations[i].equals(luclarray[j])){
+    lookupislocation = true;
+   }
+  }
+ }
+ for(int i=0;i<organizations.length;i++){
+  for(int j=0;j<luclarray.length;j++){
+   if(organizations[i].equals(luclarray[j])){
+    lookupisorganization = true;
+   }
+  }
+ }
+ if(!lookupisperson && !lookupislocation && !lookupisorganization){
+  lookupisother = true;
+ }
+
+
+ AnnotationSet closep = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Person");
+ AnnotationSet exactp = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Person");
+
+
+ AnnotationSet closel = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Location");
+ AnnotationSet exactl = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Location");
+
+
+ AnnotationSet closeo = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Organization");
+ AnnotationSet exacto = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Organization");
+
+
+ if(lookupisperson){
+
+  if(closep.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "match");
+  } else if(closel.size()>0 || closeo.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+  }
+
+  if(exactp.size()>0){
+   lu.getFeatures().put("annieExactMatch", "match");
+  } else if(exactl.size()>0 || exacto.size()>0){
+   lu.getFeatures().put("annieExactMatch", "mismatch");
+  }
+
+ } else if(lookupislocation){
+
+  if(closel.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "match");
+  } else if(closep.size()>0 || closeo.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+  }
+
+  if(exactl.size()>0){
+   lu.getFeatures().put("annieExactMatch", "match");
+  } else if(exactp.size()>0 || exacto.size()>0){
+   lu.getFeatures().put("annieExactMatch", "mismatch");
+  }
+
+ } else if(lookupisorganization){
+
+  if(closeo.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "match");
+  } else if(closep.size()>0 || closel.size()>0){
+   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+  }
+
+  if(exacto.size()>0){
+   lu.getFeatures().put("annieExactMatch", "match");
+  } else if(exactp.size()>0 || exactl.size()>0){
+   lu.getFeatures().put("annieExactMatch", "mismatch");
+  }
+
+ } else if(lookupisother){
+   lu.getFeatures().put("annieOverlapMatch", "unknown");
+   lu.getFeatures().put("annieExactMatch", "unknown");
+ }
+
+}
+
+
+

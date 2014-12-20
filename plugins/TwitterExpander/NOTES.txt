@@ -1,0 +1,20 @@
+
+Twitter information:
+  API limits: https://dev.twitter.com/docs/rate-limiting/1.1/limits
+  Lookup User Info: https://dev.twitter.com/docs/api/1/get/users/lookup
+  Also check: https://dev.twitter.com/docs/api/1/get/users/show
+  Authetification: https://dev.twitter.com/docs/auth
+
+Twitter glossary, abbreviations etc.
+  https://support.twitter.com/articles/166337-the-twitter-glossary#
+  http://www.webopedia.com/quick_ref/Twitter_Dictionary_Guide.asp
+  http://mashable.com/2013/07/19/twitter-lingo-guide/
+  http://twictionary.pbworks.com/w/page/22547584/FrontPage
+  http://www.businessinsider.com/a-guide-to-twitter-slang-lingo-abbreviations-and-acronyms-2013-9
+
+Tagdef: api.tagdef.com/Hashtag.json
+  e.g. http://api.tagdef.com/FF.json
+
+OAuth: https://code.google.com/p/oauth-signpost/wiki/GettingStarted
+
+

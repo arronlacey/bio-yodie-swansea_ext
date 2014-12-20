@@ -1,0 +1,34 @@
+Phase: makeDisambiguationMentions
+Input: Mention
+Options: control=all
+
+
+Rule: makeDisambiguationMentions
+(
+  {Mention}
+):match
+-->
+{
+  Annotation mention = bindings.get("match").iterator().next();
+  AnnotationSet lookups = doc.getAnnotations().get("Lookup");
+
+  Iterator it = lookups.iterator();
+  while(it.hasNext()){
+    Annotation lookup = (Annotation)it.next();
+    
+    if(lookup.overlaps(mention)){
+      FeatureMap fm = Factory.newFeatureMap();
+      fm.putAll(lookup.getFeatures());
+      if(mention.getFeatures().get("inst")==null){
+        //do nothing. We aren't going to train on nulls.
+      } else if(mention.getFeatures().get("inst").toString().equals(
+        "http://dbpedia.org/resource/" + lookup.getFeatures().get("inst").toString())){
+        fm.put("class", 1.0);
+        outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
+      } else {
+        fm.put("class", 0.0);
+        outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
+      }
+    }
+  }
+}

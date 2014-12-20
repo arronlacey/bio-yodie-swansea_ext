@@ -1,0 +1,57 @@
+
+// Filter all Lookup annotations we got from the Gazetteer which are rather
+// certain to be spurious: for example things within the range of an
+// ANNIE "Address.kind="url" annotation or an ANNIE "Date" annotation.
+// Also, filter any coextensive Lookup.majorType="dbpedia" annotations
+
+
+Phase: filterLookupsSpurious01
+Input: Address Date
+Options: control = all
+
+Rule: filterLookupsSpurious01_R01
+({Address.kind=="url"}):label
+-->
+:label{
+  Annotation adr = gate.Utils.getOnlyAnn(labelAnnots);
+  AnnotationSet lookups = gate.Utils.getContainedAnnotations(inputAS,adr);
+  for(Annotation lookup : lookups) {
+    outputAS.get(gate.Utils.addAnn(outputAS,lookup,lookup.getType(),lookup.getFeatures())).getFeatures().put("deletedBecause","in-URL");
+    inputAS.remove(lookup);
+  }
+}  
+
+Rule: filterLookupsSpurious01_R02
+({Date}):label
+-->
+:label{
+  Annotation adr = gate.Utils.getOnlyAnn(labelAnnots);
+  AnnotationSet lookups = gate.Utils.getContainedAnnotations(inputAS,adr);
+  for(Annotation lookup : lookups) {
+    outputAS.get(gate.Utils.addAnn(outputAS,lookup,lookup.getType(),lookup.getFeatures())).getFeatures().put("deletedBecause","in-Date");
+    inputAS.remove(lookup);
+  }
+}  
+
+
+
+Phase: filterCoextensiveLookups
+Input: Lookup
+Options: control = all
+
+Rule: filterCoextensiveLookups_R01
+({Lookup.majorType=="dbpedia"}):label
+-->
+:label{
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  int id = lookup.getId();
+  AnnotationSet containeds = gate.Utils.getContainedAnnotations(inputAS,lookup,"Lookup");
+  for(Annotation contained : containeds) {
+    if(contained.getId() != id && contained.coextensive(lookup)) {
+      outputAS.get(gate.Utils.addAnn(outputAS,lookup,lookup.getType()+"-COEXT",lookup.getFeatures())).getFeatures().put("deletedBecause","coextensiveDupe");
+      inputAS.remove(contained);
+    }
+  }
+}
+
+

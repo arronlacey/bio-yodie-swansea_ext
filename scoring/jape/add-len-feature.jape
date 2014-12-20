@@ -1,0 +1,17 @@
+Phase: addTestFeatures
+Input: Lookup
+Options: control=all
+
+
+Rule: addTestFeatures
+(
+  {Lookup}
+):match
+-->
+{
+  Annotation lu = bindings.get("match").iterator().next();
+  FeatureMap fm = lu.getFeatures();
+  int strlen = gate.Utils.cleanStringFor(doc, lu).length();
+  fm.put("stringLength", strlen);
+  lu.setFeatures(fm);
+}

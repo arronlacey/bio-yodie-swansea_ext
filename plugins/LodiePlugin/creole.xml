@@ -1,0 +1,12 @@
+<!-- creole.xml LodiePlugin -->
+<!--  johann, 25/4/2014 -->
+
+<!--
+This file just references the JAR file that contains the compiled resource.
+Configuration is contained in the @CreoleResource annotation on 
+gate.trendminer.lodie.LODIELR.
+-->
+
+<CREOLE-DIRECTORY>
+  <JAR SCAN="true">LodiePlugin.jar</JAR>
+</CREOLE-DIRECTORY>

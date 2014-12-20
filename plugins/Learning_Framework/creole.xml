@@ -1,0 +1,20 @@
+<!-- creole.xml for LearningFramework PR -->
+<CREOLE-DIRECTORY>
+  <JAR scan="true">learningframework.jar</JAR>
+<!--  
+  <JAR>lib/bsh.jar</JAR>
+  <JAR>lib/grmm-deps.jar</JAR>
+  <JAR>lib/jdom-1.0.jar</JAR>
+  <JAR>lib/jgrapht-0.6.0.jar</JAR>
+  <JAR>lib/junit-4.5.jar</JAR>
+  <JAR>lib/jwnl-1.3.jar</JAR> 
+  <JAR>lib/mtj-0.9.9.jar</JAR>
+  <JAR>lib/openjgraph.jar</JAR>
+  <JAR>lib/trove-2.0.2.jar</JAR>
+-->
+  <JAR>lib/mallet.jar</JAR>
+  <JAR>lib/mallet-deps.jar</JAR>
+  <JAR>lib/libsvm.jar</JAR> 
+  <JAR>lib/weka.jar</JAR> 
+
+</CREOLE-DIRECTORY>

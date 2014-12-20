@@ -1,0 +1,22 @@
+Phase: FixURLs
+Input: Mention
+Options: control = all debug = true  
+ 
+
+Rule: FixURLs
+(
+ {Mention}
+)
+:match
+-->
+{
+ AnnotationSet matches = bindings.get("match");  
+ Annotation match = matches.iterator().next();
+
+ FeatureMap fm = match.getFeatures();
+ String inst = (String)fm.get("inst");
+ inst = "http://dbpedia.org/resource/" + inst;
+ fm.put("inst", inst);
+}
+
+

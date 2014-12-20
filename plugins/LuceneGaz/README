@@ -1,0 +1,33 @@
+######### Indexing ##########
+Steps:
+ export GATE_HOME=path/to/gate/folder
+1) ant
+2) download ignore-case-final-wiki-links.txt from gs6:/experiments/wikipedia-dump/
+3) java -cp .:lucene-gaz.jar:lib/lucene-core.jar gate.creole.gazetteer.lucene.Indexer indexDir <path-to-ignore-case-final-wiki-links.txt>
+
+where,
+indexDir = this is going to be a new directory where the lucene index will be created
+
+############ Searching ###############
+NOTE: I had to allocate 1500M as max memory for GATE. It didn't work with 1200M.
+
+From the CLI:
+  java -cp .:lucene-gaz.jar:${GATE_HOME}/lib/lucene-core.jar:lib/lucene-queryparser-3.5.0.jar gate.creole.gazetteer.lucene.Searcher indexDir
+
+Steps:
+1) start gate
+2) load LuceneGaz plugin
+3) create a PR called Lucene Gazetteer PR and provide indexDir (above) as a directory with lucene index
+4) process your documents with ANNIE to produce annotations such as Person, Location, Organization etc.
+5) set runtime parameters of Lucene Gazetteer PR 
+  i) provide names of annotations for which you want to find out dbpedia baseline URIs
+  ii) inputASName - annotation set with annotations of the types provided in step 1
+  iii) outputASNmae - the PR creates annotations of type Lookup with "inst" and "count" features where uri is the most probably URI for this string in dbpedia and count shows the number of times this URI is chosen by users for the string of your annotation.
+
+
+######################### Benchmark
+
+To run the benchmarking script:
+  time ./bin/lookupKeysBench.sh /data/disambiguation/application/application-resources/lucene-indices/redirect-index < keylist
+where keylist is a file created like this
+  zcat dbpedia-redirect-src.txt.gz | cut -f1 | head -100000 > keylist  

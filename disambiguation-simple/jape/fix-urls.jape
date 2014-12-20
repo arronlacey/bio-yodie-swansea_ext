@@ -1,0 +1,43 @@
+Phase: FixURLs
+Input: Mention
+Options: control = all debug = true  
+
+// Prepend the base URI http://dbpedia.org/resource/ to the inst feature if it 
+// is not already there (or something else that starts with http://)
+// If the inst feature is not a string or missing or empty, set it to the 
+// empty string which indicates a null. 
+
+Rule: FixURLs
+(
+ {Mention}
+)
+:match
+-->
+:match{
+ Annotation match = gate.Utils.getOnlyAnn(matchAnnots);
+
+ FeatureMap fm = match.getFeatures();
+ Object instObj = fm.get("inst");
+ if(instObj == null) {
+   System.err.println(doc.getName()+": ERROR inst feature is null for "+match);
+   fm.put("inst","");
+   return;
+ }
+ if(!(instObj instanceof String)) {
+   System.err.println(doc.getName()+": ERROR inst feature is not a String for "+match);
+   fm.put("inst","");
+   return;
+ } 
+ String instString = (String)instObj;
+ if(instString.trim().isEmpty()) {
+   fm.put("inst","");
+   return;
+ }
+ if(instString.startsWith("http://")) {
+   return;
+ }
+ String inst = "http://dbpedia.org/resource/" + instString;
+ fm.put("inst", inst);
+}
+
+

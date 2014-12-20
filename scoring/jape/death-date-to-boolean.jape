@@ -1,0 +1,20 @@
+Phase: deathDateToBoolean
+Input: Lookup
+Options: control=all
+
+
+Rule: deathDateToBoolean
+(
+  {Lookup}
+):match
+-->
+{
+  Annotation lu = bindings.get("match").iterator().next();
+  String deathDate = (String)lu.getFeatures().get("deathDate");
+  FeatureMap fm = lu.getFeatures();
+  if(deathDate!=null && !deathDate.equals("")){
+    fm.put("dead", "true");
+  } else {
+    fm.put("dead", "false");
+  }
+}

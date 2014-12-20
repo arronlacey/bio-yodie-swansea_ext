@@ -1,0 +1,42 @@
+
+
+//[
+// Create temporary annotations LookupInfoPairOne and LookupInfoPairTwo
+// We can get overlapping annotations for LookupInfoPairOne and LookupInforPairTwo
+// in many different ways. These get filtered in the JavaScripting code ...
+//]
+Phase: markLookupList4Location01
+Input: LookupList Token
+Options: control = all
+
+
+Rule: markLookupList4Location01_R01
+(
+  ({LookupList}):l1
+  {Token.string==","}
+  ({LookupList}):l2
+):full
+-->
+{
+  Annotation l1 = gate.Utils.getOnlyAnn(bindings.get("l1"));
+  Annotation l2 = gate.Utils.getOnlyAnn(bindings.get("l2"));
+  l1.getFeatures().put("lookupPair","pair"); 
+  l2.getFeatures().put("lookupPair","pair");
+  FeatureMap newfm = Factory.newFeatureMap();
+  newfm.put("firstId",l1.getId());
+  newfm.put("secondId",l2.getId());
+  gate.Utils.addAnn(outputAS,bindings.get("full"),"LookupListPairTwo",newfm);
+}
+
+Rule: markLookupList4Location01_R02
+( {LookupList contains {Token.string == ","}} ):label
+-->
+:label{
+  Annotation l = gate.Utils.getOnlyAnn(labelAnnots);
+  l.getFeatures().put("lookupPair","single");
+  FeatureMap newfm = Factory.newFeatureMap();
+  newfm.put("singleId",l.getId());
+  gate.Utils.addAnn(outputAS,labelAnnots,"LookupListPairOne",newfm);
+}
+
+

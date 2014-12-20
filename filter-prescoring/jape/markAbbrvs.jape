@@ -1,0 +1,206 @@
+
+
+//[
+// 1) Create temporary annotations: 
+// LookupListDefinedAbbrv: a lookup list which is also an all upper case abbreviation,
+//   enclosed in parentheses, after what looks like a possible definition 
+// AbbrvDefinition: what looks like a possible definition for an abbreviation
+//   which is following it, but not overlapping with a LookupList 
+// LookupListAbbrvDefinition: a lookup list which looks like a possible definition
+//   for an abbreviation following it
+// This is done by first identifying abbreviations in parentheses which are 
+// also LookupList and marking them as TmpPossibleAbbrv
+// At the moment we only allow abbreviations with at most 6 letters
+// Then find all sequences of 1 to 6 word tokens immediately before a tmpPossibleAbbrv
+// and mark them as TmpPossibleDef with features indicating the length 
+// We also check for each of these if it is coextensive with LookupList and
+// set isCoextensiveWithLookupList accordingly. 
+// We initialize the isOverlappingWithLookupListAbbrvDefinition feature to false.
+// Then we match the longest TmpPossibleDef which is coextensive with a 
+// Lookuplist to create LookupListAbbrvDefinition. All overlapping other 
+// TmpPossibleDef get the feature isOverlappingWithLookupListAbbrDefinition set to true so
+// we do not match a a longer sequence as a definition later
+// Then we match the longest TmpPossibleDef which does not overlap with
+// with a LookupListAbbrvDefinition (using the feature)  to find the remaining definitions.
+//]
+
+
+Imports: { 
+import gate.trendminer.lodie.utils.LodieUtils;
+import static gate.Utils.*;
+}
+
+// Create TmpPossibleAbbrv annotations:
+// Only if this looks like an abbreviations of 2 to 6 characters
+// enclosed in parentheses and coextensive with a LookupList
+// The feature llId points to the original LookupList annotation
+Phase: findAllPossibleAbbrvs
+Input: LookupList Token SpaceToken
+Options: control = appelt
+
+Rule: findAllPossibleAbbrvs_R01
+( {Token.string=="("}
+  ({SpaceToken.string==" "})?
+  ({Token.kind=="word", Token.orth=="allCaps"}):abbrv
+  ({SpaceToken.string==" "})?
+  {Token.string==")"}
+):full
+-->
+:abbrv{
+  Annotation token = getOnlyAnn(abbrvAnnots);
+  //System.out.println(doc.getName()+": maybe abbrv: "+token);
+  AnnotationSet lls = getContainedAnnotations(inputAS,token,"LookupList");
+  AnnotationSet full = bindings.get("full");
+  // if the length of the abbreviation is not more than 6 and we do have
+  // a lookuplist at all ...
+  if(length(token) >= 2 && length(token) <= 6 && lls.size() > 0) {
+    List<Annotation> coexs = new ArrayList<Annotation>();
+    for(Annotation ll : lls) {
+      if(ll.coextensive(token)) {
+        coexs.add(ll);
+      } else {
+        // TODO: keep for debugging?
+        // System.out.println("Removing contained LookupList"+ll);        
+        inputAS.remove(ll);
+      }
+    }
+    if(coexs.size() == 1) {
+      // we have a single coextensive LookupList: good!
+      Annotation ll = coexs.get(0);
+      //System.out.println("Adding TmpPossibleAbbrv annotation over ll: "+ll);
+      int addedid = addAnn(outputAS,full,"TmpPossibleAbbrv",featureMap("abbrv",token.getFeatures().get("string"),"llId",ll.getId()));
+      //Annotation addedann = outputAS.get(addedid);
+      // System.out.println("Added this annotation: "+addedann);
+    } else {
+      // we have none or several, do nothing for now
+      // System.out.println("None or several coextensive LookupList for an abbreviation in "+doc.getName()+": "+token);
+    }
+  } else {
+    // System.out.println("But longer than 6 or no contained LookupList");
+  }
+}
+
+
+// find the possible definitions and mark them as coextensive with a LookupList
+// if they are. Also initialize the isOverlappingWithLookupListAbbrvDefinition to false.
+Phase: findAllPossibleAbbrvDefs
+Input: LookupList Token SpaceToken TmpPossibleAbbrv Split
+Options: control = all
+
+Rule: findAllPossibleAbbrvDefs_R01
+(
+  // TODO: this is far from perfect atm
+  ( ( {Token.kind == "word", Token.orth == "upperInitial"}) 
+    // TODO: instead of just lowercase, add a feature to the token that
+    // indicates it is an abbreviation definition stopword!!! 
+    // An abbreviation definition stopword could actually be present 
+    // in upperInitial too. 
+    // This is still far more complicated since sometimes such a word
+    // could be part of the abbreviation letters and other times not.
+    // (see below)
+    ({SpaceToken}|{Token.kind=="punctuation"}|{Token.orth == "lowercase"})[0,2]
+  )[2,6]:def
+  ({TmpPossibleAbbrv}):abbrv
+):label
+-->
+:label{
+  AnnotationSet wordtokens = bindings.get("def").get("Token");  
+  // System.out.println("Found potential definition: "+wordtokens);
+  // now check our constraings: for now the first letters of all tokens 
+  // have to match the abbreviation
+  // TODO: problem: this will not work at the moment if there is a 
+  // Token.punctuation in the definition and it will not work in the future
+  // if we relax the matching constraints or allow stop words.
+  List<Annotation> tokenseq = wordtokens.inDocumentOrder();
+  // now filter the sequence so it only contains the upperInitial words
+  Iterator<Annotation> it = tokenseq.iterator();
+  while(it.hasNext()) {
+    Annotation token = it.next();
+    FeatureMap fm = token.getFeatures();
+    String orth = (String)fm.get("orth");
+    if(orth==null) { orth = ""; }
+    if(!orth.equals("upperInitial")) {
+      it.remove();
+    }
+  }
+  String deftext = gate.Utils.stringFor(doc,wordtokens);
+  String abbrvtext = (String)gate.Utils.getOnlyAnn(bindings.get("abbrv")).getFeatures().get("abbrv");
+  if(abbrvtext.length() != tokenseq.size()) {
+    return;
+  }
+  int i = 0;
+  for(Annotation token : tokenseq) {
+    String first = ((String)token.getFeatures().get("string")).substring(0,1);
+    if(!first.equals(abbrvtext.substring(i,i+1))) {
+      System.out.println("Mismatch between definition word and abbreviation: "+abbrvtext+"/"+deftext+"/"+i);
+      return; 
+    } 
+    i++;
+  }
+  FeatureMap fm = featureMap("nwords",wordtokens.size());
+  fm.put("isOverlappingWithLookupListAbbrvDefinition",false);
+  int id = addAnn(outputAS,wordtokens,"TmpPossibleDef",fm);
+  Annotation added = outputAS.get(id);
+  AnnotationSet lls = getContainedAnnotations(inputAS,added,"LookupList");
+  for(Annotation ll : lls) {
+    if(ll.coextensive(added)) {
+      fm.put("isCoextensiveWithLookupList",true);
+      fm.put("llId",ll.getId());
+      fm.put("coextensiveWithLookupList",ll.getId());
+    }
+  }
+}
+
+
+// find the longest possible definition which is coextensive with a lookuplist
+// and mark as LookupListAbbrvDefinition
+// Also establish the link between the definition and the abbreviation and
+// mark all other TmpPossibleAbbrv overlapping with this one with
+// isOverlappingWithLookupListAbbrvDefinition
+Phase: findLongestLookupListAbbrvDefinition
+Input: TmpPossibleDef SpaceToken TmpPossibleAbbrv 
+Options: control = appelt
+
+Rule: findLongestLookupListAbbrvDefinition_R01
+( ({TmpPossibleDef.isCoextensiveWithLookupList==true}):def
+  ({SpaceToken})[1,2]
+  ({TmpPossibleAbbrv}):abbrv
+)
+-->
+:def{
+  Annotation def = getOnlyAnn(defAnnots);
+  int llDefId = (Integer)def.getFeatures().get("llId");
+  Annotation abbrv = getOnlyAnn(bindings.get("abbrv"));
+  FeatureMap fm = Factory.newFeatureMap();
+  fm.put("llAbbrvId",abbrv.getFeatures().get("llId"));
+  fm.put("llId",llDefId);
+  abbrv.getFeatures().put("llDefId",llDefId);
+  addAnn(outputAS,def,"LookupListAbbrvDefinition",fm);
+  addAnn(outputAS,abbrv,"LookupListAbbrv",featureMap("llId",abbrv.getFeatures().get("llId"),"llDefId",llDefId,"type","list"));
+  AnnotationSet alldefs = getOverlappingAnnotations(inputAS,def,"TmpPossibleDef");
+  for(Annotation somedef : alldefs) {
+    somedef.getFeatures().put("isOverlappingWithLookupListAbbrvDefinition",true);
+  }
+}
+
+
+// Find the longest possible definition which is not overlapping with a LookupListAbbrvDefinition
+Phase: findLongestAbbrvDefinition
+Input: TmpPossibleDef SpaceToken TmpPossibleAbbrv
+Options: control = appelt
+
+Rule: findLongestAbbrvDefinition_R01
+( ({TmpPossibleDef.isOverlappingWithLookupListAbbrvDefinition==false}):def
+  ({SpaceToken})[1,2]
+  ({TmpPossibleAbbrv}):abbrv
+)
+-->
+:def{  
+  Annotation def = getOnlyAnn(defAnnots);
+  Annotation abbrv = getOnlyAnn(bindings.get("abbrv"));
+  FeatureMap fm = Factory.newFeatureMap();
+  fm.put("llAbbrvId",abbrv.getFeatures().get("llId"));
+  abbrv.getFeatures().put("defId",def.getId());
+  addAnn(outputAS,abbrv,"LookupListAbbrv",featureMap("llId",abbrv.getFeatures().get("llId"),"defId",def.getId(),"type","string"));
+  addAnn(outputAS,def,"AbbrvDefinition",fm);
+}

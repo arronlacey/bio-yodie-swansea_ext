@@ -1,0 +1,72 @@
+Bugs
+  tac2010-no-nuls/NYT_ENG_20071001.0195.LDC2009T13.sgm.finf
+     APW_ENG_20080111.0045.LDC2009T13.sgm.finf
+     APW_ENG_20080315.0012.LDC2009T13.sgm.finf
+     APW_ENG_20070127.0027.LDC2009T13.sgm.finf
+  LodieUtils 670/84 from filterLocation 93
+
+Note about the bugs: this was caused by the JAPE file 
+markLocation... where it could happen that the same 
+location had both a ..One and ..Two annotation, because
+of the many ways how LookupLists can overlap. 
+Changing this so that the ..Two annotations took precedence
+hurt the precision. This seems to indicate that biggest
+gain comes from the ..One situation. 
+UPDATE: all attempts to re-create the initial high 
+precision I got when there were NPEs failed so far.
+UPDATE2: found the bugs, we are back to nearly the same
+values!
+
+Impact of the filtering on the simple disambiguation:
+
+1) tac2010-no-nils old, new 5/5, new 1/10 filtering
+old1: as copied over from prepped-corpora (the older one)
+old2: as run on prepped-corpora-20140424 on gs7 (in  /data/disambiguation/evaluation2/)
+new 5/5: run johann/jp-all-simple-disambiguation.xgapp with a config
+  that has .minUriFreqInWp set to 5 and .maxCands set to 5
+new 1/10: same with minUriFreqInWp set to 1 and maxCands set to 10
+  
+                 old /old2/ 5,5/1,10
+F1StrPerson      0.86/0.86/0.87/0.87
+F1LenPerson      0.92/0.92/0.90/0.91
+F1StrLocation    0.62/0.57/0.76/0.76
+F1LenLocation    0.77/0.71/0.77/0.77
+F1StrOrg         0.62/0.42/0.58/0.52
+F1LenOrg         0.60/0.47/0.60/0.52
+F1StrUnknown     0.74/0.68/0.78/0.77
+F1LenUnknown     0.82/0.75/0.81/0.80
+
+F1StrAll         0.67/0.61/0.75/0.74
+F1LenAll         0.78/0.71/0.77/0.75
+
+Maxrecall:       0.91/0.86/0.89/0.89
+MaxRecPers       0.93/0.93/0.87/0.88
+MaxRecLoc        0.87/0.83/0.86/0.87
+MaxRecOrg        0.91/0.82/0.88/0.89
+MaxRecUnkn       0.94/0.90/0.91/0.92
+
+Significant reduction of the number of lookups in prepped-corpora (old1)
+e.g. in DOC-SUM APW_ENG_20080117.0590.LDC2009T13.sgm.finf  > 18.000 down to 895
+In the new prepped corpus, we have a comparable or smaller number 
+
+2) aida-a-tuning, only overall eval since we do not have the target class
+old1: as copied over from prepped-corpora (the older one)
+old2: as run on prepped-corpora-20140424 on gs7 (in  /data/disambiguation/evaluation2/)
+new 5/5: run johann/jp-all-simple-disambiguation.xgapp with a config
+  that has .minUriFreqInWp set to 5 and .maxCands set to 5
+new 1/10: same with minUriFreqInWp set to 1 and maxCands set to 10
+
+                 old1/old2/ 5,5/1,10  
+F1StrAll         0.60/0.57/0.64/0.64
+F1LenAll         0.62/0.59/0.65/0.65
+
+Maxrecall:       0.76/0.75/0.76/0.78
+
+
+3) aida-ee with ML-maxent (gen/all-ml-disambiguation.xgapp) 
+
+F1Str:           0.52/0.62
+F1StrIncl:       0.32/0.38
+F1Len:           0.57/0.65
+F1LenIncl:       0.44/0.50
+MaxRecall:       0.66/0.68

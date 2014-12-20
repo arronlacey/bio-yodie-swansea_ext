@@ -1,0 +1,28 @@
+
+// This may be necessary ... copied over from lodie1
+
+Phase: removeLookupsUnderDateAndURL
+Input: Address Date 
+Options: control=all
+
+Rule: removeLookupsUnderDateAndURL_01
+( {Address.kind==url} | {Date}):m
+-->
+{
+  // TODO: this should really be done in ANNIE!!
+  lookupSet = inputAS.get(gate.Utils.start(a), gate.Utils.end(a)).get("Location");
+  for(Annotation aLookup : lookupSet) {
+    outputAS.get(gate.Utils.addAnn(outputAS,aLookup,aLookup.getType(),aLookup.getFeatures())).
+      getFeatures().put("deletedBecause","overlapsWithAddressOrDate");    
+    inputAS.remove(aLookup);
+  }
+
+  // TODO: this should really be done in ANNIE!
+  lookupSet = inputAS.get(gate.Utils.start(a), gate.Utils.end(a)).get("Organization");
+  for(Annotation aLookup : lookupSet) {
+    outputAS.get(gate.Utils.addAnn(outputAS,aLookup,aLookup.getType(),aLookup.getFeatures())).
+      getFeatures().put("deletedBecause","overlapsWithAddressOrDate");    
+    inputAS.remove(aLookup);
+  }
+}
+

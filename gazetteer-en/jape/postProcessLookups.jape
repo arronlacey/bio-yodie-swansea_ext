@@ -1,0 +1,32 @@
+
+// Add the document string to the lookup annotation, 
+// remove features we do not need or want.
+
+Phase: adaptFeatures
+Input: Lookup
+Options: control = all
+
+Rule: adaptFeatures_R01
+({Lookup}):label
+-->
+:label{
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  FeatureMap fm = lookup.getFeatures();
+  
+  String query = (String)fm.get("query");
+  String string = gate.Utils.cleanStringFor(doc,lookup);
+  // if we have a "query"  feature from the gazetteer, use this instead
+  // of the document text. This is used to map e.g. country demonyms to
+  // their country.
+  if(query != null && !query.isEmpty()) {
+    string = query;
+  }
+  fm.put("string_orig",string);  
+  fm.put("string",string.toLowerCase());
+  
+  // remove unnecessary/unwanted features the gazetteer has created ...
+  fm.remove("_firstcharCategory");
+  fm.remove("_firstcharUpper");
+  fm.remove("_listnr");
+  fm.remove("_string");
+}
