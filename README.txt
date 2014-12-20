@@ -36,5 +36,5 @@ but without the following directories or files:
   wp-prepare
 Some of these may be added later or to a different yodie-* repository.
 
-Unfortunately we had to copy over the following plugins:
+Unfortunately we had to copy over the following plugin:
   plugins/LuceneGaz/  required by the Disambiguation plugin
