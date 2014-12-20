@@ -2,6 +2,7 @@
 *~
 *.swp
 *.bak
+*.tmp
 
 # build/compile output we do not want checked in
 *.class
@@ -10,6 +11,16 @@
 
 # Virtual machine crash logs
 hs_err_pid*
+
+# IDE files will not get checked in, mainly Eclipse cruft ..
+.project
+.metadata
+.classpath
+.settings/
+.loadpath
+.externalToolBuilders/
+.launch
+
 
 # yodie-specific stuff to ignore
 *.gazbin
