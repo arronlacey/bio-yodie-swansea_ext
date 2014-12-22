@@ -39,5 +39,6 @@ Some of these may be added later or to a different yodie-* repository.
 = the tagger plugins have been moved to yodie-experiements/pipelines/plugins
 = the wp-* directories have been moved to yodie-preparation/pipelines
 
+
 Unfortunately we had to copy over the following plugin:
   plugins/LuceneGaz/  required by the Disambiguation plugin
