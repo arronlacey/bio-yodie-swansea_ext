@@ -35,6 +35,9 @@ but without the following directories or files:
   wp-linksAndMentions
   wp-prepare
 Some of these may be added later or to a different yodie-* repository.
+= the tagger-app directory has been moved to yodie-experiments/pipelines
+= the tagger plugins have been moved to yodie-experiements/pipelines/plugins
+= the wp-* directories have been moved to yodie-preparation/pipelines
 
 Unfortunately we had to copy over the following plugin:
   plugins/LuceneGaz/  required by the Disambiguation plugin
