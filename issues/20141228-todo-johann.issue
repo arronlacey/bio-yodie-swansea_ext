@@ -1,0 +1,14 @@
+summary: implement/experiment with NIL detection
+assignedName: johann
+priority: 3/3
+comments:
+  We need to do better NIL detection. We need to find out what information 
+  we should use for nil detection, this may influence when to best do NIL detection.
+  We have a chicken-egg problem here: for collective disambiguation, we do not 
+  want to consider mentions which are really nils, but to know if something is a nil
+  we may need to attempt disambiguation first (and may need features calculated
+  during disambiguation). 
+  One core question is if NIL detection should be a separate step or part of the 
+  disambiguation (both has been tried in various ways in the literature). 
+  
+

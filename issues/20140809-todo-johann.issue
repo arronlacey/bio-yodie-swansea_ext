@@ -1,0 +1,13 @@
+summary: Make the parameter keyOverlapsOnly work
+assignedName: johann
+priority: 1/10
+severity: 1/10
+comments:
+  This must have stopped working at some point, make it work again so we can evaluate with 
+  corpusQA in TAC-like cases too.
+  The other reason for doing this is that we should think about how to restrict the 
+  disambiguation to pre-identified spots in general (so we can e.g. submit to TAC) and
+  how to still use other identified entities for disambiguation without actually 
+  annotating them. 
+  The simplest preliminary fix would be to do everything as normal but only copy the 
+  annotations for those spots where we have a key annotation. 

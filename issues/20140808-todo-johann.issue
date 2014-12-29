@@ -1,0 +1,16 @@
+summary: Use parametrization to create specialized pipelines
+assignedName: johann
+priority: 1/3
+comments:
+  Make modular pipelines accept an empty pipeline name so we can override 
+  (make empty) that parameter from a config file. 
+  Look at the code to see how exactly the PR loads the pipeline and find out 
+  if there is maybe another way to control modular pipeline loading from a
+  config file (e.g. setting a hidden runtime parameter). 
+  Also, modify the configuration file code so that setting something for a pipeline
+  that has not been loaded does not cause an error. This way we can keep the full 
+  config file for the full pipeline and still use the same config file to 
+  just load parts of the pipeline. 
+  The main reason for doing this is to make loading of pipelines much faster if 
+  we do not need some slow-loading steps.
+

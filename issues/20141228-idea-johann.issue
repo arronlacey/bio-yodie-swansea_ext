@@ -1,0 +1,18 @@
+summary: rethink filtering by POS
+assignedName: johann
+priority: 2/3
+severity: 3/3
+comments:
+  The POS tagger does not correctly identify many terms as NNP so our
+  strict filtering based on the POS tag is very unreliable, especially for 
+  tweets. Instead try other ways to identify the spots. One approach could
+  be the use the pos tags assigned by one or more taggers as additional
+  features, together with the statistics from WP and other sources
+  (we should also add Google n-gram stats and see which other linguistic 
+  sources may be useful)
+  Then we could explore training models (using the Stanford CRF or other 
+  algorithms) on these features just to detect a spot (not assign pos tags). 
+  It may also be interesting to see which features from the candidate list
+  may be helping that model especially things like the ambiguity, number of
+  candidate, most common commonness, difference between first and second 
+  commonness etc. 

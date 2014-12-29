@@ -1,0 +1,10 @@
+summary: ambiguity and confidence estimation
+assignedName: johann
+priority: 3/3
+comments:
+  We need to investigate into measures for estimating 
+  ambiguity and confidence. 
+  (re-check how spotlight does it: by comparing/similarity of two top candidate texts (tf*icf))
+  Estimate ambiguity as the difficulty to make a decision.
+  There should be many other ways one could do this!
+

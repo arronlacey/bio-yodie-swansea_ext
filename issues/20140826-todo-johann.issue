@@ -1,0 +1,10 @@
+summary: Create API/service for basic disambiguation tasks
+assignedName: johann
+priority: 3/3
+comments:
+  Think about how to package up some of the basic 
+  tasks we perform into an API. Ultimately this could be a wrapper around 
+  using our own REST service or something faster. This could simplify experiments
+  and evaluation because we do not have to create separate pipelines for everything
+  and instead just write a fast Groovy/Scala script.
+

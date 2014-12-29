@@ -1,0 +1,11 @@
+summary: Check usefulness of Stanford 7class models and of Stanford model combinations
+assignedName: johann
+priority: 1/3
+comments:
+  Can we use the model combiner in our own plugin?
+   See javaDoc http://www-nlp.stanford.edu/nlp/javadoc/javanlp/
+
+  (Also mabe check usefulness of Stanford true-caser model)
+
+  (Also re-chack with Leon about own-trained models but see 20141228-idea-johann.issue)
+  see also old svn todo-2014-08.txt

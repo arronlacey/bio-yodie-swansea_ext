@@ -1,0 +1,12 @@
+summary: Make use of known unambiguous or not very ambiguous mentions
+assignedName: johann
+priority: 2/3
+comments:
+  Essentially look into some of the ideas from other implementations of how to 
+  "kick-start" the disambiguation using not-very-ambiguous mentions. 
+  This depends on 20140827-todo-johann.issue
+  If we have a good ambiguity measure we should be able to do the context-based
+  disambiguation differently by e.g. start with the most ambiguous and disambiguate
+  against the least ambiguous ones (however even the least ambiguous ones may be 
+  NILs -> processing may depend on how we do nil detection)
+

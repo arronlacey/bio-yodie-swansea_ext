@@ -1,0 +1,16 @@
+summary: Handle other "phrasal" mismatches like "for America"
+assignedName: johann
+priority: 2/3
+severity: 3/3
+comments:
+  In most cases the correct annotation is for |America| and usually America is United_States
+  but because of our current strategy we match "For America" which is a dbpo:Single
+  We need a generic solution that handles "The Whitehouse" and "For America" in similar ways.
+  A similar case is "in Tokyo". 
+  Probably the best solution is to disambiguate between all overlapping candidates. This means
+  we should merge the candidate lists for "in Tokyo" and "Tokyo" and then disambiguate. 
+  However, this should probably not be done for all overlapping annotations, only for certain
+  kinds, e.g. where the part before is something like "in", "the" or "for" or where the 
+  part after is a possesive "'s". 
+  We need to analyze the list of overlapping annotations to find out when and how to do this 
+  exactly!

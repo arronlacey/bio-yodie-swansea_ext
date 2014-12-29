@@ -1,0 +1,10 @@
+summary: Consider Hadoop/Pig or other parallelization for preparation
+assignedName: johann
+priority: 1/3
+comments:
+  Look into how Spotlight does the preprocessing using Hadoop and Pig,
+  maybe we can adopt some of those? What other options do we have, 
+  especially for parallelization on our own, non-hadoop servers?
+  Look into simple linux-process parallelization first (Linux commands 
+  xargs -P, parallel etc). For java-based processing consider 
+  Scala multithreading or clojure multithreading?
