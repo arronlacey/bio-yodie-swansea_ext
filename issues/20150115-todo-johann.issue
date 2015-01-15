@@ -1,0 +1,31 @@
+summary: Better way to parametrize which types to annotate
+due: 2015-02-15
+assignedName: johann
+priority: 5/10
+comments: In order to make YODIE useful both for the production web service
+  and for comparisons and challenges we need a practical way to define which 
+  mentions should get annotated. 
+  From a user's point of view the easiest way to do this would probably be by 
+  allowing for any number of white-listed or black-listed types.
+  Types could be dbpedia classes, airpedia classes or yago types. 
+  Each type in the list could be specified as immediate or generic.
+  For whitelisting: a generic type means that this type and all subtypes are desired,
+  an immediate type means that only this type is desired but not its subtypes. 
+  The configuration should be possible by specifying a config file that contins 
+  one or more white and blacklists. The config file could get converted into 
+  actual sets of desired and undesired classes, based on the ontology or graph of 
+  known types. These actual sets could get printed for reference.
+  Then, any mention that gets disambiguated to be of type X is only annotated if 
+  type X is desired. 
+  Not sure yet how to combine this with the annotation of NILs: if a mention is a NIL,
+  then we cannot derive the type from the candidate that was picked in the disambiguation
+  phase. So we need some other hint about the type. So far this could only come from the 
+  ANNIE/Stanford NER tagger, but then we need a mapping between those types and the 
+  types used for white/blacklisting. 
+  A more practical approach could be to do it the other way round: for each potential 
+  spot we use some black-box approach to find the type. Then we do the disambiguation
+  and NIL detection based on that type. If we assign a NIL we keep the type. If we 
+  assign non-NIL we may also re-assign the type. 
+  NOTE: this is different from specifying which candidate spots should get considered
+  for disambiguation. There a similar mechanism could get used but extended with 
+  types for ANNIE or Stanford NER types. 

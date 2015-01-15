@@ -1,0 +1,18 @@
+summary: Use semantice DBPedia type distance for disambiguation
+priority: 3/10
+comments: From email "LODIE feature idea"
+  having looked at some more examples (mostly tweets) and LODIE results on them, I came up with an idea for a new feature, which is not very expensive to calculate I think.
+
+The idea is if we are disambiguating a set of candidate URIs, to take their DBpedia ontology classes and then calculate the semantic distance between these classes and the classes of the rest of the entities in the sentences. Similar to the Structural similarity, but instead of searching for relationships at instance level, check for class-level relationships instead. This kinds of relationships need to be at a rather specific level of the ontology, i.e. not Person, Place, Organisation (because on some level any person can be at any place or in a relationship to an organisation), and the more specific, the better.
+
+The reason why I think this might be valuable is because of tweets like:
+
+De Rossi Admits He Considered United Move But Club Were Too Slow
+
+we correctly assign De Rossi as a footballer. United though becomes US, whereas there should have been another candidate - the football club too and the latter is more consistent.
+
+If we wanted to do this in an even more principled way, it could be worth for each more specific DBpedia ontology class (we can by hand decide which these classes are, since they are not that many), take the top 100 URIs (according to their popularity/commonness scores which we have cached), and the corresponding Wikipedia articles. Build unigram and bigram language models from these and take say the top 100 of each. This will give us hopefully richer models of how this type of entities are talked about. Then the similarities could be calculated on that basis and include also the other words in the surrounding sentence, not just the named entities.
+
+Anyway, perhaps something to put on the backlog and we come back to it later. Implementing the class-based disambiguation based purely on the ontology is not much work hopefully. Might be worth seeing first if that buys us enough anyway. The reason why I thought of the language model thing is because of wanting to integrate the information in words like "defender" or "club", "final whistle", "kick-off" which appear in tweets and indicate that a URI candidate with a football or sport-related class is more likely than other classes.
+
+
