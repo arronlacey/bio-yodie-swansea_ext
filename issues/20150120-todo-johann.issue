@@ -1,0 +1,11 @@
+summary: Evaluate tweet expansion and similar techniques on a focused corpus
+due: 
+assignedName: johann
+priority: 3/10
+comments: This was a feedback for the www15 paper - we should use a corpus specifically 
+for investigating these techniques, limited to tweets where that technique actually 
+can be applied. This should probably be an additional evaluation but may better illustrate
+what the effect of the technique is on tweets where it can be applied. Then add statistics
+about how often we can apply it and not apply it (because nothing to expand, expansion did
+not work etc.)
+

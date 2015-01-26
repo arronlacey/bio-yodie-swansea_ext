@@ -1,0 +1,9 @@
+summary: Implement a tool for standard analysis of errors and error changes
+due:  2015-02-28
+assignedName: johann
+priority: 7/10
+comments: Using the evaluation plugin and other plugins, and based on carefully selected
+documents from our gold-standard corpora, implement scripts that will automatically 
+analyse the errors and track how the errors change over time. This is realted 
+to our automatic unit tests.
+

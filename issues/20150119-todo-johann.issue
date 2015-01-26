@@ -1,0 +1,15 @@
+summary: Improve the twitter pipeline by handling twitter specifics better
+due: 2015-02-15
+assignedName: johann
+priority: 8/10
+comments: This consists of several individual things that are still missing:
+= recognize twitter lingo better and annotate it. Then we can use the fact that
+  a spot overlaps with lingo as a fiture or filtering criterion.
+= recognize stock ticker symbols and associate with the company entity
+= detect truncated URLs in retweets (these have the beginning of a URL followed
+  by dots but only the dots are (wrongly) annoted. Correct that error. If we 
+  got the tweet from JSON, we mayb be able to replace the tweet text with the 
+  full version. Also we will have the URL as an annotation for a tweet from JSON
+  but we will not have anything usable for a tweet that was imported as text.
+  For that, just annotate as a useless part (useless URL).
+

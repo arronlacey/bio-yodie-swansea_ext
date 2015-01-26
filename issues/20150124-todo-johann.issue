@@ -1,0 +1,10 @@
+summary: Re-create and clean the Twitter corpora we have, if possible
+due: 
+assignedName: johann
+priority: 3/10
+comments: The Twitter corpora we have now are not imported from the twitter
+json format and therefore all information about entities etc. is missing, retweets
+are truncated, URLs are sometimes truncated etc. 
+Check if we can re-fetch the tweets based on tweet id and copy over the key annotations
+based on text matching.
+

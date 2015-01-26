@@ -1,0 +1,9 @@
+summary: Check if we can make use and analyse twitter "conversations" 
+due:  2015-03-15
+assignedName: johann
+priority: 2/10
+comments: We have mentioned this as still missing research in the www15 paper but did 
+not address or discuss it: can we, for a given tweet, retrieve all the other tweets that
+preceded and came after that tweet in a "thread"  or "conversation"? So not just timeline
+tweets but tweets where one user answered another.
+

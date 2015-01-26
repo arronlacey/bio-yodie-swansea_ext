@@ -1,0 +1,14 @@
+summary: Expand author profile, original tweet and other things.
+due: 2015-03-31
+assignedName: johann
+priority: 3/10
+comments: There are other things that may be useful to expand "on the fly"  when 
+processing a tweet (and caching the result):
+= the profile of the tweet author
+= the complete original tweet text, if it was a truncated re-tweet, and subsequently,
+  any URL that got truncated in the text of the retweet too.
+= Expand URLs or users based on the information we get from the twitter entity 
+  annotatins, if the tweet was imported from a JSON format that has that information
+= Maybe do an on-demand expansion of tweet conversation or recent timeline tweets 
+  
+
