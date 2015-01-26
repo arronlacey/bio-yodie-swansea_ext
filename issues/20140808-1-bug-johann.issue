@@ -1,7 +1,6 @@
 summary: Handle other "phrasal" mismatches like "for America"
 assignedName: johann
-priority: 2/3
-severity: 3/3
+priority: 8/10
 comments:
   In most cases the correct annotation is for |America| and usually America is United_States
   but because of our current strategy we match "For America" which is a dbpo:Single

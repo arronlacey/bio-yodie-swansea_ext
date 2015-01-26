@@ -1,7 +1,7 @@
 summary: Make the parameter keyOverlapsOnly work
 assignedName: johann
-priority: 1/10
-severity: 1/10
+priority: 3/10
+severity: 2/10
 comments:
   This must have stopped working at some point, make it work again so we can evaluate with 
   corpusQA in TAC-like cases too.

@@ -1,7 +1,7 @@
 summary: rethink filtering by POS
 assignedName: johann
-priority: 2/3
-severity: 3/3
+priority: 8/10
+severity: 7/10
 comments:
   The POS tagger does not correctly identify many terms as NNP so our
   strict filtering based on the POS tag is very unreliable, especially for 

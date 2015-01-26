@@ -1,5 +1,4 @@
 summary: Re-create and clean the Twitter corpora we have, if possible
-due: 
 assignedName: johann
 priority: 3/10
 comments: The Twitter corpora we have now are not imported from the twitter

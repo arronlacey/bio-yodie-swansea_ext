@@ -1,6 +1,6 @@
 summary: Make use of known unambiguous or not very ambiguous mentions
 assignedName: johann
-priority: 2/3
+priority: 7/10
 comments:
   Essentially look into some of the ideas from other implementations of how to 
   "kick-start" the disambiguation using not-very-ambiguous mentions. 

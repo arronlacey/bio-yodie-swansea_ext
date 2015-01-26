@@ -1,6 +1,6 @@
 summary: implement/experiment with NIL detection
 assignedName: johann
-priority: 3/3
+priority: 7/10
 comments:
   We need to do better NIL detection. We need to find out what information 
   we should use for nil detection, this may influence when to best do NIL detection.

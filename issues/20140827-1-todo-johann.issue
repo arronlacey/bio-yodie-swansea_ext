@@ -1,6 +1,7 @@
 summary: ambiguity and confidence estimation
 assignedName: johann
-priority: 3/3
+due: 
+priority: 8/10
 comments:
   We need to investigate into measures for estimating 
   ambiguity and confidence. 
