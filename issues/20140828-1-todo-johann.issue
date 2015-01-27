@@ -1,9 +1,0 @@
-summary: Evaluate our disambiguation methods on ambiguous Wikipedia links
-assignedName: johann
-priority: 2/10
-comments:
-  Like in the Spotlight paper, select a random sample of known to be ambigous
-  WP links for simple and quick experiments. Other than them we probably cannot
-  easily do holdout but only in-training set selection but on the plus side,
-  if we do this right, we could maybe select our evaluation set also based 
-  on ambiguity, type of target resource etc. 
