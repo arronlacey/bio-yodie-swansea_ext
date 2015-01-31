@@ -14,7 +14,7 @@
         <urlString>$relpath$../plugins/LodiePlugin/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/gateplugin-JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Java/</urlString>
