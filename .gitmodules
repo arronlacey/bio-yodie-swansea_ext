@@ -1,0 +1,6 @@
+[submodule "plugins/gateplugin-JdbcLookup"]
+	path = plugins/gateplugin-JdbcLookup
+	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/gateplugin-JdbcLookup
+[submodule "plugins/gateplugin-TwitterExpander"]
+	path = plugins/gateplugin-TwitterExpander
+	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/gateplugin-TwitterExpander.git
