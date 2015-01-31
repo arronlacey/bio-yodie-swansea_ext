@@ -1,0 +1,12 @@
+summary: Use high-level contextual information for disambiguation
+due: 20150631
+assignedName: johann
+priority: 4/10
+comments: Apart from using the graph-based and textual similarity clues, can we also establish 
+some very basic high-level clues for each document or tweet to help with the disambiguation?
+For example, establish the location of the author of a tweet and use this as a first clue
+for which person or organization names to prefer (for example we may prefer politicians from
+that country). However this very rough approach can easily fail since people will also 
+tend to talk about globally important people and organizations (Obama, MS, ....) 
+So we should think about how to prioritize the use of each kind of clue we have, based 
+on what other clues are actually present and how ambiguous something is. 

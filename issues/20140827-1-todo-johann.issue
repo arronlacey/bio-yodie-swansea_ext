@@ -9,3 +9,12 @@ comments:
   Estimate ambiguity as the difficulty to make a decision.
   There should be many other ways one could do this!
 
+An ambiguity score should reflect the number of different ways an entity can be linked, but
+for us, we still need to somehow combine this with the prior probability of each link. 
+For example Ohio will very likely nearly always mean the state, although there are many alternatives, including NIL.
+However, we should have extremely high confidence for a NIL to assign a NIL and we should have 
+very high confidence for any other interpretation to NOT assign Ohio the state. 
+So one measure of ambiguity may not just be the number of alternatives, but an indication
+how much more likely it is for the mention to get linked to the most probably entity than to 
+any other entity. 
+We could try to get estimates for this from not just wikipedia, but also from the wikilinks dataset?
