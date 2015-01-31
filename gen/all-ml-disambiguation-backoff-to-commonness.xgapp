@@ -32,7 +32,7 @@
         <urlString>$relpath$../plugins/gateplugin-JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/TwitterExpander/</urlString>
+        <urlString>$relpath$../plugins/gateplugin-TwitterExpander/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$gatehome$plugins/Alignment/</urlString>
