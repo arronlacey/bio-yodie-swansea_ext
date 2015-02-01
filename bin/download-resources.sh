@@ -32,7 +32,7 @@ echo SCRIPTDIR=$SCRIPTDIR
 echo ROOTDIR=$ROOTDIR
 dest="$ROOTDIR"/resources
 
-mkdir $dest 2>&1 >/dev/null
+mkdir $dest 2>/dev/null
 if [[ ! -d $dest ]]
 then
   echo Directory $dest could not be created

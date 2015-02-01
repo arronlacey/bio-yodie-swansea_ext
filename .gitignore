@@ -28,7 +28,6 @@ hs_err_pid*
 
 # yodie-specific stuff to ignore
 *.gazbin
+resources
 resources/*
-!resources/.donotdelete
 lodie.config.yaml
-resources/last-sync.txt
