@@ -32,6 +32,13 @@ echo SCRIPTDIR=$SCRIPTDIR
 echo ROOTDIR=$ROOTDIR
 dest="$ROOTDIR"/resources
 
+mkdir $dest 2>&1 >/dev/null
+if [[ ! -d $dest ]]
+then
+  echo Directory $dest could not be created
+  exit 1
+fi
+
 ## process any command line parameters
 while test "$1" != "";
 do
@@ -87,3 +94,5 @@ FROMPREFIX=${user}@${server}:${path}
 
 echo SYNCING everything from $FROMPREFIX to $dest
 rsync $OPTS $FROMPREFIX $dest
+date=`date +%Y-%m-%d,%H:%M:%S`
+echo "Last sync from $FROMPREFIX on $date" > $dest/last-sync.txt

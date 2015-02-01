@@ -31,3 +31,4 @@ hs_err_pid*
 resources/*
 !resources/.donotdelete
 lodie.config.yaml
+resources/last-sync.txt
