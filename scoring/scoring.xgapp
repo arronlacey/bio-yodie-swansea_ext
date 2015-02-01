@@ -5,7 +5,7 @@
         <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/gateplugin-JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/ANNIE/</urlString>

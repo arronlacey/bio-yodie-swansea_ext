@@ -29,7 +29,7 @@
         <urlString>$relpath$../plugins/ModularPipelines/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/gateplugin-JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Disambiguation/</urlString>
