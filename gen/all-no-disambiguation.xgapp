@@ -41,7 +41,7 @@
         <urlString>$relpath$../plugins/Java/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/gateplugin-TwitterExpander/</urlString>
+        <urlString>$relpath$../plugins/TwitterExpander/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
