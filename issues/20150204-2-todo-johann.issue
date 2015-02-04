@@ -1,0 +1,5 @@
+summary: Start working on implementing and experimenting with truely graph-based approaches
+due: 2015-08-01
+assignedName: johann
+priority: 9/10
+comments: We need to get going with implementing some of of the graph-based approaches described in the literature. Probably get started with something related to personalized page-rank and then look at what other options may be promising. Something that I have not seen in the literature yet is if we can formulate the problem such that the graph represents the probabilistic dependencies between nodes more directly: can we make the graph a baysian network or a simplification thereof and instead of propagating scores we propagate probabilities? We will need some simplifications or approximations (or both) here because calculating a general bayesian network is NP-hard (but that is also the case with the exact solutions to other graph-based approaches that have been proposed). 

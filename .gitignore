@@ -5,6 +5,7 @@
 *.tmp
 
 tmp/
+tmp*
 
 logs/
 

@@ -1,0 +1,11 @@
+summary: Get started with proper co-referencing
+due: 2015-04-30
+assignedName: johann
+priority: 9/10
+comments: We need to start working on intra-document and inter-document co-referencing modules that can be used for NEL, i.e. which are designed to support arbitrary types. We basically need a module that will produce the most likely of all coreference chains within a single document and something that will then be able to cluster all these chains for a whole corpus or stream of documents (could use agglomerative clustering for a corpus but need incremental clustering for a stream) with priority on processing a stream. 
+
+This is absolutely necessary for creating labeled NILs but the basic building parts could also be useful for non-NILs or making the judgement about whether something should be a NIL: the task of assigning mentions to entities can be seen as assigning them to clusters we already have, finding the cluster that most closely matches the existing intra-document coreference chain. 
+
+So a simple clustering based approach could be to first create the intra-document coref chain and then create a candidate list for the chain, then matching the chain to the per-candidate clusters. 
+
+A more complex approach would try to see the intra-document coreferencing task and the task of finding the correct cluster as a joint task where several optimization targets have to be reached at the same time: optimizing the coherence for the coreference chain and optimizing the closeness of that chain to one of the existing clusters (creating a KB link or linking to an already known NIL) or to a newly created cluster (if none of the existing clusters matches close enough, creating a new labeld NIL).

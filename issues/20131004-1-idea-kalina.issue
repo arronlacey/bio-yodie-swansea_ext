@@ -1,4 +1,4 @@
-summary: Use semantice DBPedia type distance for disambiguation
+summary: Use semantic DBPedia type distance for disambiguation
 priority: 3/10
 comments: From email "LODIE feature idea"
   having looked at some more examples (mostly tweets) and LODIE results on them, I came up with an idea for a new feature, which is not very expensive to calculate I think.
