@@ -67,7 +67,7 @@ public class LookupList {
 			List<Integer> ids = (List<Integer>)lookuplist.getFeatures().get("ids");
 			for(int i=0;i<ids.size();i++){
 				Annotation ann = document.getAnnotations().get(ids.get(i));
-				this.annotationbyinst.put((String)ann.getFeatures().get("inst"), ann);
+				this.annotationbyinst.put(ann.getFeatures().get("inst").toString(), ann);
 			}
 		} else { //Otherwise make an empty new one.
 			AnnotationSet inputAS = document.getAnnotations(inputASName);
