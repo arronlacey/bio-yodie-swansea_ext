@@ -19,6 +19,9 @@
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/TwitterExpander/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
