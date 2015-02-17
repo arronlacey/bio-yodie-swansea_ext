@@ -251,18 +251,6 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
         long startTime = Benchmark.startPoint();
         Entity ent = entsit.next();
         
-        //In addition to using the pre-prepared large vector space
-        //model, we're also going to try a little one for just this
-        //candidate list.
-        SemanticSpace candidateListSemSpace = null;
-
-        try {
-			candidateListSemSpace = new VectorSpaceModel();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
         String contextString = ent.getContext(contextLength, useTwitterExpansion);
         //System.out.println("TARGET: " + contextString);
         contextString = processLikeSSpace(contextString);
@@ -279,9 +267,6 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
         Iterator<String> candsit = candidatesbyinst.iterator();
         benchmarkCheckpoint(startTime, "__pre1");
 
-        //Store the candidate vectors. We're going to use them again.
-        Map<String, String> candTexts = new HashMap<String, String>();
-        
         while (candsit != null && candsit.hasNext()) {
 
           if (interrupted) {
@@ -312,18 +297,7 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
 
           startTime = Benchmark.startPoint();
           candidateText = processLikeSSpace(candidateText);
-          
-          candTexts.put(cand, candidateText);
-          
-          //Add it to the candidate-list-specific model
-          try {
-			candidateListSemSpace.processDocument(
-					  new BufferedReader(new StringReader(candidateText)));
-		  } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		  }
-          
+                    
           benchmarkCheckpoint(startTime, "__processLikeSSpace");
           //System.out.println("CANDIDATE: " + candidateText);
 
@@ -341,51 +315,8 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
           Double similarity = Similarity.getSimilarity(similarityFunction, candidateVector, contextVector);
           benchmarkCheckpoint(startTime, "__sim");
 
-          //Double cosineSimilarity = Similarity.cosineSimilarity(candidateVector, contextVector);
-
-
           ent.putFeatureFloat(cand, this.outputFeature, similarity.floatValue());
 
-        }
-        
-
-        //We have applied the result from using the pre-prepared semantic
-        //space, but not the small candidate-list-specific one. We need
-        //to run through the candidates and add that one now.
-        Properties tficfConfig = new Properties();
-        // JP: the sspace seems to store vectors in transposed form: 
-        // rows are documents and columns are terms, while the 
-        // edu.ucla.sspace.matrix.TfIdfTransform transform expects it the 
-        // other way round.
-        tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
-          "edu.ucla.sspace.matrix.TfIdfDocStripedTransform");
-        candidateListSemSpace.processSpace(tficfConfig);
-
-        DocumentVectorBuilder tficfVectorBuilder = 
-        		new DocumentVectorBuilder(candidateListSemSpace);
-
-        DoubleVector tficfContextVector = tficfVectorBuilder.buildVector(
-                new BufferedReader(new StringReader(contextString)),
-                new DenseVector(candidateListSemSpace.getVectorLength()));
-
-        //System.out.println("CONTEXT: " + tficfContextVector.toString());
-        
-        candsit = candidatesbyinst.iterator();
-
-        while (candsit != null && candsit.hasNext()) {
-        	String cand = candsit.next();
-        	String candtext = candTexts.get(cand);
-        	DoubleVector candidateVector = tficfVectorBuilder.buildVector(
-                    new BufferedReader(new StringReader(candtext)),
-                    new DenseVector(candidateListSemSpace.getVectorLength()));
-        	
-            //System.out.println("CAND: " + candidateVector.toString());
-        	
-            Double similarity = Similarity.getSimilarity(
-            		similarityFunction, candidateVector, tficfContextVector);
-            //System.out.println("Similarity: " + similarity);
-            ent.putFeatureFloat(cand, this.outputFeature + "TFICF", 
-            		similarity.floatValue());
         }
       }
 
