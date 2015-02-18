@@ -15,12 +15,17 @@ Rule: CreateAllRankFeatures
  AnnotationSet matches = bindings.get("match");  
  Annotation ll = matches.iterator().next();
 
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityLuceneS", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityLuceneR", ll, inputAS, false);
-
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityVector", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFDirect", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFIndirect", ll, inputAS, false);
+
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityTFICFSimple", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityRDFDirectTFICFSimple", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityRDFIndirectTFICFSimple", ll, inputAS, false);
+
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityTFICFSemantic", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityRDFDirectTFICFSemantic", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("contextualSimilarityRDFIndirectTFICFSemantic", ll, inputAS, false);
 
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relLabelFreqByUriInWp", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relUriFreqByLabelInWp", ll, inputAS, true);
