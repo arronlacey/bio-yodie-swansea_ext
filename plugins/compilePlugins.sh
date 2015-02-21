@@ -26,7 +26,7 @@ SCRIPTDIR=`dirname "$PRG"`
 SCRIPTDIR=`cd "$SCRIPTDIR"; pwd -P`
 pushd "$SCRIPTDIR"
 tmpout=/tmp/`whoami`-compilePlugins$$.out
-for file in *
+for file in Evaluation ModularPipelines
 do
   if [ "$file" == ANNIE ] || [ ! -d "$file" ]
   then
@@ -35,6 +35,7 @@ do
     pushd "$file"
     if [[ -f build.xml ]]
     then
+      echo Build of plugin $file started
       ant clean
       if [ "$compile" == 1 ]
       then 
@@ -42,8 +43,10 @@ do
         grep -q "BUILD SUCCESSFUL" $tmpout 
         if [ "$?" != 0 ]
         then
-          echo Build failed for $file compilation script aborted
-          exit
+          echo ERROR Build of plugin $file failed, plugin compilation script aborted
+          exit 1
+        else 
+          echo Build of plugin $file completed
         fi
       fi
     fi
