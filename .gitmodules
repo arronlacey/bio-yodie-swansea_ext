@@ -7,3 +7,6 @@
 [submodule "plugins/gateplugin-Evaluation"]
 	path = plugins/gateplugin-Evaluation
 	url = https://github.com/johann-petrak/gateplugin-Evaluation.git
+[submodule "plugins/Evaluation"]
+	path = plugins/Evaluation
+	url = https://github.com/johann-petrak/gateplugin-Evaluation.git
