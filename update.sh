@@ -18,6 +18,10 @@ fi
 git fetch --recurse-submodules=on-demand
 
 ## try and merge the changes into the branch
-git merge origin/master | grep 'Already up-to-date' && exit 0
+git merge origin/master                          ### do not do this:  | grep 'Already up-to-date' && exit 0
+
+## we still need to update the submodules, if necessary
+git submodule update --init --recursive
+
 
 ./plugins/compilePlugins.sh | tee compilePlugins.log | grep 'Build of plugin' 
