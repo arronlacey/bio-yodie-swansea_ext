@@ -32,3 +32,4 @@ hs_err_pid*
 resources
 resources/*
 lodie.config.yaml
+compilePlugins.log

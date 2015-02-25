@@ -4,3 +4,12 @@
 [submodule "plugins/gateplugin-TwitterExpander"]
 	path = plugins/TwitterExpander
 	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/TwitterExpander.git
+[submodule "plugins/gateplugin-Evaluation"]
+	path = plugins/gateplugin-Evaluation
+	url = https://github.com/johann-petrak/gateplugin-Evaluation.git
+[submodule "plugins/Evaluation"]
+	path = plugins/Evaluation
+	url = https://github.com/johann-petrak/gateplugin-Evaluation.git
+[submodule "plugins/ModularPipelines"]
+	path = plugins/ModularPipelines
+	url = https://github.com/johann-petrak/gateplugin-ModularPipelines.git
