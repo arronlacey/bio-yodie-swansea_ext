@@ -1,3 +1,18 @@
+/*
+ * EngineLibSVM.java
+ *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
+ */
+
 package gate.learningframework;
 
 import gate.Annotation;
@@ -9,12 +24,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -153,6 +170,11 @@ public class EngineLibSVM  extends Engine {
 		//This isn't helpful, so I'll set it here to the sensible default it
 		//ought to have.
 		param.C = 1;
+		
+		//Again, supposedly the default is 2 but it looks to me like it's 0.
+		//We'll make it 2 so that functionality reflects the current online
+		//libsvm documentation.
+		param.kernel_type = 2;
 
 		//Weights need setting up
 		param.nr_weight = 0;
@@ -262,8 +284,10 @@ public class EngineLibSVM  extends Engine {
 
 		//Train is a static method on svm
 		libsvm.svm.svm_set_print_string_function(print_func);
+		libsvm.svm.rand.setSeed(1);
 		svmModel = libsvm.svm.svm_train(prob, param);
-
+		
+		printModel(trMal);
 
 		//Save the classifier so we don't have to retrain if we
 		//restart GATE
@@ -412,5 +436,40 @@ public class EngineLibSVM  extends Engine {
 
 	public Algorithm whatIsIt(){
 		return Algorithm.valueOf("LIBSVM");
+	}
+	
+	private void printModel(CorpusWriterMallet trMal){
+		if(this.svmModel.param.kernel_type==0){
+			double[][] coef = svmModel.sv_coef;
+			try {
+				FileWriter fw = new FileWriter(new File(this.getOutputDirectory(), "model"));
+
+				//For each separator (one vs another)
+				for(int i=0;i<coef.length;i++){
+					fw.write("Separator " + i + ":\n");
+					double[] thisclassifier = coef[i];
+					for(int j=0;j<thisclassifier.length;j++){
+						fw.write(
+								trMal.getInstances().getDataAlphabet().lookupObject(j) 
+								+ "\t" + thisclassifier[j]
+								+ "\n");
+					}
+					fw.write("\n");
+				}
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				FileWriter fw = new FileWriter(new File(this.getOutputDirectory(), "model"));
+				fw.write("Cannot write model that isn't linear.\n");
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

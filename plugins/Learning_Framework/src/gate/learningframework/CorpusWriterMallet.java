@@ -1,3 +1,18 @@
+/*
+ * CorpusWriterMallet.java
+ *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
+ */
+
 package gate.learningframework;
 
 import gate.Annotation;
@@ -105,7 +120,7 @@ public class CorpusWriterMallet extends CorpusWriter{
 	/**
 	 * Prints instances list to the output location.
 	 */
-	public void append(Document doc){	 
+	/*public void append(Document doc){	 
 		String output = "";  
 
 		//  Get the output annotation set
@@ -128,7 +143,7 @@ public class CorpusWriterMallet extends CorpusWriter{
 			this.getOutputStream().print(output + "\n");
 		}
 		this.getOutputStream().flush();
-	}
+	}*/
 
 	/**
 	 * Builds a Mallet instance based on the config file and returns it.
@@ -185,11 +200,13 @@ public class CorpusWriterMallet extends CorpusWriter{
 			String classFeature, String identifierFeature){
 		String classEl = "";
 
-		if(classType!=null && classFeature!=null){
+		if(classType!=null){
 			switch(mode){
 			case CLASSIFICATION:
-				classEl = FeatureExtractor.extractClassForClassification(
+				if(classFeature!=null){
+					classEl = FeatureExtractor.extractClassForClassification(
 						classType, classFeature, inputASname, instanceAnnotation, doc);
+				}
 				break;
 			case NAMED_ENTITY_RECOGNITION:
 				classEl = FeatureExtractor.extractClassNER(
@@ -297,7 +314,7 @@ public class CorpusWriterMallet extends CorpusWriter{
 
 		Reader reader = null;
 		try {
-			reader = new FileReader(this.getOutputFile());
+			reader = new FileReader(this.getOutputDirectory());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

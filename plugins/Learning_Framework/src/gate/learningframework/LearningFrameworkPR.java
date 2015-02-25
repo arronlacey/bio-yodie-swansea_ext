@@ -1,20 +1,36 @@
 /*
+ * LearningFrameworkPR.java
  *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
  *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
  */
 
 package gate.learningframework;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import libsvm.svm_model;
+
 import org.apache.log4j.Logger;
 
+import cc.mallet.pipe.Pipe;
 import gate.AnnotationSet;
 import gate.Annotation;
 import gate.Document;
@@ -380,7 +396,7 @@ Serializable {
 	private static String testfilenamemalletseq = "test.seq.mallet";
 	private static String trainfilenamearff = "train.arff";
 	private static String testfilenamearff = "test.arff";
-	private static String outputfilenamearff = "output.arff";
+	private static String corpusoutputdirectory = "exportedCorpora";
 
 	//Some directory names. The evaluation one doesn't get used at the mo.
 	private static String savedModelDirectory = "savedModel";
@@ -436,7 +452,7 @@ Serializable {
 		}
 		return null;
 	}
-
+	
 	@Override
 	public void execute() throws ExecutionException {	 
 		Document doc = getDocument();
@@ -478,7 +494,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), trainfilenamearff);
 						trainingCorpus = new CorpusWriterArffNumericClass(this.conf, this.instanceName, 
 								this.inputASName, trainfileweka, 
-								mode, classType, classFeature, identifierFeature);
+								mode, classType, classFeature, identifierFeature, null);
 						break;
 					case WEKA_CL_NAIVE_BAYES:
 					case WEKA_CL_J48:
@@ -488,7 +504,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), trainfilenamearff);
 						trainingCorpus = new CorpusWriterArff(this.conf, this.instanceName, 
 								this.inputASName, trainfileweka, 
-								mode, classType, classFeature, identifierFeature);
+								mode, classType, classFeature, identifierFeature, null);
 						break;
 					}
 
@@ -603,7 +619,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), testfilenamearff);
 						testCorpus = new CorpusWriterArffNumericClass(this.conf, this.instanceName, 
 								this.inputASName, testfileweka, mode, classType, classFeature, 
-								identifierFeature);
+								identifierFeature, null);
 						break;
 					case WEKA_CL_NAIVE_BAYES:
 					case WEKA_CL_J48:
@@ -613,7 +629,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), testfilenamearff);
 						testCorpus = new CorpusWriterArff(this.conf, this.instanceName, 
 								this.inputASName, testfileweka, mode, classType, classFeature, 
-								identifierFeature);
+								identifierFeature, null);
 						break;
 					}
 				}
@@ -666,7 +682,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), testfilenamearff);
 						testCorpus = new CorpusWriterArffNumericClass(this.conf, this.instanceName, 
 								this.inputASName, testfileweka, mode, classType, classFeature, 
-								identifierFeature);
+								identifierFeature, null);
 						break;
 					case WEKA_CL_NAIVE_BAYES:
 					case WEKA_CL_J48:
@@ -676,7 +692,7 @@ Serializable {
 								gate.util.Files.fileFromURL(saveDirectory), testfilenamearff);
 						testCorpus = new CorpusWriterArff(this.conf, this.instanceName, 
 								this.inputASName, testfileweka, mode, classType, classFeature, 
-								identifierFeature);
+								identifierFeature, null);
 						break;
 					}
 				}
@@ -698,10 +714,38 @@ Serializable {
 			//Do this once only on the first document
 			if(corpus.indexOf(document)==0) {
 				File outputfilearff = new File(
-						gate.util.Files.fileFromURL(saveDirectory), outputfilenamearff);
+						gate.util.Files.fileFromURL(saveDirectory), corpusoutputdirectory);
 				exportCorpus = new CorpusWriterArff(this.conf, this.instanceName, this.inputASName, 
-						outputfilearff, mode, classType, classFeature, identifierFeature);
-				exportCorpus.initializeOutputStream();
+						outputfilearff, mode, classType, classFeature, identifierFeature, null);
+				//exportCorpus.initializeOutputStream();
+			}
+
+			//Every document
+			exportCorpus.add(document);
+
+			//Do this once only, on the last document.
+			if(corpus.indexOf(document)==(corpus.size()-1)) {
+				exportCorpus.conclude();
+			}
+			break;
+		case EXPORT_ARFF_THRU_CURRENT_PIPE:
+			//Do this once only on the first document
+			if(corpus.indexOf(document)==0) {
+				File outputfilearff = new File(
+						gate.util.Files.fileFromURL(saveDirectory), corpusoutputdirectory);
+				
+				if(CorpusWriterArff.getArffPipe(outputfilearff)==null){
+					logger.warn("LearningFramework: No pipe found in corpus output directory! "
+							+ "Begin by exporting arff training data without using pipe "
+							+ "so as to create one which you can then use to export test "
+							+ "data.");
+					break;
+				}
+				
+				exportCorpus = new CorpusWriterArff(this.conf, this.instanceName, this.inputASName, 
+						outputfilearff, mode, classType, classFeature, identifierFeature, 
+						CorpusWriterArff.getArffPipe(outputfilearff));
+				//exportCorpus.initializeOutputStream();
 			}
 
 			//Every document
@@ -716,10 +760,38 @@ Serializable {
 			//Do this once only on the first document
 			if(corpus.indexOf(document)==0) {
 				File outputfilearff = new File(
-						gate.util.Files.fileFromURL(saveDirectory), outputfilenamearff);
+						gate.util.Files.fileFromURL(saveDirectory), corpusoutputdirectory);
 				exportCorpus = new CorpusWriterArffNumericClass(this.conf, this.instanceName, this.inputASName, 
-						outputfilearff, mode, classType, classFeature, identifierFeature);
-				exportCorpus.initializeOutputStream();
+						outputfilearff, mode, classType, classFeature, identifierFeature, null);
+				//exportCorpus.initializeOutputStream();
+			}
+
+			//Every document
+			exportCorpus.add(document);
+
+			//Do this once only, on the last document.
+			if(corpus.indexOf(document)==(corpus.size()-1)) {
+				exportCorpus.conclude();
+			}
+			break;
+		case EXPORT_ARFF_NUMERIC_CLASS_THRU_CURRENT_PIPE:
+			//Do this once only on the first document
+			if(corpus.indexOf(document)==0) {
+				File outputfilearff = new File(
+						gate.util.Files.fileFromURL(saveDirectory), corpusoutputdirectory);
+				
+				if(CorpusWriterArff.getArffPipe(outputfilearff)==null){
+					logger.warn("LearningFramework: No pipe found in corpus output directory! "
+							+ "Begin by exporting arff training data without using pipe "
+							+ "so as to create one which you can then use to export test "
+							+ "data.");
+					break;
+				}
+				
+				exportCorpus = new CorpusWriterArffNumericClass(this.conf, this.instanceName, this.inputASName, 
+						outputfilearff, mode, classType, classFeature, identifierFeature, 
+						CorpusWriterArff.getArffPipe(outputfilearff));
+				//exportCorpus.initializeOutputStream();
 			}
 
 			//Every document

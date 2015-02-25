@@ -1,3 +1,18 @@
+/*
+ * CorpusWriterArffNumericClass.java
+ *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
+ */
+
 package gate.learningframework;
 
 import gate.Annotation;
@@ -5,6 +20,8 @@ import gate.AnnotationSet;
 import gate.Document;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,20 +44,30 @@ import cc.mallet.types.InstanceList;
 public class CorpusWriterArffNumericClass extends CorpusWriterArff {
 
 	public CorpusWriterArffNumericClass(FeatureSpecification conf,
-			String inst, String inpas, File outputFile, Mode mode,
-			String classType, String classFeature, String identifierFeature) {
-		super(conf, inst, inpas, outputFile, mode, classType, classFeature,
-				identifierFeature);
+			String inst, String inpas, File outputDirectory, Mode mode,
+			String classType, String classFeature, String identifierFeature,
+			SerialPipes savedPipe) {
+		super(conf, inst, inpas, outputDirectory, mode, classType, classFeature,
+				identifierFeature, null);
 		
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
-		
-		//Prepare the data as required
-		pipeList.add(new Input2CharSequence("UTF-8"));
-		pipeList.add(new FeatureValueString2FeatureVector());
-		
-		//pipeList.add(new PrintInputAndTarget());
-		this.setPipe(new SerialPipes(pipeList));
-		
+
+		if(savedPipe==null){ //We need to create one
+			//Prepare the data as required
+			pipeList.add(new Input2CharSequence("UTF-8"));
+			pipeList.add(new FeatureValueString2FeatureVector());
+			
+			//pipeList.add(new PrintInputAndTarget());
+			this.setPipe(new SerialPipes(pipeList));
+		} else {
+			pipeList = savedPipe.pipes();
+
+			this.pipe = new SerialPipes(pipeList);
+			this.pipe.getDataAlphabet().stopGrowth();
+			
+			outputfile = outputfilenamearffpipe;
+		}
+
 		this.setInstances(new InstanceList(this.getPipe()));
 	}
 
@@ -50,21 +77,26 @@ public class CorpusWriterArffNumericClass extends CorpusWriterArff {
 	 * but trivial.
 	 */
 	public void conclude(){
+		this.initializeOutputStream(outputfile);
 		//First the header
-		this.getOutputStream().print("@relation gate\n\n");
+		this.getOutputStream(outputfile).print("@relation gate\n\n");
 
 		for(int i=0;i<this.getPipe().getDataAlphabet().size();i++){
 			String attributeName = (String)this.getPipe().getDataAlphabet().lookupObject(i);
+
+			//Replace characters that arff doesn't like
 			attributeName = attributeName.replace("\"", "[quote]");
-			this.getOutputStream().print("@attribute \"" 
+			attributeName = attributeName.replace("\\", "[backslash]");
+			
+			this.getOutputStream(outputfile).print("@attribute \"" 
 					+ attributeName + "\" numeric\n");
 		}
 		
 		//The class attribute is nominal
-		this.getOutputStream().print("@attribute class numeric\n\n");
+		this.getOutputStream(outputfile).print("@attribute class numeric\n\n");
 		
 		//Now the data
-		this.getOutputStream().print("@data\n");
+		this.getOutputStream(outputfile).print("@data\n");
 		
 		Iterator<Instance> instit = this.getInstances().iterator();
 		while(instit.hasNext()){
@@ -88,10 +120,21 @@ public class CorpusWriterArffNumericClass extends CorpusWriterArff {
 			}
 			output = output + this.getPipe().getDataAlphabet().size() + " " + target + "}\n";
 			
-			this.getOutputStream().print(output);
+			this.getOutputStream(outputfile).print(output);
 		}
 		
-		this.getOutputStream().flush();
+		this.getOutputStream(outputfile).flush();
+
+		//Save the pipe
+		try {
+			File pf = new File(this.getOutputDirectory(), pipefilenamearff);
+			ObjectOutputStream oos = new ObjectOutputStream
+					(new FileOutputStream(pf));
+			oos.writeObject(this.pipe);
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

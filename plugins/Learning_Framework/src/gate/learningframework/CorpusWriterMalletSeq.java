@@ -1,3 +1,18 @@
+/*
+ * CorpusWriterMalletSeq.java
+ *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
+ */
+
 package gate.learningframework;
 
 import gate.Annotation;
@@ -139,7 +154,7 @@ public class CorpusWriterMalletSeq extends CorpusWriter{
 			Annotation instanceAnnotation = instanceAnnotationsIterator.next();
 
 			//One class per instance, #-separated
-			if(type!=null && feature!=null){
+			if(type!=null){
 				switch(mode){
 				case CLASSIFICATION:
 					classEl = classEl + "#" + FeatureExtractor.extractClassForClassification(
@@ -147,13 +162,15 @@ public class CorpusWriterMalletSeq extends CorpusWriter{
 							doc).replace("#", "[hash]");
 					break;
 				case NAMED_ENTITY_RECOGNITION:
-					classEl = classEl + "#" + FeatureExtractor.extractClassNER(
+					if(feature!=null){
+						classEl = classEl + "#" + FeatureExtractor.extractClassNER(
 							type, inputASname, instanceAnnotation, 
 							doc);
+					}
 					break;
 				}
 			} else {
-				//If we have no class type or feature, we can't extract class.
+				//If we have no class type, we can't extract class.
 				//This is probably being called in application mode.
 			}
 

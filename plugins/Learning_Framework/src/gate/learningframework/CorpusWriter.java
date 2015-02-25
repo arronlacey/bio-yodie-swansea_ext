@@ -1,11 +1,29 @@
+/*
+ * CorpusWriter.java
+ *  
+ * Copyright (c) 1995-2015, The University of Sheffield. See the file
+ * COPYRIGHT.txt in the software or at http://gate.ac.uk/gate/COPYRIGHT.txt
+ * Copyright 2015 South London and Maudsley NHS Trust and King's College London
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free software,
+ * licenced under the GNU Library General Public License, Version 2, June 1991
+ * (in the distribution as file licence.html, and also available at
+ * http://gate.ac.uk/gate/licence.html).
+ *
+ * Genevieve Gorrell, 9 Jan 2015
+ */
+
 package gate.learningframework;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
 
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.FeatureVector;
 import gate.Document;
 
@@ -25,12 +43,12 @@ public abstract class CorpusWriter {
 
 	private PrintStream outputStream;
 
-	public void setOutputFile(File outputFile) {
-		this.outputFile = outputFile;
+	public void setOutputDirectory(File outputFile) {
+		this.outputDirectory = outputFile;
 	}
 
-	public File getOutputFile() {
-		return this.outputFile;
+	public File getOutputDirectory() {
+		return this.outputDirectory;
 	}
 
 
@@ -53,7 +71,7 @@ public abstract class CorpusWriter {
 
 	private FeatureSpecification conf = null;
 
-	private File outputFile;
+	private File outputDirectory;
 	
 	private Mode mode;
 	
@@ -62,33 +80,41 @@ public abstract class CorpusWriter {
 	private String classFeature;
 	
 	private String identifierFeature;
+	
+	static String outputfilenamearff = "output.arff";
+	static String outputfilenamearffpipe = "output-thru-pipe.arff";
+	static String pipefilenamearff = "arff.pipe";
+	
+	String outputfile = outputfilenamearff;
+	
 
 	public CorpusWriter(FeatureSpecification conf, String inst, String inpas, 
-			File outputFile, Mode mode, String classType, String classFeature,
+			File outputDirectory, Mode mode, String classType, String classFeature,
 			String identifierFeature){
 		this.conf = conf;
 		this.instanceName = inst;
 		this.inputASName = inpas;
-		this.outputFile = outputFile;
+		this.outputDirectory = outputDirectory;
 		this.mode = mode;
 		this.classType = classType;
 		this.classFeature = classFeature;
 		this.identifierFeature = identifierFeature;
 	}
 
+	public void initializeOutputStream(String file) {
+		outputDirectory.mkdirs();
 
-
-	public void initializeOutputStream() {
-		if(outputFile.exists()){
-			outputFile.delete();
+		File output = new File(outputDirectory, file);
+		if(output.exists()){
+			output.delete();
 		}
 		try {
-			outputFile.createNewFile();
+			output.createNewFile();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		try {
-			outputStream = new PrintStream(new FileOutputStream(outputFile, true));
+			outputStream = new PrintStream(new FileOutputStream(output, true));
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -110,7 +136,7 @@ public abstract class CorpusWriter {
 	
 	public abstract void conclude();
 
-	public PrintStream getOutputStream() {
+	public PrintStream getOutputStream(String file) {
 		return outputStream;
 	}
 
