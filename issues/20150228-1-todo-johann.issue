@@ -1,0 +1,7 @@
+summary: Investigate opening the resources databases read-only from several processes.
+due: 2015-03-30
+assignedName: johann
+priority: 8/10
+comments: Check out if ;FILE_LOCK=NO;ACCESS_MODE_DATA=r will do what we want.
+Also add ;IFEXISTS=TRUE to avoid unnecessary creation of the db. 
+
