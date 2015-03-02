@@ -2,16 +2,13 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/ModularPipelines/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/StringAnnotation/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ANNIE/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Tagger_NP_Chunking/</urlString>
+        <urlString>$relpath$../plugins/LODIE1_Exporter/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Tools/</urlString>
@@ -20,28 +17,88 @@
         <urlString>$relpath$../plugins/Groovy/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Tools/</urlString>
+        <urlString>$relpath$../plugins/Tagger_NP_Chunking/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ModularPipelines/</urlString>
+        <urlString>$relpath$../plugins/Stanford_CoreNLP/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Twitter/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/TwitterExpander/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/StringAnnotation/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Java/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Disambiguation/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Learning_Framework/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
-  <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+  <application class="at.ofai.gate.modularpipelines.ParametrizedCorpusControllerPersistence">
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
+            <resourceName>MP:preprocess</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>pipelineFileURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$../preprocess/preprocess.xgapp</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -77,8 +134,6 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -131,43 +186,6 @@
               </localMap>
             </runtimeParams>
             <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
-            <resourceName>MP:lookupinfo-preproc</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>pipelineFileURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../lookupinfo-preproc/lookupinfo-preproc.xgapp</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
             <resourceName>MP:lookupinfo</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -188,8 +206,6 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -205,14 +221,14 @@
               </localMap>
             </runtimeParams>
             <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
-            <resourceName>MP:lookupinfo-postproc</resourceName>
+            <resourceName>MP:filter-prescoring</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>pipelineFileURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../lookupinfo-postproc/lookupinfo-postproc.xgapp</urlString>
+                    <urlString>$relpath$../filter-prescoring/filter-prescoring.xgapp</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -225,8 +241,6 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -262,6 +276,8 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -277,14 +293,14 @@
               </localMap>
             </runtimeParams>
             <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
-            <resourceName>MP:disambiguation-simple</resourceName>
+            <resourceName>MP:disambiguation-libsvm</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>pipelineFileURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../disambiguation-simple/disambiguation-simple.xgapp</urlString>
+                    <urlString>$relpath$../disambiguation-libsvm/disambiguation-ml-application.xgapp</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -310,11 +326,18 @@
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
-    <resourceType>gate.creole.ConditionalSerialAnalyserController</resourceType>
-    <resourceName>main</resourceName>
+    <resourceType>at.ofai.gate.modularpipelines.ParametrizedCorpusController</resourceType>
+    <resourceName>main.xgapp</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-      <localMap/>
+      <localMap>
+        <entry>
+          <string>configFileUrl</string>
+          <gate.util.persistence.PersistenceManager-URLHolder>
+            <urlString>$relpath$lodie-webservice.config.yaml</urlString>
+          </gate.util.persistence.PersistenceManager-URLHolder>
+        </entry>
+      </localMap>
     </initParams>
     <features class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
