@@ -13,3 +13,6 @@
 [submodule "plugins/ModularPipelines"]
 	path = plugins/ModularPipelines
 	url = https://github.com/johann-petrak/gateplugin-ModularPipelines.git
+[submodule "plugins/Learning_Framework"]
+	path = plugins/Learning_Framework
+	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/Learning_Framework.git
