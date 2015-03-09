@@ -1,0 +1,15 @@
+summary: Handle overlapping LookupList annotations correctly
+component: filter-prescoring, Java:filterOverlapping and maybe others
+due: 2015-03-31
+assignedName: johann
+priority: 10/10
+severity: 10/10
+comments: We need to document ecactly how LookupList annotations are created and 
+subsequently filtered and work out exactly which kinds of overlaps, coextensiveness
+etc can occur under which circumstances and how exactly we want to handle each
+of those. Also, in which order so that we make sure that a stage which e.g. does
+not expect coextensive lists anymore does not find them.
+In filterOverlapping, there is a check for coextensive Lists and some pre-annotated
+documents in the directory docsLoc01 (e.g. NYT_ENG_20080416.0228.LDC2009T13.sgm.finf) 
+do have that - we need to find out if the latest pipeline still produces this and
+how it can happen.
