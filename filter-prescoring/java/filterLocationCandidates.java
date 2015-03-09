@@ -1,16 +1,12 @@
 
 import gate.trendminer.lodie.utils.LodieUtils;
 import gate.trendminer.lodie.utils.Pair;
+import gate.creole.disambiguation.fastgraph.FastGraphLR;
 import gate.Utils;
 import gate.*;
 import gate.util.GateRuntimeException;
 import com.jpetrak.gate.jdbclookup.JdbcLR;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -30,9 +26,7 @@ import java.lang.reflect.Array;
 // = once we have processed the pairs and also the co-references, we should be 
 //   able to remove all other contained or overlapping LookupLists
 
-Connection connection = null;
-String sql = "SELECT RelationCount FROM RelationCounts WHERE URIFROM = ? AND URITO = ?"; 
-PreparedStatement pSt;
+private FastGraphLR graph;
 
 @Override
 public void execute() {
@@ -190,25 +184,12 @@ public void execute() {
 }
 
 public boolean isInRelation(String uri1, String uri2) {
-  boolean ret = false;
-  try {
-    pSt.setString(1,uri1);
-    pSt.setString(2,uri2);
-    ResultSet rs = pSt.executeQuery();
-    if(rs.next()) {  // we have a result!!
-      ret = true;
-    }
-    if(!ret) {
-      pSt.setString(1,uri2);
-      pSt.setString(2,uri1);
-      rs = pSt.executeQuery();
-      if(rs.next()) {  // we have a result!!
-        ret = true;
-      }      
-    }
-  } catch (Exception ex) {
-    throw new GateRuntimeException("Could not check relation ...",ex);
+  int n = graph.getDirectRelationCount(uri1,uri2);
+  if(n == 0) {
+    n = graph.getDirectRelationCount(uri2,uri1);
   }
+  boolean ret = (n>0);
+  System.out.println("DEBUG: checked "+uri1+" / "+uri2+" result: "+ret);
   return ret;
 }
 
@@ -247,29 +228,7 @@ public Pair<Set<FeatureMap>,Set<FeatureMap>> keepRelatedCandidates(List<FeatureM
 
 @Override
 public void init() {
-  JdbcLR db = (JdbcLR)resource1;
-  //System.out.println("Have the jdbc resource: "+db);
-  connection = db.getConnection(); 
-  if(connection == null) {
-    throw new GateRuntimeException("Connection to the db is null for "+db);
-  } else {
-    try {
-      pSt = connection.prepareStatement(sql);
-    } catch (Exception ex) {
-      throw new GateRuntimeException("Problem preparing statement",ex);
-    }
-  }
-}
-
-@Override
-public void cleanup() {
-  if(connection != null) {
-    try {
-      connection.close();
-    } catch(Exception ex) {
-      System.err.println("Could not close JDBC connection");
-      ex.printStackTrace(System.err);
-    }
-  }
+  graph = (FastGraphLR)resource1;
+  System.out.println("Have the fastgraph resource: "+graph);
 }
 
