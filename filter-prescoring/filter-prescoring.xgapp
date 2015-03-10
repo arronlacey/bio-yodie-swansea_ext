@@ -357,7 +357,7 @@
                         <entry>
                           <string>graphFileUrl</string>
                           <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../../../../../home/ssd/yodie-resources/fastgraph/graph.gz</urlString>
+                            <urlString>$relpath$../resources/fastgraph/graph.gz</urlString>
                           </gate.util.persistence.PersistenceManager-URLHolder>
                         </entry>
                       </localMap>
