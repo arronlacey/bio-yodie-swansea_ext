@@ -189,7 +189,7 @@ public boolean isInRelation(String uri1, String uri2) {
     n = graph.getDirectRelationCount(uri2,uri1);
   }
   boolean ret = (n>0);
-  System.out.println("DEBUG: checked "+uri1+" / "+uri2+" result: "+ret);
+  //System.out.println("DEBUG: checked "+uri1+" / "+uri2+" result: "+ret);
   return ret;
 }
 
