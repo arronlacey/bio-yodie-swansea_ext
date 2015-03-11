@@ -28,4 +28,4 @@ $ROOTDIR/../yodie-tools/bin/cp-random 20 1 $ROOTDIR/../yodie-corpora/corpora/aid
 $ROOTDIR/../yodie-tools/bin/cp-random 20 1 $ROOTDIR/../yodie-corpora/corpora/aida-ee-fix01 $SCRIPTDIR/aida-ee-sample1
 $ROOTDIR/../yodie-tools/bin/cp-random 100 1 $ROOTDIR/../yodie-corpora/corpora/en-tweets-training $SCRIPTDIR/en-tweets-training-sample1
 
-echo Documents copied, now run runInit.sh
+echo Documents copied, now run runReset.sh
