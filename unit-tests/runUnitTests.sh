@@ -18,6 +18,8 @@ ROOTDIR=`cd "$SCRIPTDIR/.."; pwd -P`
 
 totalret=0
 
+ts=`date +%Y%m%d%H%M%S`
+
 log=/tmp/runUnitTests$$.log
 echo Running unit tests on `date` > $log
 
@@ -38,7 +40,9 @@ totalret=$((totalret + ret))
 
 if [ $totalret != 0 ]
 then
-  echo UNIT TEST DIFFERENCES, log is in $log
+  cp $log $ROOTDIR/runUnitTest-$ts.log
+  rm $log 
+  echo UNIT TEST DIFFERENCES! Log is in $ROOTDIR/runUnitTest-$ts.log
   exit 1
 else 
   rm $log
