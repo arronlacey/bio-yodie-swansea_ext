@@ -133,14 +133,14 @@
   controller: preprocess-en-twitter
   prname: MP:preprocess-en-4TwitterExpansions
   value: true
+  
 ## In the scoring pipeline but included here since it kind of belongs
 ## This is set to true in the pipeline, so we do not need to set it here
 ## unless we want to explicitly disable it.
-#- set: prrun
-#  controller: scoring
-#  prname: TwitterExpander:Remove
-#  value: true
-
+- set: prrun
+  controller: scoring
+  prname: TwitterExpander:Remove
+  value: true
 
 
 ## Settings for the gazetteer-en sub-pipeline
@@ -178,14 +178,16 @@
 ##
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.minUriFreqInWp
-  value: "5"
+  value: "0"
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.maxCands
-  value: "5"
+  value: "10"
 ## if candidates where the minUriFreqInWp count is null should be kept
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.keepCandsWithNullFreq
   value: "false"
+  
+## Related to twitter expansion!  
 ## should a match in the expanded twitter user id get projected back
 ## to the original twitter id?
 - set: prrun
@@ -208,7 +210,7 @@
   controller: scoring
   prname: CorefRationalization
   name: candNormalizationSpanSetSize
-  value: 3
+  value: 2
 
 ## If a candidate is rejected from a coref chain for not being on one of the
 ## top n spans, should it be deleted or merely flagged?
@@ -216,14 +218,14 @@
   controller: scoring
   prname: CorefRationalization
   name: flagOrDelete
-  value: DELETE
+  value: FLAG
 
 ## Use coref at all?
 - set: prparm
   controller: scoring
   prname: CorefRationalization
   name: useCoref
-  value: true
+  value: false
 
 ## If for example URL occurs in context window for an entity,
 ## should the entire expansion be included in the context?
@@ -275,7 +277,7 @@
   controller: scoring
   prname: StructuralSimilarity
   name: contextChars
-  value: 50
+  value: 200
 
 ## If for example URL occurs in neighbourhood for an entity,
 ## should all entities in the expansion be considered neighbours?
@@ -340,10 +342,11 @@
 #  prname: LF:LibSVM
 #  name: featureSpecURL
 #  value: "../../disambiguation-libsvm/disambiguation-config.txt"
-#- set: propset
-#  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
-#  value: -0.75
-#- set: propset
-#  name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
-#  value: 5
+
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
+  value: -0.82
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
+  value: 5
 
