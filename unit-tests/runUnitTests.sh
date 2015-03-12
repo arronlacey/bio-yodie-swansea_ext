@@ -41,8 +41,10 @@ totalret=$((totalret + ret))
 if [ $totalret != 0 ]
 then
   cp $log $ROOTDIR/runUnitTest-$ts.log
-  rm $log 
-  echo UNIT TEST DIFFERENCES! Log is in $ROOTDIR/runUnitTest-$ts.log
+  echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
+  grep "=== UNIT TEST: DIFFERENCE" $log
+  echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
+  rm $log
   exit 1
 else 
   rm $log
