@@ -17,7 +17,7 @@ public void execute() {
         System.err.print("=== UNIT TEST: DIFFERENCE ("+change+") in document "+doc.getName()+" ");
         System.err.println("for >"+gate.Utils.cleanStringFor(doc,ann)+
           "< "+t+", ("+gate.Utils.start(ann)+
-          ","+gate.Utils.end(ann)+" inst="+ann.getFeatures().get("inst"));
+          ","+gate.Utils.end(ann)+") type="+ann.getType()+" inst="+ann.getFeatures().get("inst"));
         i++;
       }
     }
