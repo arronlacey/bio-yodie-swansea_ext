@@ -18,6 +18,8 @@
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -42,9 +44,7 @@
                 <entry>
                   <string>setsToRemove</string>
                   <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Ref</string>
-                    </localList>
+                    <localList/>
                     <collectionType>java.util.Arrays$ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
@@ -96,7 +96,7 @@
                 </entry>
                 <entry>
                   <string>copyAnnotations</string>
-                  <boolean>false</boolean>
+                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>outputASName</string>

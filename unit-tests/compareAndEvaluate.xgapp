@@ -51,7 +51,9 @@
                   <string>setsToRemove</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
-                      <string>Eval</string>
+                      <string>Eval_Ref</string>
+                      <string>Eval_Res</string>
+                      <string>Eval_Diff</string>
                     </localList>
                     <collectionType>java.util.Arrays$ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
@@ -124,12 +126,16 @@
                   <gate.plugin.evaluation.api.NilTreatment>NIL_IS_ABSENT</gate.plugin.evaluation.api.NilTreatment>
                 </entry>
                 <entry>
+                  <string>responseASName</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
                   <string>evaluationId</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>responseASName</string>
-                  <string>Shef</string>
+                  <string>outputASPrefix</string>
+                  <string>Eval</string>
                 </entry>
                 <entry>
                   <string>featureNameNilCluster</string>
@@ -158,10 +164,6 @@
                 <entry>
                   <string>whichThresholds</string>
                   <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALL</gate.plugin.evaluation.api.ThresholdsToUse>
-                </entry>
-                <entry>
-                  <string>outputASPrefix</string>
-                  <string>Eval</string>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -204,7 +206,7 @@
                 </entry>
                 <entry>
                   <string>inputAS</string>
-                  <string>Eval</string>
+                  <string>Eval_Diff</string>
                 </entry>
                 <entry>
                   <string>resource2</string>
