@@ -160,7 +160,7 @@
                   <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALL</gate.plugin.evaluation.api.ThresholdsToUse>
                 </entry>
                 <entry>
-                  <string>outputASName</string>
+                  <string>outputASPrefix</string>
                   <string>Eval</string>
                 </entry>
                 <entry>
