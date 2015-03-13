@@ -32,17 +32,17 @@ mkdir $SCRIPTDIR/en-tweets-training-sample1.out >& /dev/null
 rm $SCRIPTDIR/en-tweets-training-sample1.out/* >& /dev/null
 
 $ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/aida-a-tuning-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-a-tuning-sample1 $SCRIPTDIR/aida-a-tuning-sample1.out |& tee -a $log
-grep -q "=== UNIT TEST: DIFFERENCE" $log | grep -v -q "=== UNIT TEST: DIFFERENCE" 
+grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE" 
 ret=$?
 totalret=$ret
 
 $ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/aida-ee-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-ee-sample1 $SCRIPTDIR/aida-ee-sample1.out |& tee -a $log
-grep -q "=== UNIT TEST: DIFFERENCE" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
+grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
 
 $ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
-grep -q "=== UNIT TEST: DIFFERENCE" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
+grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
 
