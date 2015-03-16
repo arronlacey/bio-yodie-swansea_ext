@@ -5,9 +5,6 @@
         <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$gatehome$plugins/Tools/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
@@ -110,7 +107,7 @@
                 </entry>
                 <entry>
                   <string>copyAnnotations</string>
-                  <boolean>true</boolean>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>outputASName</string>
@@ -152,7 +149,6 @@
                     <localList>
                       <string>Key</string>
                       <string>Ref</string>
-                      <string>Shef</string>
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
