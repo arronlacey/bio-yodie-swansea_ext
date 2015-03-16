@@ -34,7 +34,7 @@ defaultAS.get("LookupList").each{ ll ->
     }
 
     if(bestcandidate!=null && scoreofbestcandidate>confidenceThreshold){
-      gate.Utils.addAnn(outputAS, bestcandidate, "Mention", bestcandidate.getFeatures());
+      gate.Utils.addAnn(outputAS, bestcandidate, "Mention", Utils.toFeatureMap(bestcandidate.getFeatures()));
     //} else {
     // TODO: check if we should create a NIL annotation here!
     //  gate.Utils.addAnn(outputAS, ll, "Mention", Factory.newFeatureMap());
