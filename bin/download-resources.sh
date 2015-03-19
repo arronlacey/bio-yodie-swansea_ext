@@ -92,7 +92,10 @@ esac
 OPTS='-O -avz --partial --delete --force --progress --cvs-exclude -e ssh'
 FROMPREFIX=${user}@${server}:${path}
 
+chmod a+r $dest/databases/*
 echo SYNCING everything from $FROMPREFIX to $dest
 rsync $OPTS $FROMPREFIX $dest
 date=`date +%Y-%m-%d,%H:%M:%S`
 echo "Last sync from $FROMPREFIX on $date" > $dest/last-sync.txt
+chmod a-r $dest/databases/*
+echo "NOTE: all databases have been write-protected!"
