@@ -1,0 +1,22 @@
+summary: Better filtering of spots by POS tags
+due: 2015-03-31
+assignedName: johann
+priority: 9/10
+severity: 9/10
+comments: Currently, we have the following  approach to filter the lookups (which will become 
+lookuplist annotations with candidate lookups later) by pos tag: 
+
+= we do the following only for spots that were matched against the dbpedia label gazetteer,
+  not the ones matched against demonym and adjectival lists! 
+= there is some code that makes this work differently if we have manually annotated text
+  (should be checked out and maybe moved somewhere else?)
+= we check if any overlapping Token 
+  - has isProperNoun set to true
+  - has a category feature that starts with "NNP"
+  if no, we delete the Lookup (and record this in the output Set for debugging)
+
+Problem:
+= if we have an adjectival and the adjectival is a known label in dbpedia, we will delete the lookup that
+  will create the normal dbpedia candidate list (because the adjective is not a proper noun and does not contain one either)
+  However, the candidate list we would get would be helpful. So we should instead first check for each dbpedia lookup
+  if it is coextensive with a adjectival/demonym lookup and in that case, flag it to be kept
