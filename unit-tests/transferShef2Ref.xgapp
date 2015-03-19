@@ -5,6 +5,9 @@
         <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$gatehome$plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
@@ -19,71 +22,12 @@
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Evaluation/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Java/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
   <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>setsToKeep</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Key</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>keepOriginalMarkupsAS</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>setsToRemove</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Ref</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
-            <resourceName>Reset:Ref</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
           <featureName></featureName>
@@ -114,11 +58,11 @@
                 </entry>
                 <entry>
                   <string>outputASName</string>
-                  <string>Ref</string>
+                  <string>Ref_LearningFramework</string>
                 </entry>
                 <entry>
                   <string>inputASName</string>
-                  <string>Shef</string>
+                  <string>LearningFramework</string>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -127,59 +71,7 @@
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.annotransfer.AnnotationSetTransfer</resourceType>
-            <resourceName>TransferShef2Ref</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>setsToKeep</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Key</string>
-                      <string>Ref</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>keepOriginalMarkupsAS</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>setsToRemove</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
-            <resourceName>ResetUnneeded</resourceName>
+            <resourceName>Transfer:LearningFramework</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap/>
@@ -258,15 +150,178 @@
             </features>
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>2</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>setsToKeep</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Key</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>setsToRemove</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Ref</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
+            <resourceName>Reset:Ref</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>2</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>tagASName</string>
+                  <string>Original markups</string>
+                </entry>
+                <entry>
+                  <string>textTagName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>transferAllUnlessFound</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>copyAnnotations</string>
+                  <boolean>false</boolean>
+                </entry>
+                <entry>
+                  <string>outputASName</string>
+                  <string>Ref</string>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.annotransfer.AnnotationSetTransfer</resourceType>
+            <resourceName>TransferShef2Ref</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>2</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>setsToKeep</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Key</string>
+                      <string>Ref</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>setsToRemove</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
+            <resourceName>ResetUnneeded</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </strategiesList>
     <prList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[2]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[2]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[3]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[5]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
