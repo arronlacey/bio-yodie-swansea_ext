@@ -44,4 +44,6 @@ en-tweets-training-sample1/
 aida-a-tuning-sample1.out/
 aida-ee-sample1.out/
 debug1.out/
-
+unit-tests/d1.*
+unit-tests/debug1
+unit-tests/out
