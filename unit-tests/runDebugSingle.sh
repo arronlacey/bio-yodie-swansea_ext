@@ -9,6 +9,8 @@ rm d1.afterTransfer/*
 rm d1.afterMain2/*
 rm d1.afterEval1/*
 
+runPipeline.sh -nl resetAllButKey.xgapp debug1
+
 runPipeline.sh -nl -c aida-a-tuning-sample1.config.yaml ../main/main.xgapp debug1 d1.afterMain1/
 
 runPipeline.sh -nl  transferShef2Ref.xgapp  d1.afterMain1/ d1.afterTransfer/
