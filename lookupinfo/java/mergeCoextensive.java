@@ -54,7 +54,7 @@ public void execute() {
     //logger.info("Merge: "+pair.value1+"/"+pair.value2);
     Annotation target = list.get(0);
     for(int i=0; i<list.size(); i++) {
-      LodieUtils.mergeListAnns(inputAS,target,list.get(i),true,"inst");
+      LodieUtils.mergeListAnns(inputAS,target,list.get(i),true,"inst","label");
     }
     // System.out.println("DEBUG: after merge: "+target);
     //logger.info("Merge after: "+pair.value1);
