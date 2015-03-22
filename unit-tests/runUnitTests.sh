@@ -18,9 +18,9 @@ ROOTDIR=`cd "$SCRIPTDIR/.."; pwd -P`
 
 totalret=0
 
-ts=`date +%Y%m%d%H%M%S`
+ts=`date +%Y%m%d_%H%M%S`
 
-log=/tmp/runUnitTests$$.log
+log=/tmp/runUnitTests-${ts}.log
 echo Running unit tests on `date` > $log
 
 ## create the output directories if not already there and empty them
@@ -31,17 +31,23 @@ rm $SCRIPTDIR/aida-ee-sample1.out/* >& /dev/null
 mkdir $SCRIPTDIR/en-tweets-training-sample1.out >& /dev/null
 rm $SCRIPTDIR/en-tweets-training-sample1.out/* >& /dev/null
 
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/aida-a-tuning-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-a-tuning-sample1 $SCRIPTDIR/aida-a-tuning-sample1.out |& tee -a $log
+outDir=/tmp
+outUrl=file://${outDir}
+
+evalId=runUnitTests-aida-a-tuning-${ts}
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-a-tuning-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-a-tuning-sample1 $SCRIPTDIR/aida-a-tuning-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE" 
 ret=$?
 totalret=$ret
 
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/aida-ee-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-ee-sample1 $SCRIPTDIR/aida-ee-sample1.out |& tee -a $log
+evalId=runUnitTests-aida-ee-${ts}
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-ee-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-ee-sample1 $SCRIPTDIR/aida-ee-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
 
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
+evalId=runUnitTests-en-tweets-training-sample1-${ts}
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
@@ -49,11 +55,17 @@ totalret=$((totalret + ret))
 if [ $totalret != 0 ]
 then
   cp $log $ROOTDIR/runUnitTest-$ts.log
-  echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
+  cp $outFile/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
+  echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log, data files are in $ROOTDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   grep "=== UNIT TEST: DIFFERENCE" $log
   echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
   rm $log
+  rm $outFile
   exit 1
 else 
+  cp $log $ROOTDIR/runUnitTest-$ts.log
+  cp $outFile/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
+  echo 'UNIT TEST COMPLETED WITHOUT DIFFERENCES! Log is in' $ROOTDIR/runUnitTest-$ts.log, data files are in $ROOT/EvaluateTagging-runUnitTests-*-$ts.tsv
   rm $log
+  rm $outFile
 fi
