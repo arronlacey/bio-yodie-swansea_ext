@@ -55,7 +55,7 @@ totalret=$((totalret + ret))
 if [ $totalret != 0 ]
 then
   cp $log $ROOTDIR/runUnitTest-$ts.log
-  cp $outFile/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
+  cp $outDir/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
   echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log, data files are in $ROOTDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   grep "=== UNIT TEST: DIFFERENCE" $log
   echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
@@ -65,6 +65,7 @@ then
 else 
   cp $log $ROOTDIR/runUnitTest-$ts.log
   cp $outFile/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
+  grep $ts EvaluateTagging-runUnitTests-*-$ts.tsv | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
   echo 'UNIT TEST COMPLETED WITHOUT DIFFERENCES! Log is in' $ROOTDIR/runUnitTest-$ts.log, data files are in $ROOT/EvaluateTagging-runUnitTests-*-$ts.tsv
   rm $log
   rm $outFile
