@@ -137,8 +137,12 @@ ProcessingResource {
 			}
 
 			if(sentences!=null && sentences.size()>0){
+                          if(sentences.size() != 1) {
+                            System.err.println("ERROR (ignored): more than one covering Sentence annotation for "+bestspan+": "+sentences);
+                          } else {
 				Annotation sentence = Utils.getOnlyAnn(sentences);
 				sentencecase = (String)sentence.getFeatures().get("case");
+                          }
 			}
 
 			//Evaluate each candidate.
