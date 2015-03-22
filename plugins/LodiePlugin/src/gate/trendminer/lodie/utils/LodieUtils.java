@@ -1175,6 +1175,53 @@ public class LodieUtils {
     // ********************************************************
     // helper methods
     
+    /**
+     * Move all list annotations of the given type from one set to another set.
+     * 
+     * This expects all annotations in the fromSet with the given type to be list annotations
+     * and moves those annotations together with their referenced annotations to the given toSet.
+     * Both fromSet and toSet must be mutable annotation sets.
+     * <p>
+     * NOTE: this method will keep the annotation ids of both list and referenced
+     * annotations intact.
+     * 
+     * @param fromSet
+     * @param toSet
+     * @param type 
+     */
+    public static void moveListAnns(AnnotationSet fromSet, AnnotationSet toSet, String type) {
+      // TODO
+    }
+    
+    /**
+     * Move all list annotations contained in the given which set from one set to another.
+     * 
+     * This expects all annotations in the which set to be list annotations and moves the annotations
+     * in the fromSet that correspond to the annotations in the which set to the toSet.
+     * <p>
+     * NOTE: this method will keep the annotation ids of both list and referenced annotations intact
+     * <p>
+     * NOTE: this method expects all annotations in the which set to actually be present in the fromSet
+     * and also expects both the fromSet and toSet to be mutable.
+     * 
+     * @param fromSet
+     * @param toSet
+     * @param which 
+     */
+    public static void moveListAnns(AnnotationSet fromSet, AnnotationSet toSet, Collection<Annotation> which) {
+      // TODO
+    }
+    
+    // similar to move, but will have to modify the ids in both the list annotation (feature ids)
+    // and the referenced annotations (feature llId)
+    public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, String type) {
+      // TODO
+    }
+    
+    public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, AnnotationSet which) {
+      // TODO
+    }
+    
     public static List<?> getIds(Annotation listAnn) {
       Object idsObj = listAnn.getFeatures().get("ids");
       if(idsObj == null) {
