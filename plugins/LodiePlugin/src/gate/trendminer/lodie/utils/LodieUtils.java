@@ -54,6 +54,23 @@ import java.util.logging.Logger;
  */
 public class LodieUtils {
 
+  // TODO: eventually use better names for these features, e.g. "gate.listann.ids" and "gate.listanns.llId"
+  /**
+   * The name of the feature in a list annotation that contains the list of ids of the referenced
+   * annotations.
+   */
+  public static final String IDS = "ids";
+  /**
+   * Then name of the feature in a referenced annotation that contains the id of the list annotation
+   * the references it. 
+   * 
+   * We deliberately allow each referenced annotation to only belong to exactly one list annotation
+   * to avoid all kinds of problems when manipulating lists. In order to have more than one list
+   * annotation reference an annotation, both must be copied.
+   */
+  public static final String LLID = "llId";
+  
+  
   private final static Logger logger = Logger.getLogger(LodieUtils.class.toString());
   /**
    * Get an annotation set of all candidates for a LookupList
@@ -232,9 +249,9 @@ public class LodieUtils {
           boolean byFeatures, String... features) {
     // TODO: this does not check if the ids features really is a list
     // and it does not check if it really is a list of Integer 
-    List<Integer> toIdList = (List<Integer>)toAnn.getFeatures().get("ids");
+    List<Integer> toIdList = (List<Integer>)toAnn.getFeatures().get(IDS);
     List<FeatureMap> toCandList = getCandidateList(set, toAnn);
-    List<Integer> fromIdList = (List<Integer>)fromAnn.getFeatures().get("ids");
+    List<Integer> fromIdList = (List<Integer>)fromAnn.getFeatures().get(IDS);
     Set<Annotation> toRemove = new HashSet<Annotation>();
     Set<Integer> toRemoveIds = new HashSet<Integer>();
     for(int id : fromIdList) {
@@ -414,7 +431,7 @@ public class LodieUtils {
    */
   public static int removeCandidateAnn(AnnotationSet fromSet, Annotation candidate) {
     FeatureMap fm = candidate.getFeatures();
-    Object listIdObj = fm.get("llId");
+    Object listIdObj = fm.get(LLID);
     Annotation listAnn = null;
     if(listIdObj == null) {
       // fallback code
@@ -470,7 +487,7 @@ public class LodieUtils {
   // TODO check the semantics of FeatureMap.equals()!!!
   public static int keepCandidateAnnsByCollection(AnnotationSet fromSet,
           Annotation lookupList, Collection<FeatureMap> filterCandidates, String... features) {
-    List<?> ids = (List<?>) lookupList.getFeatures().get("ids");
+    List<?> ids = (List<?>) lookupList.getFeatures().get(IDS);
     int nremoved = 0;
     Iterator<?> it = ids.iterator();
     while (it.hasNext()) {
@@ -526,7 +543,7 @@ public class LodieUtils {
     Document doc = fromSet.getDocument();
     log.println("  - text="+gate.Utils.cleanStringFor(doc, listAnn));
     FeatureMap fm = listAnn.getFeatures();
-    List<?> ids = (List<?>)fm.get("ids");
+    List<?> ids = (List<?>)fm.get(IDS);
     List<FeatureMap> cands = new ArrayList<FeatureMap>();
     int n = 0;
     for(Object idObj : ids) {
@@ -561,10 +578,10 @@ public class LodieUtils {
     FeatureMap oldListFm = listAnn.getFeatures();
     FeatureMap newListFm = Utils.toFeatureMap(oldListFm);
     List<Integer> newIds = new ArrayList<Integer>();
-    newListFm.put("ids",newIds);
+    newListFm.put(IDS,newIds);
     int newId = Utils.addAnn(targetSet, targetAnn, listAnn.getType(), newListFm);
     // create clones of all the referenced annotations
-    List<Integer> oldIds = (List<Integer>)oldListFm.get("ids");
+    List<Integer> oldIds = (List<Integer>)oldListFm.get(IDS);
     for(int oldId : oldIds) {
       Annotation oldAnn = listSet.get(oldId);
       FeatureMap newAnnFm = Utils.toFeatureMap(oldAnn.getFeatures());
@@ -1223,7 +1240,7 @@ public class LodieUtils {
     }
     
     public static List<?> getIds(Annotation listAnn) {
-      Object idsObj = listAnn.getFeatures().get("ids");
+      Object idsObj = listAnn.getFeatures().get(IDS);
       if(idsObj == null) {
         throw new GateRuntimeException("List annotation does not have an ids feature: "+listAnn);
       }
