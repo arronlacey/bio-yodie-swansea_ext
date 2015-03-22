@@ -55,7 +55,7 @@
                       <string>Eval_Res</string>
                       <string>Eval_Diff</string>
                     </localList>
-                    <collectionType>java.util.Arrays$ArrayList</collectionType>
+                    <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
@@ -94,7 +94,7 @@
                 </entry>
                 <entry>
                   <string>scoreFeatureName</string>
-                  <string></string>
+                  <string>LF_confidence</string>
                 </entry>
                 <entry>
                   <string>document</string>
@@ -126,12 +126,12 @@
                   <gate.plugin.evaluation.api.NilTreatment>NIL_IS_ABSENT</gate.plugin.evaluation.api.NilTreatment>
                 </entry>
                 <entry>
-                  <string>responseASName</string>
-                  <string>Shef</string>
-                </entry>
-                <entry>
                   <string>evaluationId</string>
                   <string></string>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string>Shef</string>
                 </entry>
                 <entry>
                   <string>outputASPrefix</string>
@@ -150,12 +150,12 @@
                   <string></string>
                 </entry>
                 <entry>
-                  <string>keyASName</string>
-                  <string>Key</string>
+                  <string>containmentType</string>
+                  <null/>
                 </entry>
                 <entry>
-                  <string>containmentType</string>
-                  <gate.plugin.evaluation.api.ContainmentType>OVERLAPPING</gate.plugin.evaluation.api.ContainmentType>
+                  <string>keyASName</string>
+                  <string>Key</string>
                 </entry>
                 <entry>
                   <string>containingASNameAndType</string>
@@ -163,7 +163,7 @@
                 </entry>
                 <entry>
                   <string>whichThresholds</string>
-                  <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALL</gate.plugin.evaluation.api.ThresholdsToUse>
+                  <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsToUse>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
