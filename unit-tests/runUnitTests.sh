@@ -54,6 +54,7 @@ totalret=$((totalret + ret))
 
 function summary() {
   ts=$1 
+  grep $ts $ROOT/runUnitTest-$ts.log | grep 'MaxRecall Recall'
   grep $ts $ROOT/runUnitTest-$ts.log | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
   grep $ts $ROOT/runUnitTest-$ts.log | grep 'th=none' | grep 'Precision' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
   grep $ts $ROOT/runUnitTest-$ts.log | grep 'th=none' | grep 'Recall' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"

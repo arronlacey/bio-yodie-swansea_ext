@@ -51,12 +51,12 @@ public void controllerFinished() {
     "Shef", 
     evaluationId);
   */
-  System.out.println(evaluationId+"MaxRecall Recall Strict: "+allStats.getRecallStrict());
-  System.out.println(evaluationId+"MaxRecall Recall Lenient: "+allStats.getRecallLenient());
-  System.out.println(evaluationId+"MaxRecall Precision Strict: "+allStats.getPrecisionStrict());
-  System.out.println(evaluationId+"MaxRecall Precision Lenient: "+allStats.getPrecisionLenient());
-  System.out.println(evaluationId+"MaxRecall F1.0 Strict: "+allStats.getFMeasureStrict(1.0));
-  System.out.println(evaluationId+"MaxRecall F1.0 Lenient: "+allStats.getFMeasureLenient(1.0));
+  System.out.println(evaluationId+" MaxRecall Recall Strict: "+allStats.getRecallStrict());
+  System.out.println(evaluationId+" MaxRecall Recall Lenient: "+allStats.getRecallLenient());
+  System.out.println(evaluationId+" MaxRecall Precision Strict: "+allStats.getPrecisionStrict());
+  System.out.println(evaluationId+" MaxRecall Precision Lenient: "+allStats.getPrecisionLenient());
+  System.out.println(evaluationId+" MaxRecall F1.0 Strict: "+allStats.getFMeasureStrict(1.0));
+  System.out.println(evaluationId+" MaxRecall F1.0 Lenient: "+allStats.getFMeasureLenient(1.0));
 }
 
 @Override
