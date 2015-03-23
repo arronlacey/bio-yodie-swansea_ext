@@ -58,6 +58,7 @@ then
   cp $outDir/EvaluateTagging-runUnitTests-*-$ts.tsv $ROOTDIR/
   echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log, data files are in $ROOTDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   grep "=== UNIT TEST: DIFFERENCE" $log
+  grep $ts EvaluateTagging-runUnitTests-*-$ts.tsv | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
   echo 'UNIT TEST DIFFERENCES!' Log is in $ROOTDIR/runUnitTest-$ts.log
   rm $log
   rm $outFile
