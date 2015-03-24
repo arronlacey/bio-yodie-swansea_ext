@@ -15,6 +15,6 @@ runPipeline.sh -nl -c aida-a-tuning-sample1.config.yaml ../main/main.xgapp debug
 
 runPipeline.sh -nl  transferShef2Ref.xgapp  d1.afterMain1/ d1.afterTransfer/
 
-runPipeline.sh -nl -c aida-a-tuning-sample1.config.yaml ../main/main.xgapp   d1.afterTransfer/ d1.afterMain2/
+runPipeline.sh -nl -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true  -c aida-a-tuning-sample1.config.yaml ../main/main.xgapp   d1.afterTransfer/ d1.afterMain2/
 
-runPipeline.sh -nl  compareAndEvaluate.xgapp   d1.afterMain2/ d1.afterEval1/
+runPipeline.sh -nl -DmaxRecall.evalId=DEBUG -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=DEBUG -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=file:///tmp  compareAndEvaluate.xgapp   d1.afterMain2/ d1.afterEval1/

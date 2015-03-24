@@ -35,19 +35,19 @@ outDir=/tmp
 outUrl=file://${outDir}
 
 evalId=runUnitTests-aida-a-tuning-${ts}
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-a-tuning-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-a-tuning-sample1 $SCRIPTDIR/aida-a-tuning-sample1.out |& tee -a $log
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-a-tuning-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-a-tuning-sample1 $SCRIPTDIR/aida-a-tuning-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE" 
 ret=$?
 totalret=$ret
 
 evalId=runUnitTests-aida-ee-${ts}
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-ee-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-ee-sample1 $SCRIPTDIR/aida-ee-sample1.out |& tee -a $log
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/aida-ee-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/aida-ee-sample1 $SCRIPTDIR/aida-ee-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
 
 evalId=runUnitTests-en-tweets-training-sample1-${ts}
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
 grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
 totalret=$((totalret + ret))
