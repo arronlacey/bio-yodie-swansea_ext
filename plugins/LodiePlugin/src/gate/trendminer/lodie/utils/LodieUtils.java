@@ -80,14 +80,10 @@ public class LodieUtils {
    * @return an AnnotationSet of all the Lookup annotations listed 
    */
   public static AnnotationSet getCandidateAnns(AnnotationSet fromSet, Annotation lookupList) {
-    List<?> ids = getIds(lookupList);
+    List<Integer> ids = getIds(lookupList);
     Set<Annotation> cands = new HashSet<Annotation>();
-    for(Object idObj : ids) {
-      if(idObj instanceof Integer) {
-        cands.add(fromSet.get((Integer)idObj));
-      } else {
-        throw new GateRuntimeException("Non-Integer id in the ids feature of "+lookupList);
-      }
+    for(Integer id : ids) {
+      cands.add(fromSet.get(id));
     }
     return new ImmutableAnnotationSetImpl(fromSet.getDocument(), cands);
   }
@@ -100,21 +96,14 @@ public class LodieUtils {
    * @return an List of all the feature maps from the Lookup annotations listed 
    */
   public static List<FeatureMap> getCandidateList(AnnotationSet fromSet, Annotation lookupList) {
-    List<?> ids = getIds(lookupList);
-    if(ids == null) {
-      throw new GateRuntimeException("No feature ids for lookup list: "+lookupList);
-    }
+    List<Integer> ids = getIds(lookupList);
     List<FeatureMap> cands = new ArrayList<FeatureMap>();
-    for(Object idObj : ids) {
-      if(idObj instanceof Integer) {
-        Annotation ann = fromSet.get((Integer)idObj);
-        if(ann == null) {
-          throw new GateRuntimeException("List annotation refers to non-existing id "+idObj+": "+lookupList);
-        }
-        cands.add(ann.getFeatures());
-      } else {
-        throw new GateRuntimeException("Non-Integer id in the ids feature of "+lookupList);
+    for(Integer id : ids) {      
+      Annotation ann = fromSet.get(id);
+      if(ann == null) {
+        throw new GateRuntimeException("List annotation refers to non-existing id "+id+": "+lookupList);
       }
+      cands.add(ann.getFeatures());
     }
     return cands;
   }
@@ -249,8 +238,10 @@ public class LodieUtils {
           boolean byFeatures, String... features) {
     // TODO: this does not check if the ids features really is a list
     // and it does not check if it really is a list of Integer 
+    @SuppressWarnings("unchecked")
     List<Integer> toIdList = (List<Integer>)toAnn.getFeatures().get(IDS);
     List<FeatureMap> toCandList = getCandidateList(set, toAnn);
+    @SuppressWarnings("unchecked")
     List<Integer> fromIdList = (List<Integer>)fromAnn.getFeatures().get(IDS);
     Set<Annotation> toRemove = new HashSet<Annotation>();
     Set<Integer> toRemoveIds = new HashSet<Integer>();
@@ -337,15 +328,11 @@ public class LodieUtils {
    */
   public static boolean hasCandidateAnn(Annotation listAnn, int candidateId) {
     boolean ret = false;
-    List<?> ids = getIds(listAnn);
-    for(Object idObj : ids) {
-      if(idObj instanceof Integer) {
-        if(candidateId == (Integer)idObj) {
-          ret = true;
-          break;
-        }
-      } else {
-        throw new GateRuntimeException("Non-Integer id in the ids feature of "+listAnn);
+    List<Integer> ids = getIds(listAnn);
+    for(Integer id : ids) {
+      if(candidateId == id) {
+        ret = true;
+        break;
       }
     }
     return ret;
@@ -403,15 +390,11 @@ public class LodieUtils {
    * @param listAnn 
    */
   public static int removeListAnns(AnnotationSet fromSet, Annotation listAnn) {
-    List<?> ids = getIds(listAnn);
+    List<Integer> ids = getIds(listAnn);
     int nremoved = 0;
-    for(Object idObj : ids) {
-      if(idObj instanceof Integer) {
-        fromSet.remove(fromSet.get((Integer)idObj));
-        nremoved++;
-      } else {
-        throw new GateRuntimeException("Non-Integer id in the ids feature of "+listAnn);
-      }
+    for(Integer id : ids) {
+      fromSet.remove(fromSet.get(id));
+      nremoved++;
     }
     fromSet.remove(listAnn);
     return nremoved;
@@ -431,9 +414,11 @@ public class LodieUtils {
    */
   public static int removeCandidateAnn(AnnotationSet fromSet, Annotation candidate) {
     FeatureMap fm = candidate.getFeatures();
-    Object listIdObj = fm.get(LLID);
+    Integer listId = (Integer)fm.get(LLID);
     Annotation listAnn = null;
-    if(listIdObj == null) {
+    if(listId == null) {
+      throw new GateRuntimeException("Candidate annotation does not have a list annotation id");
+      /*
       // fallback code
       AnnotationSet lists = Utils.getCoextensiveAnnotations(fromSet, candidate,"LookupList");
       if(lists.size() != 1) {
@@ -441,29 +426,20 @@ public class LodieUtils {
       } else {
         listAnn = lists.get(0);
       }
+      */
     } else {
-      if(listIdObj instanceof Integer) {
-        int listId = (Integer)listIdObj;
-        listAnn = fromSet.get(listId);
-      } else {
-        throw new GateRuntimeException("Candidate has llId feature but it is not an Integer: "+candidate);
-      }
+      listAnn = fromSet.get(listId);
     }
     int candId = candidate.getId();
-    List<?> ids = getIds(listAnn);
-    Iterator<?> it = ids.iterator();
+    List<Integer> ids = getIds(listAnn);
+    Iterator<Integer> it = ids.iterator();
     boolean removedSomething = false;
     while(it.hasNext()) {
-      Object idObj = it.next();
-      if(idObj instanceof Integer) {
-        int id = (Integer)idObj;
-        if(id == candId) {
-          removedSomething = true;
-          it.remove();
-          fromSet.remove(candidate);
-        }
-      } else {
-        throw new GateRuntimeException("List of ids contains an element that is not an Integer: "+listAnn);
+      Integer id = it.next();
+      if(id == candId) {
+        removedSomething = true;
+        it.remove();
+        fromSet.remove(candidate);
       }
     }
     if(!removedSomething) {
@@ -581,6 +557,7 @@ public class LodieUtils {
     newListFm.put(IDS,newIds);
     int newId = Utils.addAnn(targetSet, targetAnn, listAnn.getType(), newListFm);
     // create clones of all the referenced annotations
+    @SuppressWarnings("unchecked")
     List<Integer> oldIds = (List<Integer>)oldListFm.get(IDS);
     for(int oldId : oldIds) {
       Annotation oldAnn = listSet.get(oldId);
@@ -1229,23 +1206,52 @@ public class LodieUtils {
       // TODO
     }
     
-    // similar to move, but will have to modify the ids in both the list annotation (feature ids)
-    // and the referenced annotations (feature llId)
+    /**
+     * Copy all list annotations of the given type from one set to another set.
+     * 
+     * This expects all annotations in the fromSet with the given type to be list annotations
+     * and copies those annotations together with their referenced annotations to the given toSet.
+     * Both fromSet and toSet must be mutable annotation sets.
+     * <p>
+     * NOTE: this method will change the ids both in the list annotation and the referenced 
+     * annotation.
+     * 
+     * @param fromSet
+     * @param toSet
+     * @param type 
+     */
     public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, String type) {
-      // TODO
+      AnnotationSet listAnns = fromSet.get(type);
+      for(Annotation listAnn : listAnns) {
+        List<Integer> ids = getIds(listAnn);
+        List<Integer> newIds = new ArrayList<Integer>();
+        FeatureMap lfm = Utils.toFeatureMap(listAnn.getFeatures());
+        lfm.put(IDS, newIds);
+        int newLlId = Utils.addAnn(toSet,listAnn,listAnn.getType(),lfm);
+        for(Integer id : ids) {
+          Annotation ann = fromSet.get(id);
+          FeatureMap fm = Utils.toFeatureMap(ann.getFeatures());
+          // override the list annotation id with the one for the copy
+          fm.put(LLID,newLlId);
+          int newId = Utils.addAnn(toSet,ann,ann.getType(),Utils.toFeatureMap(fm));
+          newIds.add(newId);
+        } // for ids        
+      } // for listAnns
     }
     
     public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, AnnotationSet which) {
       // TODO
     }
     
-    public static List<?> getIds(Annotation listAnn) {
+    public static List<Integer> getIds(Annotation listAnn) {
       Object idsObj = listAnn.getFeatures().get(IDS);
       if(idsObj == null) {
         throw new GateRuntimeException("List annotation does not have an ids feature: "+listAnn);
       }
       if(idsObj instanceof List) {
-        return (List<?>)idsObj;
+        @SuppressWarnings("unchecked")
+        List<Integer> ret = (List<Integer>)idsObj;
+        return ret;
       } else {
         throw new GateRuntimeException("List annotation has ids feature which is not a list: "+listAnn);
       }
