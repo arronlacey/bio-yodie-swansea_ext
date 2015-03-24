@@ -1223,6 +1223,11 @@ public class LodieUtils {
     public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, String type) {
       AnnotationSet listAnns = fromSet.get(type);
       for(Annotation listAnn : listAnns) {
+        copyListAnn(listAnn, fromSet, toSet);
+      } // for listAnns
+    }
+    
+    public static void copyListAnn(Annotation listAnn, AnnotationSet fromSet, AnnotationSet toSet) {
         List<Integer> ids = getIds(listAnn);
         List<Integer> newIds = new ArrayList<Integer>();
         FeatureMap lfm = Utils.toFeatureMap(listAnn.getFeatures());
@@ -1235,8 +1240,7 @@ public class LodieUtils {
           fm.put(LLID,newLlId);
           int newId = Utils.addAnn(toSet,ann,ann.getType(),Utils.toFeatureMap(fm));
           newIds.add(newId);
-        } // for ids        
-      } // for listAnns
+        }
     }
     
     public static void copyListAnns(AnnotationSet fromSet, AnnotationSet toSet, AnnotationSet which) {
