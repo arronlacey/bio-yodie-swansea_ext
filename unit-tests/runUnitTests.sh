@@ -56,10 +56,15 @@ totalret=$((totalret + ret))
 
 function summary() {
   ts=$1 
-  grep $ts $log | grep 'MaxRecall Recall'
-  grep $ts $log | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
-  grep $ts $log | grep 'th=none' | grep 'Precision' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
-  grep $ts $log | grep 'th=none' | grep 'Recall' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
+  for ds in aida-a-tuning aida-ee en-tweets-training-sample1
+  do 
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
+    grep $ts $log | grep $ds | grep 'MaxRecall F1.0'
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'Precision' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
+    grep $ts $log | grep $ds | grep 'MaxRecall Precision'
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'Recall' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
+    grep $ts $log | grep $ds | grep 'MaxRecall Recall'
+  done
 }
 
 if [ $totalret != 0 ]
