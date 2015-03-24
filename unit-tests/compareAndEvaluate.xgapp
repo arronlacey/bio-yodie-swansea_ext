@@ -129,12 +129,12 @@
                   <gate.plugin.evaluation.api.NilTreatment>NIL_IS_ABSENT</gate.plugin.evaluation.api.NilTreatment>
                 </entry>
                 <entry>
-                  <string>responseASName</string>
-                  <string>Shef</string>
-                </entry>
-                <entry>
                   <string>evaluationId</string>
                   <string></string>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string>Shef</string>
                 </entry>
                 <entry>
                   <string>outputASPrefix</string>
@@ -208,12 +208,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputAS</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>resource2</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>inputAS</string>
+                  <string>LookupInfo</string>
                 </entry>
                 <entry>
                   <string>resource3</string>
@@ -276,12 +276,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputAS</string>
-                  <string>Eval_Diff</string>
-                </entry>
-                <entry>
                   <string>resource2</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>inputAS</string>
+                  <string>Eval_Diff</string>
                 </entry>
                 <entry>
                   <string>resource3</string>
