@@ -8,8 +8,8 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/home/johann/preparation/output
-server=gateservice6.dcs.shef.ac.uk
+path=/home/johann/yodie/yodie-preparation/output
+server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
 PRG="$0"
