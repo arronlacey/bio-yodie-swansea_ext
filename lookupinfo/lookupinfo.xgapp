@@ -148,7 +148,7 @@
               <localMap>
                 <entry>
                   <string>jdbcUrl</string>
-                  <string>jdbc:h2:${dbdirectory}/labelinfo;ACCESS_MODE_DATA=r</string>
+                  <string>jdbc:h2:${dbdirectory}/labelinfo;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
                 </entry>
                 <entry>
                   <string>jdbcDriver</string>

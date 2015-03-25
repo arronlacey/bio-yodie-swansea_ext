@@ -665,7 +665,7 @@
                         </entry>
                         <entry>
                           <string>jdbcUrl</string>
-                          <string>jdbc:h2:${dbdirectory}/twitterexpander-user</string>
+                          <string>jdbc:h2:${dbdirectory}/twitterexpander-user;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
                         </entry>
                         <entry>
                           <string>readOnly</string>
@@ -765,7 +765,7 @@
                         </entry>
                         <entry>
                           <string>jdbcUrl</string>
-                          <string>jdbc:h2:${dbdirectory}/twitterexpander-hashtag</string>
+                          <string>jdbc:h2:${dbdirectory}/twitterexpander-hashtag;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
                         </entry>
                         <entry>
                           <string>readOnly</string>
@@ -861,7 +861,7 @@
                         </entry>
                         <entry>
                           <string>jdbcUrl</string>
-                          <string>jdbc:h2:${dbdirectory}/twitterexpander-url</string>
+                          <string>jdbc:h2:${dbdirectory}/twitterexpander-url;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
                         </entry>
                         <entry>
                           <string>readOnly</string>
