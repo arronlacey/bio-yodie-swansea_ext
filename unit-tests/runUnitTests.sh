@@ -23,6 +23,7 @@ ts=`date +%Y%m%d_%H%M%S`
 
 mkdir $LOGDIR
 log=$LOGDIR/runUnitTests-${ts}.log
+sum=$LOGDIR/runUnitTests-${ts}.summary
 echo Running unit tests on `date` > $log
 
 ## create the output directories if not already there and empty them
@@ -56,14 +57,15 @@ totalret=$((totalret + ret))
 
 function summary() {
   ts=$1 
+  touch $sum
   for ds in aida-a-tuning aida-ee en-tweets-training-sample1
   do 
-    grep $ts $log | grep $ds | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
-    grep $ts $log | grep $ds | grep 'MaxRecall F1.0'
-    grep $ts $log | grep $ds | grep 'th=none' | grep 'Precision' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
-    grep $ts $log | grep $ds | grep 'MaxRecall Precision'
-    grep $ts $log | grep $ds | grep 'th=none' | grep 'Recall' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//"
-    grep $ts $log | grep $ds | grep 'MaxRecall Recall'
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'F1.0' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//" | tee -a $sum
+    grep $ts $log | grep $ds | grep 'MaxRecall F1.0'  | tee -a $sum
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'Precision' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//" | tee -a $sum
+    grep $ts $log | grep $ds | grep 'MaxRecall Precision' | tee -a $sum
+    grep $ts $log | grep $ds | grep 'th=none' | grep 'Recall' | sed -e "s/.\+\.log://" -e "s/, type=Mention, th=none,//" | tee -a $sum 
+    grep $ts $log | grep $ds | grep 'MaxRecall Recall' | tee -a $sum
   done
 }
 
