@@ -40,9 +40,19 @@ public class DocumentEntitySet {
 
 	Document document;
 
+        /**
+         * Create DocumentEntitySet instance.
+         * 
+         * @param document
+         * @param iasn
+         * @param atypes
+         * @param useCoref
+         * @param corefDocFeatName 
+         */
 	public DocumentEntitySet(Document document, String iasn, 
 			List<String> atypes, boolean useCoref, String corefDocFeatName) {
 		this.inputASName = iasn;
+                // REMOVE
 		this.annotationTypes = atypes;
 		this.useCoreference = useCoref;
 		this.document = document;
@@ -51,6 +61,8 @@ public class DocumentEntitySet {
 		this.populate(document);
 	}
 
+        // TODO: maybe return List<Entity> or something  
+        // construct in document order
 	public Iterator<Entity> getIterator(){
 		if(this.entities!=null){
 			return this.entities.iterator();
@@ -127,7 +139,9 @@ public class DocumentEntitySet {
 		AnnotationSet lls = document.getAnnotations(inputASName).get("LookupList");
 		
 		Iterator<Annotation> llsit = lls.iterator();
-
+                 
+                // TODO: potential nondet because iterator goes over set elements
+                // maybe: inDocumentOrder + something for same offset (does inDocumentOrder break ties properly?)
 		while(llsit.hasNext()){
 			Annotation ll = (Annotation)llsit.next();
 
@@ -174,6 +188,8 @@ public class DocumentEntitySet {
 				if(corefann!=null && corefann.getStartNode()!=null
 						&& corefann.getEndNode()!=null){
 					
+                                        // JP: parametrize ann type for the lists
+                                        // TODO: use Utils.getCoextensive
 					AnnotationSet llcands = 
 							as.get("LookupList").get(corefann.getStartNode().getOffset());
 					Annotation ll = null;
@@ -183,6 +199,7 @@ public class DocumentEntitySet {
 						if(corefann.coextensive(thisll)){
 							ll = thisll;
 						}
+                                                // NOTE: always should only have one coext here!
 					}
 					if(ll!=null) numberofllsfound++;
 					//Add it even if it is null--we might populate it later
@@ -242,6 +259,8 @@ public class DocumentEntitySet {
 		return null;
 	}
 
+        // remove the LookupList instance with fewer candidates and if it was the last one in
+        // the Entity instance, remove that as well.
 	public void choose(Entity ent1, Entity ent2){
 		List<LookupList> spans1 = ent1.getSpans();
 		List<LookupList> spans2 = ent2.getSpans();
