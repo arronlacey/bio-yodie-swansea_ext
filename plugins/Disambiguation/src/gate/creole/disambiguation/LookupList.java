@@ -144,6 +144,9 @@ public class LookupList {
 			}
 	
 			//Add it to the structure.
+                        // TODO: parameter instead of "inst"?
+                        // !!TODO: this only keeps the last inst, may overwrite if there are more than 1
+                        // candidate with the same inst (which will be the case if we merge non-coext lokuplists)
 			this.annotationbyinst.put((String)ann.getFeatures().get("inst"), ann);
 		}
 	}
