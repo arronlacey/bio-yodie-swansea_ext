@@ -115,11 +115,11 @@
                 </entry>
                 <entry>
                   <string>mode</string>
-                  <gate.learningframework.Mode>CLASSIFICATION</gate.learningframework.Mode>
+                  <gate.learningframework.classification.Mode>CLASSIFICATION</gate.learningframework.classification.Mode>
                 </entry>
                 <entry>
                   <string>operation</string>
-                  <gate.learningframework.Operation>TRAIN</gate.learningframework.Operation>
+                  <gate.learningframework.classification.Operation>TRAIN</gate.learningframework.classification.Operation>
                 </entry>
                 <entry>
                   <string>identifierFeature</string>
@@ -147,11 +147,11 @@
                 </entry>
                 <entry>
                   <string>trainingAlgo</string>
-                  <gate.learningframework.Algorithm>LIBSVM</gate.learningframework.Algorithm>
+                  <gate.learningframework.classification.Algorithm>LIBSVM</gate.learningframework.classification.Algorithm>
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.learningframework.LearningFrameworkPR</resourceType>
+            <resourceType>gate.learningframework.classification.LearningFrameworkPR</resourceType>
             <resourceName>LF:LibSVM</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
