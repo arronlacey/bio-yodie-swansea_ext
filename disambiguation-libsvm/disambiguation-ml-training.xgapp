@@ -2,10 +2,10 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
+        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/ANNIE/</urlString>
@@ -25,7 +25,7 @@
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
-  <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+  <application class="at.ofai.gate.modularpipelines.ParametrizedCorpusControllerPersistence">
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
@@ -74,14 +74,14 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>sequenceSpan</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>saveDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
                     <urlString>$relpath$../disambiguation-libsvm/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+                <entry>
+                  <string>sequenceSpan</string>
+                  <null/>
                 </entry>
                 <entry>
                   <string>classFeature</string>
@@ -89,7 +89,7 @@
                 </entry>
                 <entry>
                   <string>inputASName</string>
-                  <string>Key</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>featureSpecURL</string>
@@ -131,7 +131,7 @@
                 </entry>
                 <entry>
                   <string>learnerParams</string>
-                  <string>-s 1 -t 2</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>corpus</string>
