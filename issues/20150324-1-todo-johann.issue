@@ -1,0 +1,15 @@
+summary: Add evaluation of just NER part using standard NER corpora
+due: 2015-04-30
+assignedName: johann
+priority: 8/10
+comments: In addition to the routine NEL evaluation also add corpora and 
+pipelines for evaluating YODIE as a NER tool. For this we need to either
+create the key set of the NER corpora to have Mention.type features 
+or if we use different annotation types per NE type, we need to postprocess
+our own Shef annotations to create annotations per NE type. 
+The idea is that knowing how well we perform on the NER task gives us an
+upper bound on how well we could do on the linking task. Also, we can then
+compare NER before all the disambiguation steps and after everything 
+(e.g. if we base spotting entirely on StanfordNER, how well does the NER
+task perform based on the original spots (Stanford only) and based on what
+we make out of those spots?

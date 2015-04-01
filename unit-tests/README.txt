@@ -4,7 +4,7 @@ The idea is that the unit tests check if what some of the standard pipelines
 generate is the same as it was before we changed something.
 
 This is done the following way:
-  = there are two corpora, one for tweets and one for non-tweets, sampled from some of our 
+  = there are two groups of corpora, one for tweets and one for non-tweets, sampled from some of our 
     training corpora
   = At time X we run each pipeline on the relevant corpora and save the result
     Then, the annotatations in Shef get moved to Ref, and everything else (except the Key set) gets cleaned

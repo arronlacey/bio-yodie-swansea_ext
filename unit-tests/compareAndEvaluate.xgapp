@@ -5,19 +5,22 @@
         <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ANNIE/</urlString>
+        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/ModularPipelines/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
+        <urlString>$relpath$../plugins/Evaluation/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Java/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ModularPipelines/</urlString>
+        <urlString>$gatehome$plugins/ANNIE/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -54,20 +57,16 @@
                   <string>setsToRemove</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
-                      <null/>
+                      <string>Eval_Ref</string>
+                      <string>Eval_Res</string>
+                      <string>Eval_Diff</string>
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                      <string>LookupList</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
+                  <null/>
                 </entry>
                 <entry>
                   <string>document</string>
@@ -76,7 +75,7 @@
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
-            <resourceName>Reset:lookupinfo</resourceName>
+            <resourceName>Document Reset PR_00019</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap/>
@@ -96,88 +95,102 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>inputAnnotationType</string>
-                  <string>Lookup</string>
-                </entry>
-                <entry>
-                  <string>sqlQuery</string>
-                  <string>SELECT info FROM labelinfo WHERE label = ?</string>
-                </entry>
-                <entry>
-                  <string>outputAnnotationSet</string>
+                  <string>nilValue</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>listAnnotationType</string>
-                  <string>LookupList</string>
+                  <string>scoreFeatureName</string>
+                  <string>LF_confidence</string>
                 </entry>
                 <entry>
                   <string>document</string>
                   <null/>
                 </entry>
                 <entry>
+                  <string>featureNames</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>inst</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>containingAnnotationType</string>
+                  <string>referenceASName</string>
+                  <string>Ref</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NIL_IS_ABSENT</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
                   <string></string>
                 </entry>
                 <entry>
-                  <string>inputAnnotationSet</string>
-                  <string>GazetteerEN</string>
+                  <string>responseASName</string>
+                  <string>Shef</string>
                 </entry>
                 <entry>
-                  <string>keyFeature</string>
-                  <string>string</string>
+                  <string>outputASPrefix</string>
+                  <string>Eval</string>
                 </entry>
                 <entry>
-                  <string>processingMode</string>
-                  <com.jpetrak.gate.jdbclookup.JdbcJsonLookup-ProcessingMode>AddAnnotations</com.jpetrak.gate.jdbclookup.JdbcJsonLookup-ProcessingMode>
+                  <string>featureNameNilCluster</string>
+                  <string></string>
                 </entry>
                 <entry>
-                  <string>outputAnnotationType</string>
-                  <string>Lookup</string>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>listIdFeatureName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>Key</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsToUse>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Mention</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>com.jpetrak.gate.jdbclookup.JdbcJsonLookup</resourceType>
-            <resourceName>JdbcJsonLookup:lookupinfo</resourceName>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging</resourceType>
+            <resourceName>Evaluate</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>jdbcUrl</string>
-                  <string>jdbc:h2:${dbdirectory}/labelinfo;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
-                </entry>
-                <entry>
-                  <string>jdbcDriver</string>
-                  <string>org.h2.Driver</string>
-                </entry>
-                <entry>
-                  <string>jdbcPassword</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>jdbcUser</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>dbDirectoryUrl</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/databases/</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-              </localMap>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>DuplicationNumber</string>
-                  <int>0</int>
-                </entry>
-              </localMap>
+              <localMap/>
             </features>
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
@@ -198,115 +211,115 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputAS</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>resource2</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>resource3</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>scriptParams</string>
-                  <gate.util.persistence.MapPersistence>
-                    <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                    <localMap/>
-                  </gate.util.persistence.MapPersistence>
-                </entry>
-                <entry>
-                  <string>outputAS</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>resource1</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>com.jpetrak.gate.java.JavaScriptingPR</resourceType>
-            <resourceName>Java:mergeCoextensive</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>javaProgramUrl</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$java/mergeCoextensive.java</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.LanguageAnalyserPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>libDirUrl</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>inputAS</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>resource2</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>resource3</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>scriptParams</string>
-                  <gate.util.persistence.MapPersistence>
-                    <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                    <localMap/>
-                  </gate.util.persistence.MapPersistence>
-                </entry>
-                <entry>
-                  <string>outputAS</string>
                   <string>LookupInfo</string>
                 </entry>
                 <entry>
+                  <string>resource3</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>scriptParams</string>
+                  <gate.util.persistence.MapPersistence>
+                    <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+                    <localMap/>
+                  </gate.util.persistence.MapPersistence>
+                </entry>
+                <entry>
+                  <string>outputAS</string>
+                  <string>EvalMaxRecall</string>
+                </entry>
+                <entry>
                   <string>resource1</string>
                   <null/>
                 </entry>
               </localMap>
             </runtimeParams>
             <resourceType>com.jpetrak.gate.java.JavaScriptingPR</resourceType>
-            <resourceName>Java:copyListAnns</resourceName>
+            <resourceName>Java:maxRecall</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>javaProgramUrl</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$java/copyListAnns.java</urlString>
+                    <urlString>$relpath$java/maxRecall.java</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.LanguageAnalyserPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>libDirUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>resource2</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>inputAS</string>
+                  <string>Eval_Diff</string>
+                </entry>
+                <entry>
+                  <string>resource3</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>scriptParams</string>
+                  <gate.util.persistence.MapPersistence>
+                    <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+                    <localMap/>
+                  </gate.util.persistence.MapPersistence>
+                </entry>
+                <entry>
+                  <string>outputAS</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>resource1</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>com.jpetrak.gate.java.JavaScriptingPR</resourceType>
+            <resourceName>Java:printDifferences</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>javaProgramUrl</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$java/printDifferences.java</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -330,15 +343,13 @@
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
     <resourceType>at.ofai.gate.modularpipelines.ParametrizedCorpusController</resourceType>
-    <resourceName>lookupinfo</resourceName>
+    <resourceName>compareAndEvaluate</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
       <localMap>
         <entry>
           <string>configFileUrl</string>
-          <gate.util.persistence.PersistenceManager-URLHolder>
-            <urlString>$relpath$../lodie.config.yaml</urlString>
-          </gate.util.persistence.PersistenceManager-URLHolder>
+          <null/>
         </entry>
       </localMap>
     </initParams>

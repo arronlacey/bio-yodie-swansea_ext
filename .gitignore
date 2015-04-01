@@ -8,6 +8,9 @@ tmp/
 tmp*
 
 logs/
+*.log
+
+debug*/*
 
 # build/compile output we do not want checked in
 *.class
@@ -33,3 +36,15 @@ resources
 resources/*
 lodie.config.yaml
 compilePlugins.log
+docs*/*
+log4j.properties
+aida-a-tuning-sample1/
+aida-ee-sample1/
+en-tweets-training-sample1/
+aida-a-tuning-sample1.out/
+aida-ee-sample1.out/
+debug1.out/
+unit-tests/d1.*
+unit-tests/debug1
+unit-tests/out
+EvaluateTagging*

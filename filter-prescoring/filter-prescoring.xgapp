@@ -17,6 +17,9 @@
         <urlString>$relpath$../plugins/JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/Disambiguation/</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Java/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
@@ -346,31 +349,15 @@
                 <entry>
                   <string>resource1</string>
                   <gate.util.persistence.LRPersistence>
-                    <resourceType>com.jpetrak.gate.jdbclookup.JdbcLR</resourceType>
-                    <resourceName>JdbcLR:relations</resourceName>
+                    <resourceType>gate.creole.disambiguation.fastgraph.FastGraphLR</resourceType>
+                    <resourceName>FastGraphLR_00010</resourceName>
                     <initParams class="gate.util.persistence.MapPersistence">
                       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
                       <localMap>
                         <entry>
-                          <string>jdbcUrl</string>
-                          <string>jdbc:h2:${dbdirectory}/relations;ACCESS_MODE_DATA=r</string>
-                        </entry>
-                        <entry>
-                          <string>jdbcDriver</string>
-                          <string>org.h2.Driver</string>
-                        </entry>
-                        <entry>
-                          <string>jdbcPassword</string>
-                          <string></string>
-                        </entry>
-                        <entry>
-                          <string>jdbcUser</string>
-                          <string></string>
-                        </entry>
-                        <entry>
-                          <string>dbDirectoryUrl</string>
+                          <string>graphFileUrl</string>
                           <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../resources/databases/</urlString>
+                            <urlString>$relpath$../resources/fastgraph/graph.gz</urlString>
                           </gate.util.persistence.PersistenceManager-URLHolder>
                         </entry>
                       </localMap>

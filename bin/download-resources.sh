@@ -8,8 +8,8 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/home/johann/preparation/output
-server=gateservice6.dcs.shef.ac.uk
+path=/home/johann/yodie/yodie-preparation/output
+server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
 PRG="$0"
@@ -92,7 +92,10 @@ esac
 OPTS='-O -avz --partial --delete --force --progress --cvs-exclude -e ssh'
 FROMPREFIX=${user}@${server}:${path}
 
+chmod ug+w $dest/databases/*
 echo SYNCING everything from $FROMPREFIX to $dest
 rsync $OPTS $FROMPREFIX $dest
 date=`date +%Y-%m-%d,%H:%M:%S`
 echo "Last sync from $FROMPREFIX on $date" > $dest/last-sync.txt
+chmod ug-w $dest/databases/*
+echo "NOTE: all databases have been write-protected!"

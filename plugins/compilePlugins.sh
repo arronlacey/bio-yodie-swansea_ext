@@ -43,10 +43,11 @@ do
         grep -q "BUILD SUCCESSFUL" $tmpout 
         if [ "$?" != 0 ]
         then
-          echo ERROR Build of plugin $file failed, plugin compilation script aborted
+          echo ERROR Build of plugin $file failed, plugin compilation script aborted. Log is in $tmpout
           exit 1
         else 
           echo Build of plugin $file completed
+          rm $tmpout
         fi
       fi
     fi

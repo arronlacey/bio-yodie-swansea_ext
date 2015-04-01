@@ -1,0 +1,38 @@
+WE HAVE TWO VERY WEIRD BUGS HERE:
+
+1) differences when running the same pipeline on the same document
+
+For the documents in directory debug1 we see the following
+= we run main.xgapp which creates set Shef
+= we move Shef to Ref using pipeline trasferShef2Ref
+= after that a single annotation is present in Ref which should not be 
+  there and is never there when we just run main.xgapp
+  
+It is even weirder: transferShef2Ref has the following steps:
+= delete set Ref
+= either of the following: 
+  a) copy Shef to Ref, then remove all but Key, Ref and Shef
+  b) copy Shef to Ref, then remove all but Key and Ref (i.e. also remove Shef)
+  c) transfer Shef to Ref, then remove all but Key and Ref
+
+After the, using version a) the output is correct, i.e. the annotation is NOT there.
+Running b) or c) the output is incorrect, the annotation is there.
+
+This seems to be 100% repeatable. never seen it the other way around!!
+
+
+2) Nullpointer exception in AnnotationSetImpl when evaluating:
+
+Processed without errrors with NO benchmarking: cf2_001.finf_0001D
+Running post controller...
+java.lang.NullPointerException
+        at gate.annotation.AnnotationSetImpl.getNodes(AnnotationSetImpl.java:865)
+        at gate.annotation.AnnotationSetImpl.add(AnnotationSetImpl.java:898)
+        at gate.annotation.AnnotationSetImpl.addAll(AnnotationSetImpl.java:826)
+        at gate.plugin.evaluation.api.AnnotationDifferTagging.addChangesIndicatorAnnotations(AnnotationDifferTagging.java:571)
+        at gate.plugin.evaluation.resources.EvaluateTagging.evaluateForType(EvaluateTagging.java:557)
+        at gate.plugin.evaluation.resources.EvaluateTagging.execute(EvaluateTagging.java:378)
+        at gate.util.Benchmark.executeWithBenchmarking(Benchmark.java:291)
+        at gate.creole.ConditionalSerialController.runComponent(ConditionalSerialController.java:163)
+        
+It seems that an annotation set has been created which does not have a document stored!

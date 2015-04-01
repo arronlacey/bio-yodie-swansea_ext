@@ -1,0 +1,9 @@
+summary: Investigate opening the resources databases read-only from several processes.
+due: 2015-03-30
+assignedName: johann
+priority: 8/10
+comments: Check out if ;FILE_LOCK=NO;ACCESS_MODE_DATA=r will do what we want.
+Also add ;IFEXISTS=TRUE to avoid unnecessary creation of the db. 
+resolution: done for all pipelines where I could find a parameter value that contained jdbc:h2. 
+Also changed in VectorContextualSimilarityPR.java. H2 was used in StructuralSimilarityPRV2.java
+but this is not used any more, and V3 uses the fastgraph instead of H2 tables.

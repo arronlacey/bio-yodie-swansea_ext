@@ -1,20 +1,15 @@
 package gate.creole.disambiguation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
 import gate.Utils;
-import gate.creole.ResourceInstantiationException;
-import gate.util.InvalidOffsetException;
 
 public class Entity {
 	
@@ -35,12 +30,24 @@ public class Entity {
 	public Entity(List<LookupList> spans, Document document, String inputASName) {
 		this.document = document;
 		this.inputASName = inputASName;
-		for(int i=0;i<spans.size();i++){
-			this.addList(spans.get(i));
-		}
+                for(LookupList span : spans) {
+                  addList(span);
+                }
 		//this.selectKeySpan();
 	}
 	
+        /**
+         * Add a single LookupList instance to this Entity.
+         * 
+         * If the LookupList instance overlaps with one of the spans already in this Entity,
+         * then the span gets merged into the existing span. 
+         * <p>
+         * TODO: at the moment this only merges into the last span that overlaps in the list
+         * of spans. This should get modified so that we make sure we merge into all overlapping
+         * spans.
+         * 
+         * @param span 
+         */
 	private void addList(LookupList span){
 		LookupList mergespan = null;
 		
@@ -48,6 +55,7 @@ public class Entity {
 		while(testspanit.hasNext()){
 			LookupList testspan = testspanit.next();
 			if(testspan.overlaps(span)){
+                          // TODO: this may get executed more than once so we may miss some for merging?
 				mergespan = testspan;
 			}
 		}
@@ -62,25 +70,32 @@ public class Entity {
 		doesinstlistneedrecalculating = true;
 	}
 	
+        // NOTE: this will probably only work if the ll has previously retrieved from this 
+        // Entity (not content-equals). 
 	public void remove(LookupList ll){
 		ll.removeAllAnns();
 		this.spans.remove(ll);
 		doesinstlistneedrecalculating = true;
 	}
 	
+        /**
+         * Add all spans from the other Entity to this Entity.
+         * 
+         * 
+         * @param ent 
+         */
 	public void subsume(Entity ent){
-		List<LookupList> spanstoadd = ent.spans;
-		for(int i=0;i<spanstoadd.size();i++){
-			this.addList(spanstoadd.get(i));
-		}
+                for(LookupList span : ent.spans) {
+                  addList(span);
+                }
 		doesinstlistneedrecalculating = true;
 	}
 	
 	public void removeAllAnns(){
-		for(int i=0;i<this.spans.size();i++){
-			this.spans.get(i).removeAllAnns();
-		}
-		doesinstlistneedrecalculating = true;
+          for(LookupList span : spans){
+            span.removeAllAnns();
+          }
+	  doesinstlistneedrecalculating = true;
 	}
 	
 	//For every example of this candidate, write the float value into the feature
@@ -191,6 +206,7 @@ public class Entity {
 		return longestspan;
 	}
 
+        // find span with most characters
 	public static LookupList getLongestSpan(List<LookupList> spans){
 		LookupList longestspan = null;
 		Iterator<LookupList> spanit = spans.iterator();
@@ -228,6 +244,8 @@ public class Entity {
 		return longestspan;
 	}
 	
+        // NOTE: maybe allow other criteria for what are the n best spans (currently: find
+        // the longest spans (most characters).
 	public List<LookupList> getBestSpans(int n){
 		List<LookupList> tempspans = new ArrayList<LookupList>();
 		tempspans.addAll(this.spans);

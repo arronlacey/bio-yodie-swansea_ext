@@ -1,0 +1,14 @@
+summary: Add a filtering step for duplicate inst candidates
+due: 2015-12-31
+assignedName: johann
+priority: 5/10
+comments: Currently, the list of candidates is unique by label and inst but not 
+unique by inst. We may want to use information from duplicate insts early on
+to derive features, but eventually collapse all information into one candidate
+per inst. 
+Normally, we should not get inst duplicates at all, since all candidates
+should be for the same label. But we may get duplicates at the moment from
+the adjectivals and demonyms, so we should merge those as early as possible.
+Note that merging of these lookup lists is related to filtering the 
+spots where we create a lookup list in the first place.
+
