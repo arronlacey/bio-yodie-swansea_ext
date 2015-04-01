@@ -1,0 +1,352 @@
+### global settings (needed in many places)
+- set: docfeature
+  name: keyOverlapsOnly
+  value: false
+
+## The following ones *should* already be set for us, but if not, we
+## can set them here:
+
+## language
+# - set: docfeature
+#   name: lang
+#   value: en
+
+## docTypes: generic, tweet  (influences preprocessing and other things)
+- set: docfeature
+  name: docType
+  value: tweet
+  
+####
+#### Settings for the preprocess-en sub-pipeline
+####
+
+## the model to use for the NER tagger in the preprocessing sub pipeline
+## Only leave one value not commented out!
+## NOTE: this is an init parm!!
+## NOTE: the path seems to be relative to the path of the ModularPipelines plugin!!
+- set: prinit
+  controller: preprocess-en
+  prname: StanfordNER
+  name: modelFile
+  value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
+
+## Settings for the precache-twitterinfo pipeline
+## the key and secret for Twitter API access: MUST be replaced by a proper value
+- set: prparm
+  controller: precache-twitterinfo
+  prname: TwitterPreCacheUsers
+  name: twitterApiKey
+  value: fakeKey
+- set: prparm
+  controller: precache-twitterinfo
+  prname: TwitterPreCacheUsers
+  name: twitterApiSecret
+  value: fakeSecret
+
+  
+  
+  
+####
+#### Settings for the preprocess-en-twitter sub-pipeline
+####
+
+
+## the model to use for the NER tagger in the twitter preprocessing sub pipeline
+## Only leave one value not commented out!
+## NOTE: this is an init parm!!
+## NOTE: the path seems to be relative to the path of the ModularPipelines plugin!!
+- set: prinit
+  controller: preprocess-en-twitter
+  prname: StanfordNER
+  name: modelFile
+  value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
+
+## the key and secret for Twitter API access: MUST be replaced by a proper value
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: twitterApiKey
+  value: fakeKey
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: twitterApiSecret
+  value: fakeSecret
+  
+## Which of the expansions to run: in the pipeline, we have these steps enabled
+## by default, but since preprocess-en-twitter is only run for tweets, the 
+## expansion should only happen for documents where the docType is set to tweet.
+## Also the default in the scoring pipeline for removing twitter expansions
+## again is to run it, but it will only do anything useful if there actually
+## was an expansion.
+## NEW: each of the three expansion PRs has a parameter that makes the cache
+## read-only and a parameter that only uses the cache (fromCacheOnly).
+## The pipeline sets fromCacheOnly to true by default .. so if anything should actually
+## get fetched at runtime this needs to get set to false here.
+- set: prrun
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: fromCacheOnly
+  value: true
+- set: prrun
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Hashtag
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Hashtag
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Hashtag
+  name: fromCacheOnly
+  value: true
+- set: prrun
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Url
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Url
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Url
+  name: fromCacheOnly
+  value: true
+- set: prrun
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:AnnotateAll
+  value: true
+- set: prrun
+  controller: preprocess-en-twitter
+  prname: MP:preprocess-en-4TwitterExpansions
+  value: true
+  
+## In the scoring pipeline but included here since it kind of belongs
+## This is set to true in the pipeline, so we do not need to set it here
+## unless we want to explicitly disable it.
+- set: prrun
+  controller: scoring
+  prname: TwitterExpander:Remove
+  value: true
+
+
+## Settings for the gazetteer-en sub-pipeline
+- set: prparm
+  controller: gazetteer-en
+  prname: ExtGaz2:gazetteer-en:labels
+  name: longestMatchOnly
+  value: false
+- set: prparm
+  controller: gazetteer-en
+  prname: ExtGaz2:misc-en
+  name: longestMatchOnly
+  value: false
+
+## Settings for the gazetteer-postproc sub-pipeline
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:removeLookups
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Java:filterByNER
+  value: false
+  
+## if this property is set, the filtering will be done by target annotations
+## in the given list of annotation sets (separated by semicolons) instead of
+## based on the POS tags
+# - set: propset
+#   name: lodie.gazetteer-postproc.filterLookupByPOS.ne-set
+#   value: "annotator1"
+
+
+##
+## Settings for the filter-prescoring sub-pipeline
+##
+- set: propset
+  name: lodie.filter-prescoring.filterByFrequency.minUriFreqInWp
+  value: "0"
+- set: propset
+  name: lodie.filter-prescoring.filterByFrequency.maxCands
+  value: "10"
+## if candidates where the minUriFreqInWp count is null should be kept
+- set: propset
+  name: lodie.filter-prescoring.filterByFrequency.keepCandsWithNullFreq
+  value: "false"
+  
+## Related to twitter expansion!  
+## should a match in the expanded twitter user id get projected back
+## to the original twitter id?
+- set: prrun
+  controller: filter-prescoring
+  prname: Java:projectTwitterUserID
+  value: true
+## when projecting the twitter user id, should we limit to coextensive only?
+- set: propset
+  name: lodie.filter-prescoring.projectTwitterUserID.coextonly
+  value: false
+  
+
+###################################
+## Settings for scoring
+###################################
+
+## We will normalize candidate lists over coref chains. Pool candidates from
+## top n spans. What should n be?
+- set: prparm
+  controller: scoring
+  prname: CorefRationalization
+  name: candNormalizationSpanSetSize
+  value: 2
+
+## If a candidate is rejected from a coref chain for not being on one of the
+## top n spans, should it be deleted or merely flagged?
+- set: prparm
+  controller: scoring
+  prname: CorefRationalization
+  name: flagOrDelete
+  value: FLAG
+
+## Use coref at all?
+- set: prparm
+  controller: scoring
+  prname: CorefRationalization
+  name: useCoref
+  value: false
+
+## If for example URL occurs in context window for an entity,
+## should the entire expansion be included in the context?
+- set: prparm
+  controller: scoring
+  prname: VectSim:RDFIndirectTFIDF500000new
+  name: useTwitterExpansion
+  value: true
+
+## Context length in characters
+- set: prparm
+  controller: scoring
+  prname: VectSim:RDFIndirectTFIDF500000new
+  name: contextLength
+  value: 2000
+
+## If for example URL occurs in context window for an entity,
+## should the entire expansion be included in the context?
+- set: prparm
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: useTwitterExpansion
+  value: true
+
+## Context length in characters
+- set: prparm
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: contextLength
+  value: 2000
+
+## If for example URL occurs in context window for an entity,
+## should the entire expansion be included in the context?
+- set: prparm
+  controller: scoring
+  prname: VectSim:AbstractsTFIDF500000new
+  name: useTwitterExpansion
+  value: true
+
+## Context length in characters
+- set: prparm
+  controller: scoring
+  prname: VectSim:AbstractsTFIDF500000new
+  name: contextLength
+  value: 2000
+
+## Context window in characters
+- set: prparm
+  controller: scoring
+  prname: StructuralSimilarity
+  name: contextChars
+  value: 200
+
+## If for example URL occurs in neighbourhood for an entity,
+## should all entities in the expansion be considered neighbours?
+- set: prparm
+  controller: scoring
+  prname: StructuralSimilarity
+  name: useTwitterExpansion
+  value: true
+
+
+
+###########################################################
+## Settings for the disambiguation-simple pipeline
+###########################################################
+
+- set: propset
+  name: lodie.disambiguation-simple.simple-disamb.featureName
+  value: relUriFreqByLabelInWp
+- set: propset
+  name: lodie.disambiguation-simple.simple-disamb.minScore
+  value: 0.05
+- set: propset
+  name: lodie.disambiguation-simple.simple-disamb.createNilMentions
+  value: false 
+
+
+############################################################
+## Settings for the disambiguation-libsvm pipeline
+############################################################
+
+## Make training instances from perfect span matches with key mentions only, or any overlapping?
+- set: propset
+  name: lodie.disambiguation-ml-training.coextensiveOnly
+  value: false
+
+## Set the libsvm parameters as described at http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+#- set: prparm
+#  controller: disambiguation-ml-training
+#  prname: LF:LibSVM
+#  name: learnerParams
+#  value: "-g 0.1"
+## Save directory for training is where to save the model to.
+#- set: prparm
+#  controller: disambiguation-ml-training
+#  prname: LF:LibSVM
+#  name: saveDirectory
+#  value: "../../disambiguation-libsvm"
+## Save directory for application is where to load the model from.
+#- set: prparm
+#  controller: disambiguation-ml-application
+#  prname: LF:LibSVM
+#  name: saveDirectory
+#  value: "../../disambiguation-libsvm"
+## Feature spec URL is where to load the feature spec config from.
+#- set: prparm
+#  controller: disambiguation-ml-training
+#  prname: LF:LibSVM
+#  name: featureSpecURL
+#  value: "../../disambiguation-libsvm/disambiguation-config.txt"
+#- set: prparm
+#  controller: disambiguation-ml-application
+#  prname: LF:LibSVM
+#  name: featureSpecURL
+#  value: "../../disambiguation-libsvm/disambiguation-config.txt"
+
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
+  value: -0.82
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
+  value: 5
+

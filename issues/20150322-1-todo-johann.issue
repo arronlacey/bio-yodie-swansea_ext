@@ -1,0 +1,19 @@
+summary: Implement additional utility functions for handling list annotations
+due: 2015-04-15
+assignedName: johann
+priority: 10/10
+comments: Implement utility functions for moving and copying list annotations
+and their referenced annotations, taking care of handling the ids correctly.
+Maybe also implement separate PRs for Reset and Transfer similar to what 
+ANNIE has, but with proper handling of list annotations. 
+Implement some convention of how to recognize list annotations and 
+annotations which are referenced by list annotations (e.g. by a reserved 
+feature or simply by the features "ids" and "llId". Maybe change these 
+names globablly to something more robust e.g. "gate.listann.ids" and 
+"gate.listann.llId") 
+Then the Reset PR will have to remove the id from the list ann whenever 
+a referenced annotation is deleted, and will delete all referenced 
+anns whenever a list ann is deleted. 
+There maybe also an option for normalizing list anns and referenced 
+anns, which means to remove the specific feature from both, after 
+this they can be treated as "normal"  annotations.

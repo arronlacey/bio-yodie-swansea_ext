@@ -1,0 +1,11 @@
+summary: Different way to create the lookup lists from a database?
+due: 2015-12-31
+assignedName: johann
+priority: 5/10
+comments: Currently the lookup lists for the candidates are created based on a 
+database that maps labels to json arraus of candidates. 
+The advantage is a single db access by label, but the disadvantage is that
+candidates are replicated in many different lists, so the DB gets very large.
+What would be the speed impact of using a table for that where each candidate
+is stored in a row indexed by label and inst and we retrieve all matches for
+a label?

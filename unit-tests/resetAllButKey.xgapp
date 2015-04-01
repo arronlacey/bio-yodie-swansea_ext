@@ -5,22 +5,10 @@
         <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Groovy/</urlString>
+        <urlString>$gatehome$plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Java/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -37,28 +25,29 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>setsToKeep</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Key</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>scriptParams</string>
-                  <gate.util.persistence.MapPersistence>
-                    <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                    <localMap>
-                      <entry>
-                        <string>dummy</string>
-                        <string></string>
-                      </entry>
-                    </localMap>
-                  </gate.util.persistence.MapPersistence>
+                  <string>setsToRemove</string>
+                  <null/>
                 </entry>
                 <entry>
-                  <string>outputASName</string>
-                  <string>Shef</string>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <string>Shef</string>
+                  <string>annotationTypes</string>
+                  <null/>
                 </entry>
                 <entry>
                   <string>document</string>
@@ -66,22 +55,11 @@
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.groovy.ScriptPR</resourceType>
-            <resourceName>Groovy:expandUris</resourceName>
+            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
+            <resourceName>Reset:allButKey</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>scriptURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$groovy/expandUris.groovy</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-              </localMap>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -90,7 +68,7 @@
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
+          <runMode>1</runMode>
           <featureName></featureName>
           <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
@@ -107,7 +85,7 @@
                 </entry>
                 <entry>
                   <string>inputAS</string>
-                  <string>Shef</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>resource2</string>
@@ -125,63 +103,28 @@
                   <string>scriptParams</string>
                   <gate.util.persistence.MapPersistence>
                     <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                    <localMap>
-                      <entry>
-                        <string>type</string>
-                        <string>Mention</string>
-                      </entry>
-                    </localMap>
+                    <localMap/>
                   </gate.util.persistence.MapPersistence>
                 </entry>
                 <entry>
                   <string>outputAS</string>
-                  <string>Shef</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>resource1</string>
-                  <gate.util.persistence.LRPersistence>
-                    <resourceType>com.jpetrak.gate.jdbclookup.JdbcLR</resourceType>
-                    <resourceName>JdbcLR_00010</resourceName>
-                    <initParams class="gate.util.persistence.MapPersistence">
-                      <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-                      <localMap>
-                        <entry>
-                          <string>jdbcUrl</string>
-                          <string>jdbc:h2:${dbdirectory}/redirects;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
-                        </entry>
-                        <entry>
-                          <string>jdbcDriver</string>
-                          <string>org.h2.Driver</string>
-                        </entry>
-                        <entry>
-                          <string>jdbcPassword</string>
-                          <string></string>
-                        </entry>
-                        <entry>
-                          <string>jdbcUser</string>
-                          <string></string>
-                        </entry>
-                        <entry>
-                          <string>dbDirectoryUrl</string>
-                          <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../resources/databases/</urlString>
-                          </gate.util.persistence.PersistenceManager-URLHolder>
-                        </entry>
-                      </localMap>
-                    </initParams>
-                  </gate.util.persistence.LRPersistence>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
             <resourceType>com.jpetrak.gate.java.JavaScriptingPR</resourceType>
-            <resourceName>Java:fixUris</resourceName>
+            <resourceName>Java:clearAllDocumentFeatures</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>javaProgramUrl</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$java/fixUris.java</urlString>
+                    <urlString>$relpath$java/clearAllDocumentFeatures.java</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
@@ -203,7 +146,7 @@
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
     <resourceType>gate.creole.ConditionalSerialAnalyserController</resourceType>
-    <resourceName>postprocess</resourceName>
+    <resourceName>resetAllButKey</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
       <localMap/>

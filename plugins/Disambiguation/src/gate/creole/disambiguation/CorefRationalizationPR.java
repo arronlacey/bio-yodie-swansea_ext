@@ -161,10 +161,15 @@ ProcessingResource {
 		}
 	}
 
+        // Find the n (parameter) "best" mentions (LookupList) (based on most Tokens in the mention)
+        // and project the combined candidates of those to all other members of the chain.        
 	private void candidateListToKeySpan(Entity thisent, AnnotationSet inputAS){	
 		List<LookupList> betterspans = 
 				thisent.getBestSpans(this.candNormalizationSpanSetSize);
 		
+                // TODO: merge by label and inst instead of of inst alone
+                // maybe also use LodieUtils for merging, adding new candidates.
+                
 		Map<String, LookupList> betterllsbyinst = new HashMap<String, LookupList>();
 		for(int i=0;i<betterspans.size();i++){
 			LookupList ll = betterspans.get(i);
@@ -239,10 +244,13 @@ ProcessingResource {
 		thisent.doesinstlistneedrecalculating = true;
 	}
 
+        // Merge entities which overlap and have at least one inst in common; if they overlap
+        // without a common inst, remove the one with fewer candidates.
 	private DocumentEntitySet resolveOverlaps(DocumentEntitySet ents){
 		//Need to record all our merges otherwise it's going to be chaos.
 		Map<Entity, Entity> mergehistory = new HashMap<Entity, Entity>();
 
+                // TODO: maybe use iterator.remove() to avoid concurrent modif except. instead of for ..?
 		List<Entity> entslist = ents.getEntities();
 		for(int i=0;i<entslist.size();i++){
 			Entity thisent1 = entslist.get(i);

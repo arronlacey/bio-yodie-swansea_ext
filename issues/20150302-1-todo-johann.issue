@@ -1,0 +1,7 @@
+summary: Convert the filter-prescoring step for locations to fastgraph
+due:  2015-03-15
+assignedName: johann
+priority: 10/10
+comments: The Java scripting code for handling locations still uses the relations database.
+Change this so it uses the FastGraph code instead. Absolutely necessary before we can
+upgrade the resources to the latest version which will not have the relations database anymore!!

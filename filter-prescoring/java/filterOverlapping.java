@@ -22,7 +22,11 @@ public void execute() {
       } else {
         // just ignore if the contained ann is the same as which we used to start ...
         if(ll.getId() != contained.getId()) {
-          throw new GateRuntimeException(doc.getName()+": Found coextensive list annotations: "+ll+" / "+contained);
+          // DEBUG: disable this for now, we need to come back to this
+          // see issue 20150309-1-bug-johann
+          // Instead, we just log an error for now.
+          //throw new GateRuntimeException(doc.getName()+": Found coextensive list annotations: "+ll+" / "+contained);
+          System.err.println(doc.getName()+": (filterOverlapping.java) Found coextensive list annotations (ignored for now): "+ll+" / "+contained);
         }
       }
     }
