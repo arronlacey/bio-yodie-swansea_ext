@@ -45,17 +45,7 @@
 </ATTRIBUTE>
 
 <ATTRIBUTE>
-<FEATURE>contextualSimilarityVectorRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
 <FEATURE>contextualSimilarityRDFDirectRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
-<FEATURE>contextualSimilarityRDFIndirectRank</FEATURE>
 <DATATYPE>numeric</DATATYPE>
 </ATTRIBUTE>
 
@@ -65,27 +55,7 @@
 </ATTRIBUTE>
 
 <ATTRIBUTE>
-<FEATURE>contextualSimilarityRDFDirectTFICFSimpleRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
-<FEATURE>contextualSimilarityRDFIndirectTFICFSimpleRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
 <FEATURE>contextualSimilarityTFICFSemanticRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
-<FEATURE>contextualSimilarityRDFDirectTFICFSemanticRank</FEATURE>
-<DATATYPE>numeric</DATATYPE>
-</ATTRIBUTE>
-
-<ATTRIBUTE>
-<FEATURE>contextualSimilarityRDFIndirectTFICFSemanticRank</FEATURE>
 <DATATYPE>numeric</DATATYPE>
 </ATTRIBUTE>
 
