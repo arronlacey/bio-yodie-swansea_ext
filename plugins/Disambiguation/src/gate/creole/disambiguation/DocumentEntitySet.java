@@ -137,11 +137,10 @@ public class DocumentEntitySet {
 		}
 
 		AnnotationSet lls = document.getAnnotations(inputASName).get("LookupList");
-		
-		Iterator<Annotation> llsit = lls.iterator();
+
+        // TODO: potential nondet for same start offset
+		Iterator<Annotation> llsit = lls.inDocumentOrder().iterator();
                  
-                // TODO: potential nondet because iterator goes over set elements
-                // maybe: inDocumentOrder + something for same offset (does inDocumentOrder break ties properly?)
 		while(llsit.hasNext()){
 			Annotation ll = (Annotation)llsit.next();
 
@@ -188,18 +187,11 @@ public class DocumentEntitySet {
 				if(corefann!=null && corefann.getStartNode()!=null
 						&& corefann.getEndNode()!=null){
 					
-                                        // JP: parametrize ann type for the lists
-                                        // TODO: use Utils.getCoextensive
-					AnnotationSet llcands = 
-							as.get("LookupList").get(corefann.getStartNode().getOffset());
+                    // JP: parametrize ann type for the lists
+					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get("LookupList"), corefann);
 					Annotation ll = null;
-					Iterator<Annotation> llcandsit = llcands.iterator();
-					while(llcandsit.hasNext()){
-						Annotation thisll = llcandsit.next();
-						if(corefann.coextensive(thisll)){
-							ll = thisll;
-						}
-                                                // NOTE: always should only have one coext here!
+					if(llcands.size()==1){
+						ll = Utils.getOnlyAnn(llcands);
 					}
 					if(ll!=null) numberofllsfound++;
 					//Add it even if it is null--we might populate it later
