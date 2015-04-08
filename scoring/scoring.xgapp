@@ -146,13 +146,13 @@
                 <entry>
                   <string>sspaceURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/semspace/tfidf-500000.sspace</urlString>
+                    <urlString>$relpath$../resources/semspace/tfidf-500000.sspace</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -230,13 +230,13 @@
                 <entry>
                   <string>sspaceURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/semspace/tfidf-500000.sspace</urlString>
+                    <urlString>$relpath$../resources/semspace/tfidf-500000.sspace</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -314,13 +314,13 @@
                 <entry>
                   <string>sspaceURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/semspace/tfidf-500000.sspace</urlString>
+                    <urlString>$relpath$../resources/semspace/tfidf-500000.sspace</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -398,7 +398,7 @@
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -476,7 +476,7 @@
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -554,7 +554,7 @@
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../../resources/databases/</urlString>
+                    <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -637,7 +637,7 @@
                         <entry>
                           <string>dbDirectoryUrl</string>
                           <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../../resources/databases/</urlString>
+                            <urlString>$relpath$../resources/databases/</urlString>
                           </gate.util.persistence.PersistenceManager-URLHolder>
                         </entry>
                       </localMap>
@@ -666,7 +666,7 @@
                         <entry>
                           <string>graphFileUrl</string>
                           <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../../resources/fastgraph/graph.gz</urlString>
+                            <urlString>$relpath$../resources/fastgraph/graph.gz</urlString>
                           </gate.util.persistence.PersistenceManager-URLHolder>
                         </entry>
                       </localMap>
