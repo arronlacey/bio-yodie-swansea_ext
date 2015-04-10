@@ -14,10 +14,28 @@
 ## docTypes: generic, tweet  (influences preprocessing and other things)
 - set: docfeature
   name: docType
-  value: tweet
+  value: generic 
+  
+## Which disambiguation to run: simple or ml
+## If simple, we can deactivate scoring too for now
+- set: prrun
+  controller: forgetit
+  prname: MP:disambiguation-libsvm
+  value: false
+- set: prrun
+  controller: forgetit
+  prname: MP:scoring
+  value: false
+- set: prrun
+  controller: forgetit
+  prname: MP:disambiguation-simple
+  value: true
+
+  
   
 ####
 #### Settings for the preprocess-en sub-pipeline
+#### (NOTE: not currently included in the pipeline!!)
 ####
 
 ## the model to use for the NER tagger in the preprocessing sub pipeline
@@ -44,63 +62,17 @@
   value: 8kA38esvSBcqpQNxkSqOIrJF14rrIoTm1qvJHHsW0xKQ5cV0pP
 
 
-
-####
-#### Settings for the preprocess-en-twitter sub-pipeline
-####
-
-
-## the model to use for the NER tagger in the twitter preprocessing sub pipeline
-## Only leave one value not commented out!
-## NOTE: this is an init parm!!
-## NOTE: the path seems to be relative to the path of the ModularPipelines plugin!!
-- set: prinit
-  controller: preprocess-en-twitter
-  prname: StanfordNER
-  name: modelFile
-  value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
-
-## Settings for the preprocess-en-twitter sub-pipeline
-## the key and secret for Twitter API access: MUST be replaced by a proper value
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: twitterApiKey
-  value: xX1QUu73Gpiq1okahkkuy6kM7
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: twitterApiSecret
-  value: 8kA38esvSBcqpQNxkSqOIrJF14rrIoTm1qvJHHsW0xKQ5cV0pP
-  
-## which of the expansions to run, default is to run none, and since none is
-## run, also not run the segment processing which processes the generated text
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  value: true
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Hashtag
-  value: true
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Url
-  value: true
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:AnnotateAll
-  value: true
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: MP:preprocess-en-4TwitterExpansions
-  value: true
-
 ## Settings for the gazetteer-en sub-pipeline
 - set: prparm
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: longestMatchOnly
+  value: false
+  
+## for now, do not run the misc-en gazetter
+- set: prrun
+  controller: gazetteer-en
+  prname: ExtGaz2:misc-en
   value: false
 - set: prparm
   controller: gazetteer-en
@@ -111,22 +83,26 @@
 ## Settings for the gazetteer-postproc sub-pipeline
 - set: prrun
   controller: gazetteer-postproc
-  prname: JAPE:removeLookups
+  prname: JAPE:filterLookupsByPOS
   value: false
 - set: prrun
   controller: gazetteer-postproc
   prname: Java:filterByNER
   value: false
-
-## if this property is set, the filtering will be done by target annotations
-## in the given list of annotation sets (separated by semicolons) instead of
-## based on the POS tags
-# - set: propset
-#   name: lodie.gazetteer-postproc.filterLookupByPOS.ne-set
-#   value: "annotator1"
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Java:filterByNERSet
+  value: true
+## Remove all lookup list annotations except the longest. For now enabled
+## but TODO: maybe need to disable again!
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:removeLookups
+  value: true
 
 
 ## Settings for the filter-prescoring sub-pipeline
+## CHANGED: for forgetit we require more than the usual 0
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.minUriFreqInWp
   value: "0"
@@ -226,10 +202,6 @@
   name: useTwitterExpansion
   value: true
 
-- set: prrun
-  controller: scoring
-  prname: TwitterExpander:Remove
-  value: false
 
 
 
@@ -239,10 +211,10 @@
   value: relUriFreqByLabelInWp
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
-  value: 0.05
+  value: 0.5
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
-  value: true 
+  value: false
 
 
 ## Settings for the disambiguation-libsvm pipeline
@@ -277,7 +249,7 @@
 #  value: "/export/ssd/gate/disambiguation/application2/disambiguation-libsvm/disambiguation-config.txt"
 - set: propset
   name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
-  value: 0.82
+  value: 0.50
 - set: propset
   name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
   value: 5
