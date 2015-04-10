@@ -35,6 +35,7 @@ public void init() {
   if(minScoreString != null) {
     try {
       minScore = Double.parseDouble(minScoreString);
+      System.out.println("INFO: using simple-disamb.minScore="+minScore);
     } catch (Exception ex) {
       throw new GateRuntimeException("Problem converting the minScore setting: "+minScoreString,ex);
     }
@@ -49,6 +50,7 @@ public void init() {
       throw new GateRuntimeException("Property createNilMentions is neither 'true' nor 'false': "+createNilMentionsString);
     }
   }
+  System.out.println("INFO: creating explicit NIL mentions: "+createNilMentions);
 }
 
 @Override
@@ -62,6 +64,11 @@ public void execute() {
     List<FeatureMap> best = new ArrayList<FeatureMap>(); 
     try {
       best = LodieUtils.sortCandidatesDescOn(cands,featureName,1,false);
+      // To make the following code useful for debugging, use >1 results in the previous line:
+      //System.out.println("BEST feature maps:");
+      //for(FeatureMap tmpfm : best) {
+      //  System.out.println("inst="+tmpfm.get("inst")+", score="+tmpfm.get(featureName));
+      //}
     } catch (Exception ex) {
       System.err.println("simple-disamb.java: got an exception when trying to sort candidates on "+featureName);
       System.err.println("Candidates: \n");
@@ -79,6 +86,7 @@ public void execute() {
       // this val MUST be non-null because we prevented null values from getting included earlier!
       if(val.doubleValue() < minScore) {
         isNull = true;
+        // System.out.println("This is a NULL");
       }
     }
     // we create a NIL if we have to and if isNull is true or bestFm is null.
