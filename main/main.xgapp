@@ -334,7 +334,7 @@
         <entry>
           <string>configFileUrl</string>
           <gate.util.persistence.PersistenceManager-URLHolder>
-            <urlString>$relpath$lodie-webservice.config.yaml</urlString>
+            <urlString>$relpath$yodie-main.config.yaml</urlString>
           </gate.util.persistence.PersistenceManager-URLHolder>
         </entry>
       </localMap>
