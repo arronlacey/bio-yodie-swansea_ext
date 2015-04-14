@@ -10,6 +10,7 @@ import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
 import gate.Utils;
+import gate.util.Benchmark;
 
 public class Entity {
 	
@@ -261,6 +262,7 @@ public class Entity {
 	}
 	
 	public long shortestDistanceFrom(Entity testent, Boolean useTwitterExpansion){
+                long startTime = Benchmark.startPoint();
 		Iterator<LookupList> testspanit = testent.spans.iterator();
 		Iterator<LookupList> thisspanit = this.spans.iterator();
 		long shortestdistance = 1000000;
@@ -322,11 +324,13 @@ public class Entity {
 				}
 			}
 		}
+                benchmarkCheckpoint(startTime, "__shortestDistanceFrom");
 		
 		return shortestdistance;
 	}
 
 	public String getContext(int contextLength, Boolean useTwitterExpansion){
+                long startTime = Benchmark.startPoint();
 		Set<String> contextSet = new HashSet<String>();
 	    String contextString = "";
 		//int docContentLength = document.getContent().toString().length();
@@ -426,11 +430,13 @@ public class Entity {
 	    for(int i=0;i<dedupedWords.length;i++){
 	    	contextString = contextString + " " + dedupedWords[i].toString();
 	    }
+            benchmarkCheckpoint(startTime, "__getContext");
 	    
 	    return contextString;
 	}
 	
 	public Set<String> contextTokensAsList(int contextLength, boolean nounsOnly){
+                long startTime = Benchmark.startPoint();
 		AnnotationSet inputAS = document.getAnnotations(inputASName);
 		int docContentLength = document.getContent().toString().length();
 		Set<String> contextSet = new HashSet<String>();
@@ -466,6 +472,7 @@ public class Entity {
 				}
 			}
 		}
+                benchmarkCheckpoint(startTime, "__contextTokensAsList");
 		return contextSet;
 	}
 
@@ -480,6 +487,7 @@ public class Entity {
 	}
 
 	public Set<String> getInstSet() {
+                long startTime = Benchmark.startPoint();
 		if(doesinstlistneedrecalculating){
 			Set<String> newinstlist = new HashSet<String>();
 			for(int i=0;i<this.spans.size();i++){
@@ -489,10 +497,12 @@ public class Entity {
 			this.instlist = newinstlist;
 			doesinstlistneedrecalculating = false;
 		}
+                benchmarkCheckpoint(startTime, "__getInstSet");
 		return this.instlist;
 	}
 
 	public List<Annotation> getAnnsByInst(String inst){
+                long startTime = Benchmark.startPoint();
 		List<Annotation> toreturn = new ArrayList<Annotation>();
 		for(int i=0;i<this.getSpans().size();i++){
 			LookupList sp = spans.get(i);
@@ -501,6 +511,7 @@ public class Entity {
 				toreturn.add(anntoadd);
 			}
 		}
+                benchmarkCheckpoint(startTime, "__getAnnsByInst");
 		return toreturn;
 	}
 	
@@ -536,4 +547,27 @@ public class Entity {
 		this.keyspan = keyspan;
 	}*/
 
+// **** BENCHMARK-RELATED
+  protected void benchmarkCheckpoint(long startTime, String name) {
+    if (Benchmark.isBenchmarkingEnabled()) {
+      Benchmark.checkPointWithDuration(
+              Benchmark.startPoint() - startTime,
+              Benchmark.createBenchmarkId(name, this.getBenchmarkId()),
+              this, null);
+    }
+  }
+
+  public String getBenchmarkId() {
+    return benchmarkId;
+  }
+
+  public void setBenchmarkId(String string) {
+    benchmarkId = string;
+  }
+  private String benchmarkId = "Entity";
+
+
+          
+        
+        
 }
