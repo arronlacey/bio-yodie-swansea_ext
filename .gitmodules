@@ -16,3 +16,6 @@
 [submodule "plugins/Learning_Framework"]
 	path = plugins/Learning_Framework
 	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/Learning_Framework.git
+[submodule "plugins/YodiePlugin"]
+	path = plugins/YodiePlugin
+	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/YodiePlugin.git
