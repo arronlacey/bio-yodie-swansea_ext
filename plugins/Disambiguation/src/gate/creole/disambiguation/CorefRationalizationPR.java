@@ -166,30 +166,28 @@ ProcessingResource {
 	private void candidateListToKeySpan(Entity thisent, AnnotationSet inputAS){	
 		List<LookupList> betterspans = 
 				thisent.getBestSpans(this.candNormalizationSpanSetSize);
-		
-                // TODO: merge by label and inst instead of of inst alone
                 // maybe also use LodieUtils for merging, adding new candidates.
                 
-		Map<String, LookupList> betterllsbyinst = new HashMap<String, LookupList>();
+		Map<LookupList.KeyPair, LookupList> betterllsbyinstlabel = new HashMap<LookupList.KeyPair, LookupList>();
 		for(int i=0;i<betterspans.size();i++){
 			LookupList ll = betterspans.get(i);
-			Set<String> insts = ll.getAnnotationsbyinst().keySet();
-			Iterator<String> it = insts.iterator();
+			Set<LookupList.KeyPair> instlabels = ll.getAnnotationsbyinstlabel().keySet();
+			Iterator<LookupList.KeyPair> it = instlabels.iterator();
 			while(it.hasNext()){
-				String inst = it.next();
-				if(betterllsbyinst.get(inst)==null){
-					betterllsbyinst.put(inst, ll);
+				LookupList.KeyPair instlabel = it.next();
+				if(betterllsbyinstlabel.get(instlabel)==null){
+					betterllsbyinstlabel.put(instlabel, ll);
 				}
 			}
 		}
 		
-		Set<String> instsofbetterlls = betterllsbyinst.keySet();
+		Set<LookupList.KeyPair> instlabelsofbetterlls = betterllsbyinstlabel.keySet();
 		
 		//Make a set of insts to remove from everything
-		Set<String> candstoconsiderremovingfromthis = thisent.getInstSet();
-		Set<String> candstoremovefromthis = new HashSet<String>();
+		Set<LookupList.KeyPair> candstoconsiderremovingfromthis = thisent.getInstLabelSet();
+		Set<LookupList.KeyPair> candstoremovefromthis = new HashSet<LookupList.KeyPair>();
 		candstoremovefromthis.addAll(candstoconsiderremovingfromthis);
-		candstoremovefromthis.removeAll(instsofbetterlls);
+		candstoremovefromthis.removeAll(instlabelsofbetterlls);
 
 		//Work through spans one at a time removing the offending candidates
 		//and adding candidates to match union of better spans where necessary.
@@ -201,9 +199,9 @@ ProcessingResource {
 			
 			//Removing.
 			
-			Iterator<String> ctrftit1 = candstoremovefromthis.iterator();
+			Iterator<LookupList.KeyPair> ctrftit1 = candstoremovefromthis.iterator();
 			while(ctrftit1.hasNext()){
-				String ctr = ctrftit1.next();
+				LookupList.KeyPair ctr = ctrftit1.next();
 				if(this.flagOrDelete==FlagOrDelete.FLAG){
 					sp.flagAnn(ctr);
 				} else {
@@ -214,19 +212,19 @@ ProcessingResource {
 			//Add any cands required to make this similar to the
 			//key span candidate list
 
-			Set<String> candstoadd = new HashSet<String>();
-			candstoadd.addAll(instsofbetterlls);
-			candstoadd.removeAll(sp.getAnnotationsbyinst().keySet()); //Already there
+			Set<LookupList.KeyPair> candstoadd = new HashSet<LookupList.KeyPair>();
+			candstoadd.addAll(instlabelsofbetterlls);
+			candstoadd.removeAll(sp.getAnnotationsbyinstlabel().keySet()); //Already there
 
-			Iterator<String> ctait = candstoadd.iterator();
+			Iterator<LookupList.KeyPair> ctait = candstoadd.iterator();
 			while(ctait.hasNext()){
-				String cta = ctait.next();
+				LookupList.KeyPair cta = ctait.next();
 				//Need to make a new annotation.
 				//It's a bit unsatisfactory, since there could be features that
 				//don't transfer meaningfully to a different span, but nonetheless 
 				//we'll just copy all the features from the example on the better span.
-				LookupList betterspan = betterllsbyinst.get(cta);
-				Annotation theoneonthekeyspan = betterspan.getAnnotationbyinst(cta);
+				LookupList betterspan = betterllsbyinstlabel.get(cta);
+				Annotation theoneonthekeyspan = betterspan.getAnnotationbyinstlabel(cta);
 				FeatureMap fm = gate.Factory.newFeatureMap();
 				fm.putAll(theoneonthekeyspan.getFeatures());
 				Integer id;

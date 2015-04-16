@@ -9,6 +9,8 @@ import gate.util.InvalidOffsetException;
 import gate.util.compilers.eclipse.jdt.internal.compiler.ast.ThisReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,24 +37,24 @@ public class DocumentEntitySet {
 	//Should we use coreference information to group entities
 	//or just make a separate entity for each span?
 	private boolean useCoreference = true;
-	
+
 	private String corefDocFeatName;
 
 	Document document;
 
-        /**
-         * Create DocumentEntitySet instance.
-         * 
-         * @param document
-         * @param iasn
-         * @param atypes
-         * @param useCoref
-         * @param corefDocFeatName 
-         */
+	/**
+	 * Create DocumentEntitySet instance.
+	 * 
+	 * @param document
+	 * @param iasn
+	 * @param atypes
+	 * @param useCoref
+	 * @param corefDocFeatName 
+	 */
 	public DocumentEntitySet(Document document, String iasn, 
 			List<String> atypes, boolean useCoref, String corefDocFeatName) {
 		this.inputASName = iasn;
-                // REMOVE
+		// REMOVE
 		this.annotationTypes = atypes;
 		this.useCoreference = useCoref;
 		this.document = document;
@@ -61,8 +63,8 @@ public class DocumentEntitySet {
 		this.populate(document);
 	}
 
-        // TODO: maybe return List<Entity> or something  
-        // construct in document order
+	// TODO: maybe return List<Entity> or something  
+	// construct in document order
 	public Iterator<Entity> getIterator(){
 		if(this.entities!=null){
 			return this.entities.iterator();
@@ -115,13 +117,13 @@ public class DocumentEntitySet {
 			} catch(ClassCastException e){
 				e.printStackTrace();
 			}
-			
+
 			if(corefs!=null){
 				if(inputASName!=null && inputASName.equals("")){
 					inputASName = null;
 				}
 				List<List<Integer>> entchains = (List<List<Integer>>)corefs.get(inputASName);
-	
+
 				if(entchains!=null){
 					entities = populateCoreffedEntities(document, entchains, inputASName);
 				}
@@ -131,6 +133,13 @@ public class DocumentEntitySet {
 		this.makeEntitiesNotCoreffed(document);
 	}
 
+	public class AnnotationComparator implements Comparator<Annotation> {
+		@Override
+		public int compare(Annotation a1, Annotation a2) {
+			return a2.getId() - a1.getId();
+		}
+	}
+
 	private void makeEntitiesNotCoreffed(Document document){
 		if(entities==null){
 			entities = new ArrayList<Entity>();
@@ -138,9 +147,12 @@ public class DocumentEntitySet {
 
 		AnnotationSet lls = document.getAnnotations(inputASName).get("LookupList");
 
-        // TODO: potential nondet for same start offset
-		Iterator<Annotation> llsit = lls.inDocumentOrder().iterator();
-                 
+		//Make the order deterministic
+		List<Annotation> annlist = new ArrayList<Annotation>(lls);
+		Collections.sort(annlist, new AnnotationComparator());
+
+		Iterator<Annotation> llsit = annlist.iterator();
+
 		while(llsit.hasNext()){
 			Annotation ll = (Annotation)llsit.next();
 
@@ -155,7 +167,7 @@ public class DocumentEntitySet {
 					matchent = ent;
 				}
 			}
-			
+
 			if(matchent==null){ //Will make new entity based on this list
 				LookupList span = new LookupList(ll, ll, document, inputASName);
 				List<LookupList> lll = new ArrayList<LookupList>();
@@ -171,7 +183,7 @@ public class DocumentEntitySet {
 		List<Entity> entities = new ArrayList<Entity>();
 		AnnotationSet as = doc.getAnnotations(iasn);
 		Iterator<List<Integer>> entsit = entchains.iterator();
-		
+
 		while(entsit!=null && entsit.hasNext()){
 			List<Integer> group = (List<Integer>)entsit.next();
 
@@ -179,15 +191,15 @@ public class DocumentEntitySet {
 			int numberofllsfound = 0;
 			Iterator<Integer> cgit = group.iterator();
 			while(cgit!=null && cgit.hasNext()){ //For each span in the coref group
-				
+
 				Integer id = (Integer)cgit.next();
-				
+
 				//don't care what it is, just want the span
 				Annotation corefann = as.get(id);
 				if(corefann!=null && corefann.getStartNode()!=null
 						&& corefann.getEndNode()!=null){
-					
-                    // JP: parametrize ann type for the lists
+
+					// JP: parametrize ann type for the lists
 					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get("LookupList"), corefann);
 					Annotation ll = null;
 					if(llcands.size()==1){
@@ -251,24 +263,24 @@ public class DocumentEntitySet {
 		return null;
 	}
 
-        // remove the LookupList instance with fewer candidates and if it was the last one in
-        // the Entity instance, remove that as well.
+	// remove the LookupList instance with fewer candidates and if it was the last one in
+	// the Entity instance, remove that as well.
 	public void choose(Entity ent1, Entity ent2){
 		List<LookupList> spans1 = ent1.getSpans();
 		List<LookupList> spans2 = ent2.getSpans();
-		
+
 		class SpanPair{
 			LookupList ll1;
 			LookupList ll2;
-			
+
 			SpanPair(LookupList ll1, LookupList ll2){
 				this.ll1 = ll1;
 				this.ll2 = ll2;
 			}
 		}
-		
+
 		List<SpanPair> spanstoresolve = new ArrayList<SpanPair>();
-				
+
 		//Find the clashes
 		for(int i=0;i<spans1.size();i++){
 			LookupList ll1 = spans1.get(i);
@@ -279,11 +291,11 @@ public class DocumentEntitySet {
 				}
 			}
 		}
-		
+
 		for(int i=0;i<spanstoresolve.size();i++){
 			SpanPair toresolve = spanstoresolve.get(i);
-			if(toresolve.ll1.getAnnotationsbyinst().keySet().size()
-					> toresolve.ll2.getAnnotationsbyinst().keySet().size()){
+			if(toresolve.ll1.getAnnotationsbyinstlabel().keySet().size()
+					> toresolve.ll2.getAnnotationsbyinstlabel().keySet().size()){
 				ent2.remove(toresolve.ll2);
 				if(ent2.getSpans().size()<1){
 					this.entities.remove(ent2);
@@ -296,7 +308,7 @@ public class DocumentEntitySet {
 			}
 		}
 	}
-	
+
 	public void print(){
 		System.out.println("Printing document entity set:");
 		List<Entity> entlist = this.getEntities();
@@ -306,7 +318,7 @@ public class DocumentEntitySet {
 			ent.print();
 		}
 	}
-	
+
 	public boolean getUseCoreference() {
 		return useCoreference;
 	}

@@ -15,9 +15,13 @@ public class Entity {
 	
 	//private Map<String, List<Annotation>> annotationsbyinst = new HashMap<String, List<Annotation>>();
 	
-	private Set<String> instlist = new HashSet<String>();
+	private Set<String> instset = new HashSet<String>();
 	
 	boolean doesinstlistneedrecalculating = false;
+
+	private Set<LookupList.KeyPair> instlabelset = new HashSet<LookupList.KeyPair>();
+	
+	boolean doesinstlabellistneedrecalculating = false;
 	
 	private List<LookupList> spans = new ArrayList<LookupList>();
 	
@@ -98,7 +102,11 @@ public class Entity {
 	  doesinstlistneedrecalculating = true;
 	}
 	
-	//For every example of this candidate, write the float value into the feature
+	//For every example of this candidate, write the float value into the feature.
+	//Using this method on entity is appropriate when a feature has been calculated
+	//that applies to any example of that inst, i.e. independent of label, location
+	//etc. that don't apply universally to the inst. Should be fine where there
+	//are multiple of the same inst on the same list.
 	public void putFeatureFloat(String inst, String feature, float toPut){
 		List<Annotation> examples = this.getAnnsByInst(inst);
 		Iterator<Annotation> annit = examples.iterator();
@@ -109,6 +117,8 @@ public class Entity {
 		}
 	}
 
+	//Use this method to get features to work with that should be pooled across
+	//all instances of that inst.
 	public List<String> getCombinedFeature(
 			String inst, String feature, String separator){
 		List<Annotation> examples = this.getAnnsByInst(inst);
@@ -479,26 +489,40 @@ public class Entity {
 		}
 	}
 
-	public Set<String> getInstSet() {
-		if(doesinstlistneedrecalculating){
-			Set<String> newinstlist = new HashSet<String>();
+	public Set<LookupList.KeyPair> getInstLabelSet() {
+		if(doesinstlabellistneedrecalculating){
+			Set<LookupList.KeyPair> newinstlabelset = new HashSet<LookupList.KeyPair>();
 			for(int i=0;i<this.spans.size();i++){
 				LookupList sp = this.spans.get(i);
-				newinstlist.addAll(sp.getAnnotationsbyinst().keySet());
+				newinstlabelset.addAll(sp.getAnnotationsbyinstlabel().keySet());
 			}
-			this.instlist = newinstlist;
+			this.instlabelset = newinstlabelset;
 			doesinstlistneedrecalculating = false;
 		}
-		return this.instlist;
+		return this.instlabelset;
 	}
 
+	public Set<String> getInstSet() {
+		if(doesinstlistneedrecalculating){
+			Set<String> newinstset = new HashSet<String>();
+			for(int i=0;i<this.spans.size();i++){
+				LookupList sp = this.spans.get(i);
+				newinstset.addAll(sp.getInstSet());
+			}
+			this.instset = newinstset;
+			doesinstlistneedrecalculating = false;
+		}
+		return this.instset;
+	}
+
+	//Gets all annotations with a particular inst in this entity.
 	public List<Annotation> getAnnsByInst(String inst){
 		List<Annotation> toreturn = new ArrayList<Annotation>();
 		for(int i=0;i<this.getSpans().size();i++){
 			LookupList sp = spans.get(i);
-			Annotation anntoadd = sp.getAnnotationbyinst(inst);
-			if(anntoadd!=null){
-				toreturn.add(anntoadd);
+			List<Annotation> annstoadd = sp.getAnnotationSelectionbyinst(inst);
+			if(annstoadd!=null){
+				toreturn.addAll(annstoadd);
 			}
 		}
 		return toreturn;
@@ -511,7 +535,7 @@ public class Entity {
 		for(int j=0;j<lls.size();j++){
 			LookupList ll = lls.get(j);
 			System.out.println("    LookupList " + j + ": " + ll.getKey());
-			Set<String> llss = ll.getAnnotationsbyinst().keySet();
+			Set<String> llss = ll.getInstSet();
 			Iterator<String> llssit = llss.iterator();
 			while(llssit.hasNext()){
 				String s = llssit.next();
