@@ -21,6 +21,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import com.thoughtworks.xstream.core.util.Pool.Factory;
+import gate.util.Benchmark;
 
 public class DocumentEntitySet {
 
@@ -53,6 +54,8 @@ public class DocumentEntitySet {
 	 */
 	public DocumentEntitySet(Document document, String iasn, 
 			List<String> atypes, boolean useCoref, String corefDocFeatName) {
+                long startTime = Benchmark.startPoint();
+
 		this.inputASName = iasn;
 		// REMOVE
 		this.annotationTypes = atypes;
@@ -61,6 +64,8 @@ public class DocumentEntitySet {
 		this.corefDocFeatName = corefDocFeatName;
 
 		this.populate(document);
+                benchmarkCheckpoint(startTime, "__createDocumentEntitySet");
+
 	}
 
 	// TODO: maybe return List<Entity> or something  
@@ -89,6 +94,7 @@ public class DocumentEntitySet {
 	}
 
 	public Iterator<Entity> getTweetSpanIterator(Document document){
+                long startTime = Benchmark.startPoint();
 		if(document.getFeatures().get("TwitterExpanderOriginalTextSize")!=null){
 			long endDoc = (Long)document.getFeatures().get("TwitterExpanderOriginalTextSize");
 			tweetSpanEntities = new ArrayList<Entity>();
@@ -99,8 +105,10 @@ public class DocumentEntitySet {
 					tweetSpanEntities.add(thisent);
 				}
 			}
+                        benchmarkCheckpoint(startTime, "__getTweetSpanIterator_yes");
 			return tweetSpanEntities.iterator();
 		} else {
+                        benchmarkCheckpoint(startTime, "__getTweetSpanIterator_no");
 			return this.entities.iterator(); //Not an expanded tweet
 		}
 	}
@@ -221,6 +229,7 @@ public class DocumentEntitySet {
 
 	public SortedMap<Long, Entity> getProximalEntities(Entity ent, int charRange, 
 			Boolean useTwitterExpansion){
+                long startTime = Benchmark.startPoint();
 		SortedMap<Long, Entity> proximalEntities = new TreeMap<Long, Entity>();
 
 		Iterator<Entity> entit = this.entities.iterator();
@@ -237,6 +246,7 @@ public class DocumentEntitySet {
 				}	
 			}
 		}
+                benchmarkCheckpoint(startTime, "__getProximalEntities");
 
 		return proximalEntities;
 	}
@@ -366,5 +376,26 @@ public class DocumentEntitySet {
 	public void setTweetSpanEntities(List<Entity> tweetSpanEntities) {
 		this.tweetSpanEntities = tweetSpanEntities;
 	}
+  
+  // **** BENCHMARK-RELATED
+  protected void benchmarkCheckpoint(long startTime, String name) {
+    if (Benchmark.isBenchmarkingEnabled()) {
+      Benchmark.checkPointWithDuration(
+              Benchmark.startPoint() - startTime,
+              Benchmark.createBenchmarkId(name, this.getBenchmarkId()),
+              this, null);
+    }
+  }
 
+  public String getBenchmarkId() {
+    return benchmarkId;
+  }
+
+  public void setBenchmarkId(String string) {
+    benchmarkId = string;
+  }
+  private String benchmarkId = "DocumentEntitySet";
+
+
+        
 }

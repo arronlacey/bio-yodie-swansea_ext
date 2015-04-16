@@ -1,3 +1,9 @@
+// TODO: maybe move this in a more flexible PR (Java Scipting?) and 
+// load the mappings from a configuration file so it can get adapted.
+// Also make this work with both ANNIE and/or Stanford (other?) NERs and
+// any NERs we may have in the NER set.
+
+
 Phase: ApplyAnnieClassMatch 
 Input: Lookup
 Options: control = all debug = true  
@@ -413,6 +419,11 @@ Rule: ApplyAnnieClassMatch1
   lookupisother = true;
  }
 
+ // TODO: this is currently ANNIE specific, maybe we already expect here something that
+ // is tool-independent? (i.e. at an early step we decide how we pre-annotate
+ // NERs from ANNIE, Stanford, ... and create our own Anns for this?
+ // (We should probably also move to NER.type= convention because then the code
+ // does not need to get changed if the number of supported types changes)
 
  AnnotationSet closep = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Person");
  AnnotationSet exactp = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Person");
@@ -427,7 +438,7 @@ Rule: ApplyAnnieClassMatch1
 
 
  if(lookupisperson){
-
+  lu.getFeatures().put("mappedType","Person");
   if(closep.size()>0){
    lu.getFeatures().put("annieOverlapMatch", "match");
   } else if(closel.size()>0 || closeo.size()>0){
@@ -441,7 +452,7 @@ Rule: ApplyAnnieClassMatch1
   }
 
  } else if(lookupislocation){
-
+  lu.getFeatures().put("mappedType","Location");
   if(closel.size()>0){
    lu.getFeatures().put("annieOverlapMatch", "match");
   } else if(closep.size()>0 || closeo.size()>0){
@@ -455,7 +466,7 @@ Rule: ApplyAnnieClassMatch1
   }
 
  } else if(lookupisorganization){
-
+  lu.getFeatures().put("mappedType","Organization");
   if(closeo.size()>0){
    lu.getFeatures().put("annieOverlapMatch", "match");
   } else if(closep.size()>0 || closel.size()>0){
@@ -469,6 +480,7 @@ Rule: ApplyAnnieClassMatch1
   }
 
  } else if(lookupisother){
+   lu.getFeatures().put("mappedType","Other");
    lu.getFeatures().put("annieOverlapMatch", "unknown");
    lu.getFeatures().put("annieExactMatch", "unknown");
  }

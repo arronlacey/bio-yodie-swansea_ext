@@ -1,14 +1,9 @@
 package gate.creole.disambiguation;
 
 import com.jpetrak.gate.jdbclookup.JdbcLR;
-import edu.ucla.sspace.common.DocumentVectorBuilder;
-import edu.ucla.sspace.common.SemanticSpaceIO;
-import gate.LanguageResource;
 import gate.ProcessingResource;
-import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
-import gate.creole.ResourceInstantiationException;
 import gate.creole.disambiguation.fastgraph.FastGraphLR;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
@@ -17,16 +12,13 @@ import gate.creole.metadata.RunTime;
 import gate.util.Benchmark;
 import gate.util.Benchmarkable;
 import gate.util.GateRuntimeException;
-import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -257,8 +249,8 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
     long startTime = Benchmark.startPoint();
     int count = fastGraphLR.getDirectRelationCount(fromInst,toInst);
     benchmarkCheckpoint(startTime, "__directRelations");
-    logger.debug("StructuralSimilarityPRv3\tValue:directRelations\t"+fromInst+"\t"+toInst+"\t"+count);
-    logger.debug("StructuralSimilarityPRv3\tdirectRelations\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
+    //logger.debug("StructuralSimilarityPRv3\tValue:directRelations\t"+fromInst+"\t"+toInst+"\t"+count);
+    //logger.debug("StructuralSimilarityPRv3\tdirectRelations\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
     return count;
   }
   
@@ -266,7 +258,7 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
     long startTime = Benchmark.startPoint();
     int count = fastGraphLR.getSharedParentRelationCount(fromInst,toInst);
     benchmarkCheckpoint(startTime, "__sharedParent");
-    logger.debug("StructuralSimilarityPRv3\tsharedParent\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
+    //logger.debug("StructuralSimilarityPRv3\tsharedParent\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
     return count;
   }
 
@@ -274,7 +266,7 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
     long startTime = Benchmark.startPoint();
     int count = fastGraphLR.getSharedChildRelationCount(fromInst, toInst);
     benchmarkCheckpoint(startTime, "__sharedChild");
-    logger.debug("StructuralSimilarityPRv3\tsharedChild\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
+    //logger.debug("StructuralSimilarityPRv3\tsharedChild\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
     return count;
   }
 
@@ -282,7 +274,7 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
     long startTime = Benchmark.startPoint();
     int count = fastGraphLR.getSequenceRelationCount(fromInst, toInst);
     benchmarkCheckpoint(startTime, "__indirectSequence");
-    logger.debug("StructuralSimilarityPRv2\tindirectSequence\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
+    //logger.debug("StructuralSimilarityPRv2\tindirectSequence\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));
     return count;
   }
 
@@ -336,8 +328,8 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
     } catch (Exception e) {
       throw new GateRuntimeException("Could not retrieve incoming links for "+fromInst,e);
     }
-    logger.debug("StructuralSimilarityPRv3\tValue:relatednes:incoming1\t"+fromInst+"\t"+toInst+"\t"+incoming1.size());
-    logger.debug("StructuralSimilarityPRv3\tValue:relatednes:incoming2\t"+fromInst+"\t"+toInst+"\t"+incoming2.size());
+    //logger.debug("StructuralSimilarityPRv3\tValue:relatednes:incoming1\t"+fromInst+"\t"+toInst+"\t"+incoming1.size());
+    //logger.debug("StructuralSimilarityPRv3\tValue:relatednes:incoming2\t"+fromInst+"\t"+toInst+"\t"+incoming2.size());
     if(incoming1.size() == 0 || incoming2.size() == 0) {
       // just use ret=0.0F
     } else {
@@ -369,8 +361,8 @@ public class StructuralSimilarityPRv3 extends AbstractLanguageAnalyser implement
       }
     }
     benchmarkCheckpoint(startTime, "__relatedness");
-    logger.debug("StructuralSimilarityPRv3\tValue:relatedness\t"+fromInst+"\t"+toInst+"\t"+ret);
-    logger.debug("StructuralSimilarityPRv3\trelatedness\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));    
+    //logger.debug("StructuralSimilarityPRv3\tValue:relatedness\t"+fromInst+"\t"+toInst+"\t"+ret);
+    //logger.debug("StructuralSimilarityPRv3\trelatedness\t"+fromInst+"\t"+toInst+"\t"+elapsedTime(startTime));    
     return ret;
   }
 
