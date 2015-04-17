@@ -80,7 +80,7 @@ else
   summary $ts
   echo 'UNIT TEST COMPLETED WITHOUT DIFFERENCES! Log is in' $LOGDIR/runUnitTest-$ts.log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   rm $log
-  rm $outFile
+  exit 0
 fi
 
 
