@@ -51,9 +51,9 @@ totalret=$((totalret + ret))
 
 evalId=runUnitTests-en-tweets-training-sample1-${ts}
 $ROOTDIR/../yodie-tools/bin/runPipeline.sh -DmaxRecall.evalId=$evalId -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl -c $SCRIPTDIR/en-tweets-training-sample1.config.yaml -nl -d -P $SCRIPTDIR/compareAndEvaluate.xgapp $ROOTDIR/main/main.xgapp $SCRIPTDIR/en-tweets-training-sample1 $SCRIPTDIR/en-tweets-training-sample1.out |& tee -a $log
-grep -q "=== UNIT TEST:" $log | grep -v -q "=== UNIT TEST: DIFFERENCE"
+
+grep "=== UNIT TEST:" $log | grep -q "=== UNIT TEST: DIFFERENCE"
 ret=$?
-totalret=$((totalret + ret))
 
 function summary() {
   ts=$1 
@@ -69,7 +69,7 @@ function summary() {
   done
 }
 
-if [ $totalret != 0 ]
+if [ $ret == 1 ]
 then
   echo 'UNIT TEST DIFFERENCES!' Log is in $LOGDIR/runUnitTest-$ts.log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   grep "=== UNIT TEST: DIFFERENCE" $log
