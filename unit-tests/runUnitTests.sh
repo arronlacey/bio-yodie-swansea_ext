@@ -69,17 +69,16 @@ function summary() {
   done
 }
 
-if [ $ret == 1 ]
+if [ $ret == 0 ]
 then
-  echo 'UNIT TEST DIFFERENCES!' Log is in $LOGDIR/runUnitTest-$ts.log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
+  echo 'UNIT TEST DIFFERENCES!' Log is in $log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   grep "=== UNIT TEST: DIFFERENCE" $log
   summary $ts
-  echo 'UNIT TEST DIFFERENCES!' Log is in $LOGDIR/runUnitTest-$ts.log
+  echo 'UNIT TEST DIFFERENCES!' Log is in $log
   exit 1
 else 
   summary $ts
-  echo 'UNIT TEST COMPLETED WITHOUT DIFFERENCES! Log is in' $LOGDIR/runUnitTest-$ts.log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
-  rm $log
+  echo 'UNIT TEST COMPLETED WITHOUT DIFFERENCES! Log is in' $log, data files are in $LOGDIR/EvaluateTagging-runUnitTests-*-$ts.tsv
   exit 0
 fi
 
