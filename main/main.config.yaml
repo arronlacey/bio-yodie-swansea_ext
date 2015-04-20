@@ -36,12 +36,12 @@
   controller: precache-twitterinfo
   prname: TwitterPreCacheUsers
   name: twitterApiKey
-  value: xX1QUu73Gpiq1okahkkuy6kM7
+  value: dummyValue
 - set: prparm
   controller: precache-twitterinfo
   prname: TwitterPreCacheUsers
   name: twitterApiSecret
-  value: 8kA38esvSBcqpQNxkSqOIrJF14rrIoTm1qvJHHsW0xKQ5cV0pP
+  value: dummyValue
 
 
 
@@ -66,12 +66,12 @@
   controller: preprocess-en-twitter
   prname: TwitterExpander:User
   name: twitterApiKey
-  value: xX1QUu73Gpiq1okahkkuy6kM7
+  value: dummyValue
 - set: prparm
   controller: preprocess-en-twitter
   prname: TwitterExpander:User
   name: twitterApiSecret
-  value: 8kA38esvSBcqpQNxkSqOIrJF14rrIoTm1qvJHHsW0xKQ5cV0pP
+  value: dummyValue
   
 ## which of the expansions to run, default is to run none, and since none is
 ## run, also not run the segment processing which processes the generated text
@@ -79,14 +79,47 @@
   controller: preprocess-en-twitter
   prname: TwitterExpander:User
   value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:User
+  name: fromCacheOnly
+  value: true
+  
 - set: prrun
   controller: preprocess-en-twitter
   prname: TwitterExpander:Hashtag
   value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Hashtag
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Hashtag
+  name: fromCacheOnly
+  value: true
+  
 - set: prrun
   controller: preprocess-en-twitter
   prname: TwitterExpander:Url
   value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Url
+  name: cacheIsReadOnly
+  value: true
+- set: prparm
+  controller: preprocess-en-twitter
+  prname: TwitterExpander:Url
+  name: fromCacheOnly
+  value: true
+  
 - set: prrun
   controller: preprocess-en-twitter
   prname: TwitterExpander:AnnotateAll
@@ -137,6 +170,19 @@
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.keepCandsWithNullFreq
   value: "false"
+
+## Related to twitter expansion!  
+## should a match in the expanded twitter user id get projected back
+## to the original twitter id?
+- set: prrun
+  controller: filter-prescoring
+  prname: Java:projectTwitterUserID
+  value: false
+## when projecting the twitter user id, should we limit to coextensive only?
+- set: propset
+  name: lodie.filter-prescoring.projectTwitterUserID.coextonly
+  value: false
+  
 
 
 ###################################
@@ -242,7 +288,7 @@
   value: 0.05
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
-  value: true 
+  value: false
 
 
 ## Settings for the disambiguation-libsvm pipeline
@@ -275,6 +321,7 @@
   prname: LF:LibSVM
   name: featureSpecURL
   value: "../../disambiguation-libsvm/disambiguation-config.txt"
+  
 #- set: propset
 #  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
 #  value: 0.82
