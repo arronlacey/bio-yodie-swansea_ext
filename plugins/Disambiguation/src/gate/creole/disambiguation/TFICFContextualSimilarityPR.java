@@ -304,10 +304,10 @@ ProcessingResource {
 	        // rows are documents and columns are terms, while the 
 	        // edu.ucla.sspace.matrix.TfIdfTransform transform expects it the 
 	        // other way round.
-	        tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
-	          "edu.ucla.sspace.matrix.TfIdfDocStripedTransform");
 	        //tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
-	        //  "edu.ucla.sspace.matrix.TfIdfTransform");
+	        //  "edu.ucla.sspace.matrix.TfIdfDocStripedTransform");
+	        tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
+	          "edu.ucla.sspace.matrix.TfIdfTransform");
 	        candidateListSemSpace.processSpace(tficfConfig);
 
 	        DocumentVectorBuilder tficfVectorBuilder = 
