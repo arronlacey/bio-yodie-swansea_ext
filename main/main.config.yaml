@@ -292,6 +292,11 @@
 
 
 ## Settings for the disambiguation-libsvm pipeline
+
+- set: propset
+  name: lodie.disambiguation-ml-training.coextensiveOnly
+  value: true
+
 ## Set the libsvm parameters as described at http://www.csie.ntu.edu.tw/~cjlin/libsvm/ 
 - set: prparm
   controller: disambiguation-ml-training
