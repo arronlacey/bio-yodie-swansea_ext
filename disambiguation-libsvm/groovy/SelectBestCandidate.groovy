@@ -10,6 +10,12 @@ if(confidenceThresholdString != null) {
   confidenceThreshold = confidenceThresholdString.toDouble()
 }
 
+def frequencyThresholdString = System.getProperty("lodie.disambiguation-libsvm.SelectBestCandidate.frequencyThreshold")
+def frequencyThreshold = 451
+if(frequencyThresholdString != null) {
+  frequencyThreshold = frequencyThresholdString.toInt()
+}
+
 defaultAS.get("LookupList").each{ ll ->
     AnnotationSet candidates = Utils.getCoextensiveAnnotations(inputAS, ll, "Mention_disamb");
     Annotation bestcandidate = null;
@@ -47,7 +53,7 @@ defaultAS.get("LookupList").each{ ll ->
 
     if(bestcandidate!=null && scoreofbestcandidate>confidenceThreshold){
       gate.Utils.addAnn(outputAS, bestcandidate, "Mention", Utils.toFeatureMap(bestcandidate.getFeatures()));
-    } else if(commonestCandidate!=null && uriFreqOfCommonestCandidate>1000){
+    } else if(commonestCandidate!=null && uriFreqOfCommonestCandidate>frequencyThreshold){
       gate.Utils.addAnn(outputAS, commonestCandidate, "Mention", Utils.toFeatureMap(commonestCandidate.getFeatures()));
     //} else {
     // TODO: check if we should create a NIL annotation here!
