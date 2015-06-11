@@ -48,20 +48,6 @@
   name: modelFile
   value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
 
-## Settings for the precache-twitterinfo pipeline
-## the key and secret for Twitter API access: MUST be replaced by a proper value
-- set: prparm
-  controller: precache-twitterinfo
-  prname: TwitterPreCacheUsers
-  name: twitterApiKey
-  value: xX1QUu73Gpiq1okahkkuy6kM7
-- set: prparm
-  controller: precache-twitterinfo
-  prname: TwitterPreCacheUsers
-  name: twitterApiSecret
-  value: 8kA38esvSBcqpQNxkSqOIrJF14rrIoTm1qvJHHsW0xKQ5cV0pP
-
-
 ## Settings for the gazetteer-en sub-pipeline
 - set: prparm
   controller: gazetteer-en
@@ -98,7 +84,7 @@
 - set: prrun
   controller: gazetteer-postproc
   prname: JAPE:removeLookups
-  value: true
+  value: false
 
 
 ## Settings for the filter-prescoring sub-pipeline

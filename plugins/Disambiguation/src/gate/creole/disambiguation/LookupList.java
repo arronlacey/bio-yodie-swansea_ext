@@ -35,8 +35,20 @@ public class LookupList {
 	Annotation lookuplistann;
 	Document document;
 	String inputASName;
+	
+	//Lookups are currently keyed on inst and label because this is unique for the span.
+	//inst alone is not necessarily unique.
+	public class KeyPair{
+		String inst;
+		String label;
+		
+		public KeyPair(String inst, String label){
+			this.inst = inst;
+			this.label = label;
+		}
+	}
 
-	private Map<String, Annotation> annotationbyinst = new HashMap<String, Annotation>();
+	private Map<KeyPair, Annotation> annotationbyinstlabel = new HashMap<KeyPair, Annotation>();
 	
 	public LookupList(Annotation lookuplist, Annotation spanann, 
 			Document document, String inputASName){		
@@ -67,7 +79,8 @@ public class LookupList {
 			List<Integer> ids = (List<Integer>)lookuplist.getFeatures().get("ids");
 			for(int i=0;i<ids.size();i++){
 				Annotation ann = document.getAnnotations().get(ids.get(i));
-				this.annotationbyinst.put(ann.getFeatures().get("inst").toString(), ann);
+				KeyPair kp = new KeyPair(ann.getFeatures().get("inst").toString(), ann.getFeatures().get("label").toString());
+				this.annotationbyinstlabel.put(kp, ann);
 			}
 		} else { //Otherwise make an empty new one.
 			AnnotationSet inputAS = document.getAnnotations(inputASName);
@@ -145,20 +158,19 @@ public class LookupList {
 	
 			//Add it to the structure.
                         // TODO: parameter instead of "inst"?
-                        // !!TODO: this only keeps the last inst, may overwrite if there are more than 1
-                        // candidate with the same inst (which will be the case if we merge non-coext lokuplists)
-			this.annotationbyinst.put((String)ann.getFeatures().get("inst"), ann);
+			KeyPair kp = new KeyPair((String)ann.getFeatures().get("inst"), (String)ann.getFeatures().get("label"));
+			this.annotationbyinstlabel.put(kp , ann);
 		}
 	}
 	
 	public void removeAllAnns(){
-		Set<String> annstoremove = (Set<String>)this.annotationbyinst.keySet();
+		Set<KeyPair> annstoremove = (Set<KeyPair>)this.annotationbyinstlabel.keySet();
 		 //Make copy to avoid concurrent modification exception with removeAnn.
-		Set<String> copyofannstoremove = new HashSet<String>();
+		Set<KeyPair> copyofannstoremove = new HashSet<KeyPair>();
 		copyofannstoremove.addAll(annstoremove);
-		Iterator<String> it = copyofannstoremove.iterator();
+		Iterator<KeyPair> it = copyofannstoremove.iterator();
 		while(it.hasNext()){
-			String inst = it.next();
+			KeyPair inst = it.next();
 			this.removeAnn(inst);
 		}
 		
@@ -167,14 +179,14 @@ public class LookupList {
 		inputAS.remove(this.lookuplistann);
 	}
 	
-	public void removeAnn(String inst){
-		Annotation anntoremove = this.getAnnotationbyinst(inst);
+	public void removeAnn(KeyPair instlabel){
+		Annotation anntoremove = this.getAnnotationbyinstlabel(instlabel);
 		if(anntoremove!=null){ //Will be null if this one isn't on this span.
 			if(this.lookuplistann!=null){
 				List<Integer> ids = (List<Integer>)this.lookuplistann.getFeatures().get("ids");
 				ids.remove(anntoremove.getId());
 				this.lookuplistann.getFeatures().put("ids", ids);
-				this.annotationbyinst.remove(inst);
+				this.annotationbyinstlabel.remove(instlabel);
 			} else {
 				System.out.println("Attempt to remove Lookup from location with "
 						+ "no LookupList!");
@@ -184,8 +196,8 @@ public class LookupList {
 		}
 	}
 	
-	public void flagAnn(String inst){
-		Annotation anntoflag = this.getAnnotationbyinst(inst);
+	public void flagAnn(KeyPair instlabel){
+		Annotation anntoflag = this.getAnnotationbyinstlabel(instlabel);
 		if(anntoflag!=null){ //Will be null if this one isn't on this span.
 			anntoflag.getFeatures().put("isOnKeySpan", "false");
 		}
@@ -270,12 +282,38 @@ public class LookupList {
 		this.lookuplistann = lookuplist;
 	}
 
-	public Annotation getAnnotationbyinst(String inst) {
-		return annotationbyinst.get(inst);
+	public Annotation getAnnotationbyinstlabel(KeyPair instlabel) {
+		return annotationbyinstlabel.get(instlabel);
 	}
 
-	public Map<String, Annotation> getAnnotationsbyinst() {
-		return annotationbyinst;
+	//Get all Lookups for that inst
+	public List<Annotation> getAnnotationSelectionbyinst(String inst) {
+		ArrayList<Annotation> list = new ArrayList<Annotation>();
+		Set<KeyPair> keys = this.annotationbyinstlabel.keySet();
+		Iterator<KeyPair> it = keys.iterator();
+		while(it.hasNext()){
+			KeyPair thiskp = it.next();
+			if(thiskp.inst.equals(inst)){
+				list.add(this.getAnnotationbyinstlabel(thiskp));
+			}
+		}
+		return list;
+	}
+
+	public Map<KeyPair, Annotation> getAnnotationsbyinstlabel() {
+		return annotationbyinstlabel;
+	}
+
+	//Return the set of all insts for this LookupList
+	public Set<String> getInstSet() {
+		Set<KeyPair> keys = this.annotationbyinstlabel.keySet();
+		Iterator<KeyPair> it = keys.iterator();
+		Set<String> set = new HashSet<String>();
+		while(it.hasNext()){
+			KeyPair thiskp = it.next();
+			set.add(thiskp.inst);
+		}
+		return set;
 	}
 
 }

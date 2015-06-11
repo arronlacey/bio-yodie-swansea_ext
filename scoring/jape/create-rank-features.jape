@@ -15,22 +15,21 @@ Rule: CreateAllRankFeatures
  AnnotationSet matches = bindings.get("match");  
  Annotation ll = matches.iterator().next();
 
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityVector", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFDirect", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFIndirect", ll, inputAS, false);
 
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityTFICFSimple", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFDirectTFICFSimple", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFIndirectTFICFSimple", ll, inputAS, false);
-
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityTFICFSemantic", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFDirectTFICFSemantic", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFIndirectTFICFSemantic", ll, inputAS, false);
 
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relLabelFreqByUriInWp", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relUriFreqByLabelInWp", ll, inputAS, true);
 
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("stringSimilarityBestLabel", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2BiDirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2BiIndirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2SharedChild", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2SharedParent", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2UniDirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2UniIndirect", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2Combined", ll, inputAS, false);
  gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2Relatedness", ll, inputAS, false);
 

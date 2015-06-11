@@ -144,16 +144,8 @@
                   <string>Eval</string>
                 </entry>
                 <entry>
-                  <string>featureNameNilCluster</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>outputDirectoryUrl</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>listIdFeatureName</string>
-                  <string></string>
                 </entry>
                 <entry>
                   <string>keyASName</string>

@@ -9,6 +9,9 @@
 // precision and f-measure for the max recall situation could be.
 // The set with the filtered and merged lookup list annotations is EvalMaxRecalTmp
 
+// This will also configure the Evaluation API so annotations are placed into 
+// the outputAS that reflect correct, partial correct or incorrect/missing annotations. 
+
 // NOTE!!!!!
 // Since the Key annotation set contains annotations of type Mention with inst features
 // that contain the full URI, but the input AS contains annotations of type Lookup with
@@ -39,6 +42,8 @@ private EvalStatsTagging allStats;
 
 private String evaluationId = "PleaseProvideAProperEvalId";
 
+private AnnotationTypeSpecs annSpecs;
+
 @Override
 public void controllerStarted() {
   evaluationId = System.getProperty("maxRecall.evalId");
@@ -47,6 +52,9 @@ public void controllerStarted() {
     //throw new GateRuntimeException("Property maxRecall.evalId needs to be set to the evaluation id!");
   }
   allStats = new EvalStatsTagging();
+  ArrayList<String> types = new ArrayList<String>();
+  types.add("Lookup=LookupList");
+  annSpecs = new AnnotationTypeSpecs(types);
 }
 
 @Override
@@ -110,7 +118,11 @@ public void execute() {
                       evalAnns, 
                       evalListAnns,
                       "ids", 
-                      "relUriFreqByLabelInWp");
+                      "relUriFreqByLabelInWp",
+                      "Lookup",
+                      false,
+                      "",
+                      "ids");
   System.out.println("candidate lists: "+candList.size());                     
   AnnotationDifferTagging differ = AnnotationDifferTagging.calculateEvalStatsTagging4List(
     key4list,
@@ -120,8 +132,9 @@ public void execute() {
     fcmp,
     "ids",
     "relUriFreqByLabelInWp",
-    //Double.NEGATIVE_INFINITY
-    Double.NEGATIVE_INFINITY
+    Double.NEGATIVE_INFINITY,
+    null,
+    annSpecs
     );
   outputAS.clear();
   differ.addIndicatorAnnotations(outputAS,"");

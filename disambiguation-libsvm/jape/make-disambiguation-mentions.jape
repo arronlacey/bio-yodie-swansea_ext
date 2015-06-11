@@ -10,29 +10,32 @@ Rule: makeDisambiguationMentions
 -->
 {
   Annotation mention = bindings.get("match").iterator().next();
-  AnnotationSet lookups = doc.getAnnotations().get("Lookup");
   String coextonly = "false";
   if(System.getProperty("lodie.disambiguation-ml-training.coextensiveOnly")!=null){
     coextonly = System.getProperty("lodie.disambiguation-ml-training.coextensiveOnly");
   }
 
+  AnnotationSet lookups;
+  if(coextonly.equals("true")){
+    lookups = gate.Utils.getCoextensiveAnnotations(doc.getAnnotations().get("Lookup"), mention);
+  } else {
+    lookups = gate.Utils.getOverlappingAnnotations(doc.getAnnotations().get("Lookup"), mention);
+  }
+
   Iterator it = lookups.iterator();
   while(it.hasNext()){
     Annotation lookup = (Annotation)it.next();
-    
-    if(lookup.coextensive(mention) || (!coextonly.equals("true") && lookup.overlaps(mention))){
-      FeatureMap fm = Factory.newFeatureMap();
-      fm.putAll(lookup.getFeatures());
-      if(mention.getFeatures().get("inst")==null){
-        //do nothing. We aren't going to train on nulls.
-      } else if(mention.getFeatures().get("inst").toString().equals(
-        "http://dbpedia.org/resource/" + lookup.getFeatures().get("inst").toString())){
-        fm.put("class", "true");
-        outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
-      } else {
-        fm.put("class", "false");
-        outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
-      }
+    FeatureMap fm = Factory.newFeatureMap();
+    fm.putAll(lookup.getFeatures());
+    if(mention.getFeatures().get("inst")==null){
+      //do nothing. We aren't going to train on nulls.
+    } else if(mention.getFeatures().get("inst").toString().equals(
+      "http://dbpedia.org/resource/" + lookup.getFeatures().get("inst").toString())){
+      fm.put("class", "true");
+      outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
+    } else {
+      fm.put("class", "false");
+      outputAS.add(lookup.getStartNode(), lookup.getEndNode(), "Mention_disamb", fm);
     }
   }
 }
