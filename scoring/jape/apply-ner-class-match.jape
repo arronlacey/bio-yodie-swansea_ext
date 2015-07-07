@@ -4,12 +4,12 @@
 // any NERs we may have in the NER set.
 
 
-Phase: ApplyAnnieClassMatch 
+Phase: ApplyNERClassMatch 
 Input: Lookup
 Options: control = all debug = true  
 
 
-Rule: ApplyAnnieClassMatch1 
+Rule: ApplyNERClassMatch1 
 (  
  {Lookup} 
 )  
@@ -388,8 +388,10 @@ Rule: ApplyAnnieClassMatch1
  Annotation lu = matches.iterator().next();
  
  String lucl = (String)lu.getFeatures().get("airpSpecificClass");
- String[] luclarray = lucl.split("\\|");
+ String lucl2 = (String)lu.getFeatures().get("dbpSpecificClass");
 
+ String[] luclarray = (String[])org.apache.commons.lang.ArrayUtils.addAll(lucl.split("\\|"), lucl2.split("\\|"));
+ 
  boolean lookupisperson = false;
  boolean lookupislocation = false;
  boolean lookupisorganization = false;
@@ -425,64 +427,88 @@ Rule: ApplyAnnieClassMatch1
  // (We should probably also move to NER.type= convention because then the code
  // does not need to get changed if the number of supported types changes)
 
- AnnotationSet closep = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Person");
- AnnotationSet exactp = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Person");
+ AnnotationSet closep1 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Person");
+ AnnotationSet closep2 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "PERSON"); //Stanford NERs are in caps
+ Set<Annotation> closep = new HashSet<Annotation>();
+ closep.addAll(closep1);
+ closep.addAll(closep2);
+ AnnotationSet exactp1 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Person");
+ AnnotationSet exactp2 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "PERSON");
+ Set<Annotation> exactp = new HashSet<Annotation>();
+ exactp.addAll(exactp1);
+ exactp.addAll(exactp2);
 
 
- AnnotationSet closel = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Location");
- AnnotationSet exactl = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Location");
+ AnnotationSet closel1 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Location");
+ AnnotationSet closel2 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "LOCATION");
+ Set<Annotation> closel = new HashSet<Annotation>();
+ closel.addAll(closel1);
+ closel.addAll(closel2);
+ AnnotationSet exactl1 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Location");
+ AnnotationSet exactl2 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "LOCATION");
+ Set<Annotation> exactl = new HashSet<Annotation>();
+ exactl.addAll(exactl1);
+ exactl.addAll(exactl2);
 
 
- AnnotationSet closeo = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Organization");
- AnnotationSet exacto = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Organization");
+ AnnotationSet closeo1 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "Organization");
+ AnnotationSet closeo2 = gate.Utils.getOverlappingAnnotations(inputAS, lu, "ORGANIZATION");
+ Set<Annotation> closeo = new HashSet<Annotation>();
+ closeo.addAll(closeo1);
+ closeo.addAll(closeo2);
+ AnnotationSet exacto1 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "Organization");
+ AnnotationSet exacto2 = gate.Utils.getCoextensiveAnnotations(inputAS, lu, "ORGANIZATION");
+ Set<Annotation> exacto = new HashSet<Annotation>();
+ exacto.addAll(exacto1);
+ exacto.addAll(exacto2);
 
 
  if(lookupisperson){
   lu.getFeatures().put("mappedType","Person");
   if(closep.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "match");
+   lu.getFeatures().put("nmNEROverlapMatch", "match");
   } else if(closel.size()>0 || closeo.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+   lu.getFeatures().put("nmNEROverlapMatch", "mismatch");
   }
 
   if(exactp.size()>0){
-   lu.getFeatures().put("annieExactMatch", "match");
+   lu.getFeatures().put("nmNERExactMatch", "match");
   } else if(exactl.size()>0 || exacto.size()>0){
-   lu.getFeatures().put("annieExactMatch", "mismatch");
+   lu.getFeatures().put("nmNERExactMatch", "mismatch");
   }
 
  } else if(lookupislocation){
   lu.getFeatures().put("mappedType","Location");
   if(closel.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "match");
+   lu.getFeatures().put("nmNEROverlapMatch", "match");
   } else if(closep.size()>0 || closeo.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+   lu.getFeatures().put("nmNEROverlapMatch", "mismatch");
   }
 
   if(exactl.size()>0){
-   lu.getFeatures().put("annieExactMatch", "match");
+   lu.getFeatures().put("nmNERExactMatch", "match");
   } else if(exactp.size()>0 || exacto.size()>0){
-   lu.getFeatures().put("annieExactMatch", "mismatch");
+   lu.getFeatures().put("nmNERExactMatch", "mismatch");
   }
 
  } else if(lookupisorganization){
   lu.getFeatures().put("mappedType","Organization");
   if(closeo.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "match");
+   lu.getFeatures().put("nmNEROverlapMatch", "match");
   } else if(closep.size()>0 || closel.size()>0){
-   lu.getFeatures().put("annieOverlapMatch", "mismatch");
+   lu.getFeatures().put("nmNEROverlapMatch", "mismatch");
   }
 
   if(exacto.size()>0){
-   lu.getFeatures().put("annieExactMatch", "match");
+   lu.getFeatures().put("nmNERExactMatch", "match");
   } else if(exactp.size()>0 || exactl.size()>0){
-   lu.getFeatures().put("annieExactMatch", "mismatch");
+   lu.getFeatures().put("nmNERExactMatch", "mismatch");
   }
 
  } else if(lookupisother){
    lu.getFeatures().put("mappedType","Other");
-   lu.getFeatures().put("annieOverlapMatch", "unknown");
-   lu.getFeatures().put("annieExactMatch", "unknown");
+   lu.getFeatures().put("nmNEROverlapMatch", "unknown");
+   lu.getFeatures().put("nmNERExactMatch", "unknown");
  }
 
 }

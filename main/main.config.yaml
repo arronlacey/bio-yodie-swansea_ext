@@ -216,21 +216,6 @@
 ## should the entire expansion be included in the context?
 - set: prparm
   controller: scoring
-  prname: VectSim:RDFIndirectTFIDF500000new
-  name: useTwitterExpansion
-  value: true
-
-## Context length in characters
-- set: prparm
-  controller: scoring
-  prname: VectSim:RDFIndirectTFIDF500000new
-  name: contextLength
-  value: 2000
-
-## If for example URL occurs in context window for an entity,
-## should the entire expansion be included in the context?
-- set: prparm
-  controller: scoring
   prname: VectSim:RDFDirectTFIDF500000new
   name: useTwitterExpansion
   value: true
@@ -239,21 +224,6 @@
 - set: prparm
   controller: scoring
   prname: VectSim:RDFDirectTFIDF500000new
-  name: contextLength
-  value: 2000
-
-## If for example URL occurs in context window for an entity,
-## should the entire expansion be included in the context?
-- set: prparm
-  controller: scoring
-  prname: VectSim:AbstractsTFIDF500000new
-  name: useTwitterExpansion
-  value: true
-
-## Context length in characters
-- set: prparm
-  controller: scoring
-  prname: VectSim:AbstractsTFIDF500000new
   name: contextLength
   value: 2000
 
