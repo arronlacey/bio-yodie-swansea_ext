@@ -23,17 +23,17 @@ public void execute() {
   int removed = 0;
   for(Annotation ll : inputAS.get("LookupList")) {
     cands = LodieUtils.getCandidateList(inputAS,ll);
-    // remove all the candidates where the uriFreqInWp feature does not exist or is < minUriFreqInWp
+    // remove all the candidates where the scUriFreqInWp feature does not exist or is < minUriFreqInWp
     Iterator<FeatureMap> it = cands.iterator();
     while(it.hasNext()) {
-      Integer freq = (Integer)it.next().get("uriFreqInWp");
+      Integer freq = (Integer)it.next().get("scUriFreqInWp");
       if(freq == null || freq < minUriFreqInWp) {
         it.remove();
       }
     }
     // now only keep the maxCands most frequent in the remaining list
     if(cands.size() > maxCands) {
-      cands = LodieUtils.sortCandidatesDescOn(cands,"uriFreqInWp",maxCands,keepCandsWithNullFreq);
+      cands = LodieUtils.sortCandidatesDescOn(cands,"scUriFreqInWp",maxCands,keepCandsWithNullFreq);
     }
     // finally delete all the annotations which do not match the remaining ones, but 
     // if we have an empty candidate list, just delete everything including the list annotation
