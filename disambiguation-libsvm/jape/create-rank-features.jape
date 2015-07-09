@@ -1,43 +1,38 @@
-Phase: CreateRankFeatures 
+Phase: CreateRankFeatures
 Input: LookupList
-Options: control = all debug = true  
-
-
+Options: control = all debug = true
 
 Rule: CreateAllRankFeatures
-(  
- {LookupList} 
-)  
-:match  
---> 
+(
+ {LookupList}
+)
+:match
+-->
 {
 
- AnnotationSet matches = bindings.get("match");  
+ AnnotationSet matches = bindings.get("match");
  Annotation ll = matches.iterator().next();
 
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityRDFDirect", ll, inputAS, false);
-
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityTFICFSimple", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("contextualSimilarityTFICFSemantic", ll, inputAS, false);
-
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relLabelFreqByUriInWp", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureDouble("relUriFreqByLabelInWp", ll, inputAS, true);
-
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("stringSimilarityBestLabel", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2BiDirect", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2BiIndirect", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2SharedChild", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2SharedParent", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2UniDirect", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2UniIndirect", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2Combined", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureFloat("structSimV2Relatedness", ll, inputAS, false);
-
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureInt("labelFreqInWp", ll, inputAS, true);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureInt("labelUriFreqInWp", ll, inputAS, false);
- gate.trendminer.lodie.utils.LodieUtils.addRankFeatureInt("uriFreqInWp", ll, inputAS, true);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2Combined", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scContextualSimilarityTFICFSimple", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2BiDirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStringLength", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scLabelUriFreqInWp", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2BiIndirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2UniIndirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scMentionLinkFreq", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scLinkProb", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2UniDirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scUriFreqInWp", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2SharedChild", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStringSimilarityBestLabel", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2Relatedness", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scLabelFreqInWp", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scContextualSimilarityTFICFSemantic", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scContextualSimilarityRDFDirect", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scMentionFreq", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scStructSimV2SharedParent", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scRelUriFreqByLabelInWp", ll, inputAS, false);
+ gate.trendminer.lodie.utils.LodieUtils.addRankFeature("scRelLabelFreqByUriInWp", ll, inputAS, false);
 
 }
-
-
-

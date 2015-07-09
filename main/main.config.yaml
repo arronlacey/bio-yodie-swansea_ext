@@ -270,30 +270,30 @@
 ## Set the libsvm parameters as described at http://www.csie.ntu.edu.tw/~cjlin/libsvm/ 
 - set: prparm
   controller: disambiguation-ml-training
-  prname: LF:LibSVM
+  prname: LF:LibSVM-training
   name: learnerParams
   value: "-c 2000.0 -b 1"
 ## Save directory for training is where to save the model to.
 - set: prparm
   controller: disambiguation-ml-training
-  prname: LF:LibSVM
+  prname: LF:LibSVM-training
   name: saveDirectory
   value: "../../disambiguation-libsvm"
 ## Save directory for application is where to load the model from.
 - set: prparm
   controller: disambiguation-ml-application
-  prname: LF:LibSVM
+  prname: LF:LibSVM-application
   name: saveDirectory
   value: "../../disambiguation-libsvm"
 ## Feature spec URL is where to load the feature spec config from.
 - set: prparm
   controller: disambiguation-ml-training
-  prname: LF:LibSVM
+  prname: LF:LibSVM-training
   name: featureSpecURL
   value: "../../disambiguation-libsvm/disambiguation-config.txt"
 - set: prparm
   controller: disambiguation-ml-application
-  prname: LF:LibSVM
+  prname: LF:LibSVM-application
   name: featureSpecURL
   value: "../../disambiguation-libsvm/disambiguation-config.txt"
   

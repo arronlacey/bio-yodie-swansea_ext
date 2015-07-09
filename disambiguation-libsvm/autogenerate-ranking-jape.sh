@@ -26,5 +26,5 @@ then
   export YODIE_PIPELINE=`cd "$SCRIPTDIR"; cd ../../yodie-pipeline; pwd -P`
 fi
 
-groovy -cp "${GATE_HOME}/bin/gate.jar":"${GATE_HOME}/"'lib/*':"$YODIE_PIPELINE"/plugins/LodiePlugin/LodiePlugin.jar "$SCRIPTDIR"/groovy/autogenerate-ranking-jape.groovy  "$@"
+groovy -cp "${GATE_HOME}/bin/gate.jar":"${GATE_HOME}/"'lib/*':"$YODIE_PIPELINE"/plugins/LodiePlugin/LodiePlugin.jar "$SCRIPTDIR"/groovy/autogenerate-ranking-jape.groovy "$SCRIPTDIR"/jape/create-rank-features.jape "$SCRIPTDIR"/feature-spec.auto "$@"
 

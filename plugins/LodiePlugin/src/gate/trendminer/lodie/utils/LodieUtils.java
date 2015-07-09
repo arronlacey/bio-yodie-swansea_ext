@@ -921,7 +921,20 @@ public class LodieUtils {
       };      
     }
 
-    public static void addRankFeatureFloat(String featureToRank, Annotation lookuplist,
+    //Helper for addRankFeature
+    private static float everythingToFloat(Object score){
+    	if(score instanceof Integer){
+    		return ((Integer)score).floatValue();
+    	} else if(score instanceof Float){
+    		return ((Float)score).floatValue();
+    	} else if(score instanceof Double){
+    		return ((Double)score).floatValue();
+    	} else {
+            throw new GateRuntimeException("Failed to cast score to float.");
+    	}
+    }
+    
+    public static void addRankFeature(String featureToRank, Annotation lookuplist,
     		AnnotationSet annotationSet, boolean includeAbsoluteRankFeature){
     	AnnotationSet lus = getCandidateAnns(annotationSet, lookuplist);
 
@@ -940,7 +953,7 @@ public class LodieUtils {
 
     	  float feat = 0.0F;
     	  if(lu.getFeatures().get(featureToRank)!=null){
-    	   feat = ((Float)lu.getFeatures().get(featureToRank)).floatValue();
+    	   feat = everythingToFloat(lu.getFeatures().get(featureToRank));
     	  }
 
     	  boolean islessthan = true;
@@ -949,7 +962,7 @@ public class LodieUtils {
     	   Annotation thislistelement = lis.get(pos);
     	   float thislistfeat = 0.0F;
     	   if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	    thislistfeat = ((Float)thislistelement.getFeatures().get(featureToRank)).floatValue();
+    	    thislistfeat = everythingToFloat(thislistelement.getFeatures().get(featureToRank));
     	   }
     	   if(feat>thislistfeat){
     	    islessthan = false;
@@ -976,89 +989,7 @@ public class LodieUtils {
 
     	  float thisfeat = 0.0F;
     	  if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	   thisfeat = ((Float)thislistelement.getFeatures().get(featureToRank)).floatValue();
-    	  }
-
-    	  float rankFeat = 0.0F;
-    	  int absoluteRank = -1;
-    	  if(thisfeat==prevfeat){
-    	   rankFeat = prevrankfeat;
-    	   absoluteRank = prevAbsoluteRank;
-    	  } else if(thisfeat==0){
-    	   rankFeat = 0.0F;
-    	   absoluteRank = 0;
-    	  } else {
-    	   rankFeat = ((float)listlen-i)/(float)listlen;
-    	   absoluteRank = i+1;
-    	  }
-
-    	  lis.get(i).getFeatures().put(featureToRank + "Rank", rankFeat);
-    	  if(includeAbsoluteRankFeature){
-    		  lis.get(i).getFeatures().put(featureToRank + "AbsoluteRank", absoluteRank);
-    	  }
-    	  prevrankfeat = rankFeat;
-    	  prevfeat = thisfeat;
-    	  prevAbsoluteRank = absoluteRank;
-    	 }
-    }
-    
-    
-    public static void addRankFeatureDouble(String featureToRank, Annotation lookuplist,
-    		AnnotationSet annotationSet, boolean includeAbsoluteRankFeature){
-    	AnnotationSet lus = getCandidateAnns(annotationSet, lookuplist);
-
-    	Iterator<Annotation> it = lus.iterator();
-    	LinkedList<Annotation> lis = new LinkedList<Annotation>();
-
-		 if(it.hasNext()){
-		  Annotation first = it.next();
-		  lis.add(first);
-		 }
-
-    	 while(it.hasNext()){
-    	  Annotation lu = it.next();
-
-    	  //Insert this lookup into the list at the correct point
-
-    	  float feat = 0.0F;
-    	  if(lu.getFeatures().get(featureToRank)!=null){
-    	   feat = ((Double)lu.getFeatures().get(featureToRank)).floatValue();
-    	  }
-
-    	  boolean islessthan = true;
-    	  int pos = 0;
-    	  while(pos<lis.size() && islessthan==true){
-    	   Annotation thislistelement = lis.get(pos);
-    	   float thislistfeat = 0.0F;
-    	   if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	    thislistfeat = ((Double)thislistelement.getFeatures().get(featureToRank)).floatValue();
-    	   }
-    	   if(feat>thislistfeat){
-    	    islessthan = false;
-    	   } else {
-    	    pos++;
-    	   }
-    	  }
-
-    	  //So now we have found the element that the current lookup
-    	  //needs to precede, so we insert it in that position
-
-    	  lis.add(pos, lu);
-    	 }
-
-    	 //Now we have an ordered list. So write the rank feature on.
-    	 int listlen = lis.size();
-
-    	 float prevfeat = -1.0F;
-    	 float prevrankfeat = -1.0F;
-    	 int prevAbsoluteRank = -1;
-
-    	 for(int i=0;i<listlen;i++){
-    	  Annotation thislistelement = lis.get(i);
-
-    	  float thisfeat = 0.0F;
-    	  if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	   thisfeat = ((Double)thislistelement.getFeatures().get(featureToRank)).floatValue();
+    	   thisfeat = everythingToFloat(thislistelement.getFeatures().get(featureToRank));
     	  }
 
     	  float rankFeat = 0.0F;
@@ -1085,86 +1016,6 @@ public class LodieUtils {
     }
     
 
-    public static void addRankFeatureInt(String featureToRank, Annotation lookuplist,
-    		AnnotationSet annotationSet, boolean includeAbsoluteRankFeature){
-    	AnnotationSet lus = getCandidateAnns(annotationSet, lookuplist);
-
-    	Iterator<Annotation> it = lus.iterator();
-    	LinkedList<Annotation> lis = new LinkedList<Annotation>();
-
-		 if(it.hasNext()){
-		  Annotation first = it.next();
-		  lis.add(first);
-		 }
-
-    	 while(it.hasNext()){
-    	  Annotation lu = it.next();
-
-    	  //Insert this lookup into the list at the correct point
-
-    	  int feat = 0;
-    	  if(lu.getFeatures().get(featureToRank)!=null){
-    	   feat = ((Integer)lu.getFeatures().get(featureToRank)).intValue();
-    	  }
-
-    	  boolean islessthan = true;
-    	  int pos = 0;
-    	  while(pos<lis.size() && islessthan==true){
-    	   Annotation thislistelement = lis.get(pos);
-    	   int thislistfeat = 0;
-    	   if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	    thislistfeat = ((Integer)thislistelement.getFeatures().get(featureToRank)).intValue();
-    	   }
-    	   if(feat>thislistfeat){
-    	    islessthan = false;
-    	   } else {
-    	    pos++;
-    	   }
-    	  }
-
-    	  //So now we have found the element that the current lookup
-    	  //needs to precede, so we insert it in that position
-
-    	  lis.add(pos, lu);
-    	 }
-
-    	 //Now we have an ordered list. So write the rank feature on.
-    	 int listlen = lis.size();
-
-    	 int prevfeat = -1;
-    	 float prevrankfeat = -1.0F;
-    	 int prevAbsoluteRank = -1;
-
-    	 for(int i=0;i<listlen;i++){
-    	  Annotation thislistelement = lis.get(i);
-
-    	  int thisfeat = 0;
-    	  if(thislistelement.getFeatures().get(featureToRank)!=null){
-    	   thisfeat = ((Integer)thislistelement.getFeatures().get(featureToRank)).intValue();
-    	  }
-
-    	  float rankFeat = 0.0F;
-    	  int absoluteRank = -1;
-    	  if(thisfeat==prevfeat){
-    	   rankFeat = prevrankfeat;
-    	   absoluteRank = prevAbsoluteRank;
-    	  } else if(thisfeat==0){
-    	   rankFeat = 0.0F;
-    	   absoluteRank = 0;
-    	  } else {
-    	   rankFeat = ((float)listlen-i)/(float)listlen;
-    	   absoluteRank = i+1;
-    	  }
-
-    	  lis.get(i).getFeatures().put(featureToRank + "Rank", rankFeat);
-    	  if(includeAbsoluteRankFeature){
-    		  lis.get(i).getFeatures().put(featureToRank + "AbsoluteRank", absoluteRank);
-    	  }
-    	  prevrankfeat = rankFeat;
-    	  prevfeat = thisfeat;
-    	  prevAbsoluteRank = absoluteRank;
-    	 }
-    }
 
     // ********************************************************
     // helper methods
