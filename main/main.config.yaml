@@ -290,12 +290,12 @@
   controller: disambiguation-ml-training
   prname: LF:LibSVM-training
   name: featureSpecURL
-  value: "../../disambiguation-libsvm/disambiguation-config.txt"
+  value: "../../disambiguation-libsvm/feature-spec.xml"
 - set: prparm
   controller: disambiguation-ml-application
   prname: LF:LibSVM-application
   name: featureSpecURL
-  value: "../../disambiguation-libsvm/disambiguation-config.txt"
+  value: "../../disambiguation-libsvm/feature-spec.xml"
   
 #- set: propset
 #  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold

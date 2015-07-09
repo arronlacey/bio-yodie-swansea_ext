@@ -66,6 +66,10 @@
                   <null/>
                 </entry>
                 <entry>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
                   <string>setsToRemove</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
@@ -73,10 +77,6 @@
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>keepOriginalMarkupsAS</string>
-                  <boolean>true</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -239,7 +239,7 @@
                 <entry>
                   <string>saveDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$disambiguation-ml-training.xgapp</urlString>
+                    <urlString>$relpath$../disambiguation-libsvm</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -257,7 +257,7 @@
                 <entry>
                   <string>featureSpecURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$disambiguation-config.txt</urlString>
+                    <urlString>$relpath$feature-spec.xml</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -281,12 +281,12 @@
                   <gate.learningframework.classification.Mode>CLASSIFICATION</gate.learningframework.classification.Mode>
                 </entry>
                 <entry>
-                  <string>operation</string>
-                  <gate.learningframework.classification.Operation>TRAIN</gate.learningframework.classification.Operation>
-                </entry>
-                <entry>
                   <string>identifierFeature</string>
                   <string>inst</string>
+                </entry>
+                <entry>
+                  <string>operation</string>
+                  <gate.learningframework.classification.Operation>TRAIN</gate.learningframework.classification.Operation>
                 </entry>
                 <entry>
                   <string>document</string>
