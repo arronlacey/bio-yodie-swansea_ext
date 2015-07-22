@@ -72,7 +72,9 @@ featurenames = new HashSet<String>()
 // 5) iterate over the documents in the directory
 // for now, we only read files with an .xml or .finf extension
 def extFilter = ~/.+\.(?:xml|finf)/
+int counter = 0
 docDir.traverse(type: groovy.io.FileType.FILES, nameFilter: extFilter) { file ->
+ if(counter<20){ //We only need a sample
   // create a document from that file
   String fileName = file.getName()
   FeatureMap parms = Factory.newFeatureMap();
@@ -81,14 +83,15 @@ docDir.traverse(type: groovy.io.FileType.FILES, nameFilter: extFilter) { file ->
   Document doc = (Document) gate.Factory.createResource("gate.corpora.DocumentImpl", parms);
   doc.setName(fileName)
 
-AnnotationSet lookups = doc.getAnnotations().get("Lookup")
+  AnnotationSet lookups = doc.getAnnotations().get("Lookup")
 
-for(lookup in lookups){
- for(featurename in lookup.getFeatures().keySet()){
-  featurenames.add(featurename)
+  for(lookup in lookups){
+   for(featurename in lookup.getFeatures().keySet()){
+    featurenames.add(featurename)
+   }
+  }
  }
-}
-
+ counter++
 }
 
 //Now that we know the features, we can autogenerate the ranking script to run with the ML
