@@ -188,6 +188,7 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
       try {
         jdbcUrl = "jdbc:h2:"
                 + databaseDirectory.getPath()
+                + (databaseDirectory.getPath().endsWith("/") ? "" : "/")
                 + this.dbName
                 + ";ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUECACHE_SIZE=1000000";
         System.out.println(jdbcUrl);

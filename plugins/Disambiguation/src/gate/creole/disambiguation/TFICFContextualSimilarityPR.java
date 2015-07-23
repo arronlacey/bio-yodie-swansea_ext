@@ -159,7 +159,8 @@ ProcessingResource {
 
 	      try {
 	        jdbcUrl = "jdbc:h2:"
-	                + databaseDirectory.getPath()
+	                + databaseDirectory.getPath() 
+                        + (databaseDirectory.getPath().endsWith("/") ? "" : "/")
 	                + this.dbName
 	                + ";ACCESS_MODE_DATA=r;CACHE_SIZE=1000000";
 	        System.out.println(jdbcUrl);

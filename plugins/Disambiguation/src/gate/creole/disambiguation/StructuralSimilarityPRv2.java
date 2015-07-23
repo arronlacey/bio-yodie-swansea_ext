@@ -583,11 +583,13 @@ public class StructuralSimilarityPRv2 extends AbstractLanguageAnalyser implement
         if (useCaching == CacheMode.TRUE) {
           jdbcUrl = "jdbc:h2:"
                   + databaseDirectory.getPath()
+                  + (databaseDirectory.getPath().endsWith("/") ? "" : "/")
                   + this.dbName
                   + ";ACCESS_MODE_DATA=rw;CACHE_SIZE=1000000";
         } else {
           jdbcUrl = "jdbc:h2:"
                   + databaseDirectory.getPath()
+                  + (databaseDirectory.getPath().endsWith("/") ? "" : "/")
                   + this.dbName
                   + ";ACCESS_MODE_DATA=r;CACHE_SIZE=1000000";
         }
