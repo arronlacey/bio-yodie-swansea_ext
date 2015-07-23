@@ -138,7 +138,7 @@ for(fn in featurenames){
    
    //Add the rank feature as well for scores, since it will be there at runtime.
    featSpec << "<ATTRIBUTE>\n"
-   featSpec << "<FEATURE>" + fn + "Rank</FEATURE>\n"
+   featSpec << "<FEATURE>" + "rn" + fn.substring(2) + "Rank</FEATURE>\n"
    featSpec << "<DATATYPE>numeric</DATATYPE>\n"
    featSpec << "</ATTRIBUTE>\n\n"
  } else if(fn.substring(0,2).equals("nm") && Character.isUpperCase(fn.charAt(2))){

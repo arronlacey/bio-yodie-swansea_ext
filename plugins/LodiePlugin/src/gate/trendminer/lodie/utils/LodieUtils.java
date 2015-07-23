@@ -1005,9 +1005,10 @@ public class LodieUtils {
     	   absoluteRank = i+1;
     	  }
 
-    	  lis.get(i).getFeatures().put(featureToRank + "Rank", rankFeat);
+    	  String rankFeatureName = "rn" + featureToRank.substring(2);
+    	  lis.get(i).getFeatures().put(rankFeatureName + "Rank", rankFeat);
     	  if(includeAbsoluteRankFeature){
-    		  lis.get(i).getFeatures().put(featureToRank + "AbsoluteRank", absoluteRank);
+    		  lis.get(i).getFeatures().put(rankFeatureName + "AbsoluteRank", absoluteRank);
     	  }
     	  prevrankfeat = rankFeat;
     	  prevfeat = thisfeat;
