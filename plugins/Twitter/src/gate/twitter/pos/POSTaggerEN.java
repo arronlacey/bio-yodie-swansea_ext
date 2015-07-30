@@ -21,7 +21,9 @@ import gate.creole.metadata.CreoleResource;
 
 import gate.stanford.Tagger;
 
-@CreoleResource(name = "Twitter POS Tagger (EN)")
+@CreoleResource(name = "Twitter POS Tagger (EN)",
+    comment = "Stanford POS tagger trained on Tweets",
+    helpURL = "http://gate.ac.uk/userguide/sec:social:twitter:prs")
 public class POSTaggerEN extends Tagger {
 
   private static final long serialVersionUID = 5657607888874448666L;

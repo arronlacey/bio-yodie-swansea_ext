@@ -19,7 +19,9 @@ import gate.creole.metadata.AutoInstance;
 import gate.creole.metadata.AutoInstanceParam;
 import gate.creole.metadata.CreoleResource;
 
-@CreoleResource(name = "TwitIE (EN)", icon = "TwitIE", autoinstances = @AutoInstance(parameters = {
+@CreoleResource(name = "TwitIE (EN)", icon = "TwitIE",
+    comment = "English TwitIE application",
+    autoinstances = @AutoInstance(parameters = {
 	@AutoInstanceParam(name="pipelineURL", value="resources/twitie-en.xgapp"),
 	@AutoInstanceParam(name="menu", value="TwitIE")}))
 public class TwitIEEN extends PackagedController {

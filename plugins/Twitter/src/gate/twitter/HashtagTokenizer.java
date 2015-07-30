@@ -44,7 +44,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@CreoleResource(name = "Hashtag Tokenizer", icon = "HashtagTokenizer", comment = "Tokenizes Multi-Word Hashtags")
+@CreoleResource(name = "Hashtag Tokenizer", icon = "HashtagTokenizer",
+    comment = "Tokenizes Multi-Word Hashtags",
+    helpURL = "http://gate.ac.uk/userguide/sec:social:twitter:hashtag")
 public class HashtagTokenizer extends AbstractLanguageAnalyser {
 
   private static final long serialVersionUID = -7848183952807024913L;
@@ -144,6 +146,8 @@ public class HashtagTokenizer extends AbstractLanguageAnalyser {
 
   @Override
   public void execute() throws ExecutionException {
+    // reset interrupt flag
+    interrupted = false;
     AnnotationSet inputAS = document.getAnnotations(inputASName);
     AnnotationSet outputAS = document.getAnnotations(outputASName);
 

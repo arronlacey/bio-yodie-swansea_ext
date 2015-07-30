@@ -7,7 +7,7 @@
  *  Version 2, June 1991 (in the distribution as file licence.html,
  *  and also available at http://gate.ac.uk/gate/licence.html).
  *  
- *  $Id: JSONTweetFormat.java 17719 2014-03-20 20:41:29Z adamfunk $
+ *  $Id: JSONTweetFormat.java 18436 2014-11-06 19:03:45Z ian_roberts $
  */
 package gate.corpora;
 
@@ -17,14 +17,19 @@ import gate.GateConstants;
 import gate.Resource;
 import gate.corpora.twitter.PreAnnotation;
 import gate.corpora.twitter.Tweet;
+import gate.corpora.twitter.TweetStreamIterator;
 import gate.corpora.twitter.TweetUtils;
 import gate.creole.ResourceInstantiationException;
 import gate.creole.metadata.AutoInstance;
 import gate.creole.metadata.CreoleResource;
 import gate.util.DocumentFormatException;
 import gate.util.InvalidOffsetException;
+import gate.util.Out;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +41,9 @@ import org.apache.commons.lang.StringUtils;
  *  This format produces one GATE document from one JSON file.
  */
 @CreoleResource(name = "GATE JSON Tweet Document Format", isPrivate = true,
-    autoinstances = {@AutoInstance(hidden = true)})
+    autoinstances = {@AutoInstance(hidden = true)},
+    comment = "Format parser for Twitter JSON files",
+    helpURL = "http://gate.ac.uk/userguide/sec:social:twitter:format")
 
 public class JSONTweetFormat extends TextualDocumentFormat {
   private static final long serialVersionUID = 6878020036304333918L;
@@ -85,33 +92,50 @@ public class JSONTweetFormat extends TextualDocumentFormat {
     String jsonString = StringUtils.trimToEmpty(doc.getContent().toString());
     try {
       // Parse the String
-      List<Tweet> tweets = TweetUtils.readTweets(jsonString);
-      Map<Tweet, Long> tweetStarts = new HashMap<Tweet, Long>();
+      Iterator<Tweet> tweetSource = new TweetStreamIterator(jsonString, null, null);
+      Map<Tweet, Long> tweetStarts = new LinkedHashMap<Tweet, Long>();
       
       // Put them all together to make the unpacked document content
       StringBuilder concatenation = new StringBuilder();
-      for (Tweet tweet : tweets) {
-        tweetStarts.put(tweet, (long) concatenation.length());
-        concatenation.append(tweet.getString()).append("\n\n");
+      while(tweetSource.hasNext()) {
+        Tweet tweet = tweetSource.next();
+        if(tweet != null) {
+          // TweetStreamIterator can return null even when hasNext is true,
+          // for search result style JSON.  This is not a problem, just ignore
+          // and check hasNext again.
+          tweetStarts.put(tweet, (long) concatenation.length());
+          concatenation.append(tweet.getString()).append("\n\n");
+        }
       }
 
       // Set new document content 
       DocumentContent newContent = new DocumentContentImpl(concatenation.toString());
       doc.edit(0L, doc.getContent().size(), newContent);
 
-      AnnotationSet originalMarkups = doc.getAnnotations(GateConstants.ORIGINAL_MARKUPS_ANNOT_SET_NAME);
       // Create Original markups annotations for each tweet
-      for (Tweet tweet : tweets) {
+      for (Tweet tweet : tweetStarts.keySet()) {
         for (PreAnnotation preAnn : tweet.getAnnotations()) {
-          preAnn.toAnnotation(originalMarkups, tweetStarts.get(tweet));
+          preAnn.toAnnotation(doc, tweetStarts.get(tweet));
         }
       }
     }
-    catch (InvalidOffsetException e) {
-      throw new DocumentFormatException(e);
-    } 
-    catch(IOException e) {
-      throw new DocumentFormatException(e);
+    catch (InvalidOffsetException | IOException e) {
+      doc.getFeatures().put("parsingError", Boolean.TRUE);
+
+      Boolean bThrow =
+              (Boolean)doc.getFeatures().get(
+                      GateConstants.THROWEX_FORMAT_PROPERTY_NAME);
+
+      if(bThrow != null && bThrow.booleanValue()) {
+        // the next line is commented to avoid Document creation fail on
+        // error
+        throw new DocumentFormatException(e);
+      }
+      else {
+        Out.println("Warning: Document remains unparsed. \n"
+                + "\n  Stack Dump: ");
+        e.printStackTrace(Out.getPrintWriter());
+      } // if
     }
   }
 

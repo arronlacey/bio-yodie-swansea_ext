@@ -7,7 +7,7 @@
  *  Version 2, June 1991 (in the distribution as file licence.html,
  *  and also available at http://gate.ac.uk/gate/licence.html).
  *  
- *  $Id: TweetUtils.java 17719 2014-03-20 20:41:29Z adamfunk $
+ *  $Id: TweetUtils.java 18496 2014-12-12 15:13:48Z ian_roberts $
  */
 package gate.corpora.twitter;
 
@@ -17,7 +17,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -41,7 +46,21 @@ public class TweetUtils  {
   public static final String[] DEFAULT_CONTENT_KEYS = {DEFAULT_TEXT_ATTRIBUTE, 
     "created_at", "user:name"};
   public static final String[] DEFAULT_FEATURE_KEYS = {"user:screen_name", 
-    "user:location", "id", "source", "truncated", "retweeted_status:id"};
+    "user:location", "id_str", "source", "truncated", "retweeted_status:id"};
+  
+  /**
+   * The JSON property representing entities (e.g. hashtags).
+   */
+  public static final String ENTITIES_ATTRIBUTE = "entities";
+  
+  /**
+   * Date parser that understands the "created_at" timestamp format.
+   * The parser can cope with dates in any timezone but the returned
+   * DateTime objects will always be anchored in UTC.
+   */
+  // Month names in Twitter API responses are English, so force locale
+  public static final DateTimeFormatter CREATED_AT_FORMAT = DateTimeFormat.forPattern(
+          "EEE MMM dd HH:mm:ss Z yyyy").withZoneUTC().withLocale(Locale.ENGLISH);
 
   
   public static List<Tweet> readTweets(String string) throws IOException {
@@ -119,11 +138,21 @@ public class TweetUtils  {
     if (node.isBoolean()) {
       return node.asBoolean();
     }
-    if (node.isDouble()) {
-      return node.asDouble();
+    if (node.isIntegralNumber()) {
+      // use Long even if the number is representable as an Integer,
+      // since Long is better supported in JAPE etc.
+      if(node.canConvertToLong()) {
+        return node.asLong();
+      } else {
+        return node.bigIntegerValue();
+      }
     }
-    if (node.isInt()) {
-      return node.asInt();
+    if (node.isNumber()) {
+      // fractional number, as integers would have been caught by
+      // the previous test.  The numberValue will be a Double
+      // unless the parser was specifically configured to use
+      // BigDecimal instead
+      return node.numberValue();
     }
     if (node.isTextual()) {
       return node.asText();

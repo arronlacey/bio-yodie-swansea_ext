@@ -23,7 +23,7 @@
 	</fileset>
 
 	<!-- we also need to pull in the Tagger_Stanford jars -->
-	<fileset id="stanford.libs" dir="../Tagger_Stanford">
+	<fileset id="stanford.libs" dir="../Stanford_CoreNLP">
 		<include name="*.jar" />
 		<include name="*.zip" />
 	</fileset>
@@ -53,7 +53,7 @@
 
 
 	<target name="compile" description="Compile Java sources" depends="prepare">
-		<javac srcdir="src" destdir="${classes.dir}" debug="true" source="1.6" target="1.6" debuglevel="lines,vars,source" deprecation="on" optimize="off" encoding="UTF-8" classpathref="compile.classpath" />
+		<javac srcdir="src" destdir="${classes.dir}" debug="true" source="1.7" target="1.7" debuglevel="lines,vars,source" deprecation="on" optimize="off" encoding="UTF-8" classpathref="compile.classpath" />
 	</target>
 
 
@@ -96,7 +96,7 @@
 	</target>
 
 	<target name="javadoc" depends="doc.prepare" description="Create Javadoc API documentation">
-		<javadoc access="protected" destdir="${javadoc.dir}" classpathref="compile.classpath" Extdirs="${extDir}" Encoding="UTF-8" Use="yes" Windowtitle="GATE Twitter JavaDoc" docencoding="UTF-8" charset="UTF-8" source="1.6" useexternalfile="yes" breakiterator="true" linksource="yes">
+		<javadoc access="protected" destdir="${javadoc.dir}" classpathref="compile.classpath" Extdirs="${extDir}" Encoding="UTF-8" Use="yes" Windowtitle="GATE Twitter JavaDoc" docencoding="UTF-8" charset="UTF-8" source="1.7" useexternalfile="yes" breakiterator="true" linksource="yes">
 			<fileset dir="${src.dir}" />
 			<link href="http://docs.oracle.com/javase/6/docs/api/" />
 			<link href="http://gate.ac.uk/gate/doc/javadoc/" />

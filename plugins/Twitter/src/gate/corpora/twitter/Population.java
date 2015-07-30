@@ -7,24 +7,24 @@
  *  Version 2, June 1991 (in the distribution as file licence.html,
  *  and also available at http://gate.ac.uk/gate/licence.html).
  *  
- *  $Id: Population.java 17719 2014-03-20 20:41:29Z adamfunk $
+ *  $Id: Population.java 18579 2015-02-17 18:49:14Z johann_p $
  */
 package gate.corpora.twitter;
 
-import gate.AnnotationSet;
 import gate.Corpus;
 import gate.Document;
 import gate.DocumentContent;
 import gate.Factory;
-import gate.Gate;
 import gate.corpora.DocumentContentImpl;
 import gate.creole.ResourceInstantiationException;
 import gate.creole.metadata.AutoInstance;
 import gate.creole.metadata.CreoleResource;
 import gate.gui.NameBearerHandle;
 import gate.gui.ResourceHelper;
+import gate.util.GateRuntimeException;
 import gate.util.InvalidOffsetException;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,20 +34,26 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 
-@CreoleResource(name = "Twitter Corpus Populator", tool = true, autoinstances = @AutoInstance)
+@CreoleResource(name = "Twitter Corpus Populator", tool = true, autoinstances = @AutoInstance,
+    comment = "Populate a corpus from Twitter JSON containing multiple Tweets",
+    helpURL = "http://gate.ac.uk/userguide/sec:social:twitter:format")
 public class Population extends ResourceHelper  {
 
   private static final long serialVersionUID = 1443073039199794668L;
+
+  private static final Logger logger = Logger.getLogger(Population.class.getName());
+  
+  private static final int COUNTER_DIGITS = 9;
 
   
   public static void populateCorpus(final Corpus corpus, URL inputUrl, PopulationConfig config) 
       throws ResourceInstantiationException {
     populateCorpus(corpus, inputUrl, config.getEncoding(), config.getContentKeys(), 
-        config.getFeatureKeys(), config.getTweetsPerDoc());
+        config.getFeatureKeys(), config.getTweetsPerDoc(), config.isProcessEntities());
   }
   
   /**
@@ -62,47 +68,58 @@ public class Population extends ResourceHelper  {
    */
   public static void populateCorpus(final Corpus corpus, URL inputUrl, String encoding, List<String> contentKeys,
       List<String> featureKeys, int tweetsPerDoc) throws ResourceInstantiationException {
+    populateCorpus(corpus, inputUrl, encoding, contentKeys, featureKeys, tweetsPerDoc, true);
+  }
+
+  public static void populateCorpus(final Corpus corpus, URL inputUrl, String encoding, List<String> contentKeys,
+          List<String> featureKeys, int tweetsPerDoc, boolean processEntities) throws ResourceInstantiationException {
+
+    InputStream input = null;
     try {
-      InputStream input = inputUrl.openStream();
-      List<String> lines = IOUtils.readLines(input, encoding);
-      IOUtils.closeQuietly(input);
+      input = inputUrl.openStream();
       
-      // TODO: sort this out so it processes one at a time instead of reading the
-      // whole hog into memory
-      
-      // For now, we assume the streaming API format (concatenated maps, not in a list)
-      List<Tweet> tweets = TweetUtils.readTweetStrings(lines, contentKeys, featureKeys);
-      
-      int digits = (int) Math.ceil(Math.log10(tweets.size()));
+      // TODO Detect & handle gzipped input.
+      // TODO handling of entities, once there's GUI to control it
+      TweetStreamIterator tweetSource = new TweetStreamIterator(input, contentKeys, featureKeys, false, processEntities);
+
       int tweetCounter = 0;
-      Document document = newDocument(inputUrl, tweetCounter, digits);
+      int tweetDocCounter = 0;
+      Document document = newDocument(inputUrl, tweetCounter, COUNTER_DIGITS);
       StringBuilder content = new StringBuilder();
       Map<PreAnnotation, Integer> annotandaOffsets = new HashMap<PreAnnotation, Integer>();
       
-      for (Tweet tweet : tweets) {
-        if ( (tweetsPerDoc > 0) && (tweetCounter > 0) && ((tweetCounter % tweetsPerDoc) == 0) ) {
-          closeDocument(document, content, annotandaOffsets, corpus);
-          document = newDocument(inputUrl, tweetCounter, digits);
-          content = new StringBuilder();
-          annotandaOffsets = new HashMap<PreAnnotation, Integer>();
+      /* TweetStreamIterator.hasNext() returns true if there might be more
+       * tweets in the file; a concatenated set of search results might
+       * have an object with an empty statuses array followed by one 
+       * with some tweet in the array; in that case, we ignore the first null
+       * and keep looking.       */
+      
+      while (tweetSource.hasNext()) {
+        Tweet tweet = tweetSource.next();
+        // next() == null means there wasn't anything ready in the stream,
+        // but there might be next time.
+        if (tweet != null) {
+          tweetDocCounter++;
+          if ( (tweetsPerDoc > 0) && (tweetDocCounter >= tweetsPerDoc) ) {
+            closeDocument(document, content, annotandaOffsets, corpus);
+            tweetDocCounter = 0;
+            document = newDocument(inputUrl, tweetCounter, COUNTER_DIGITS);
+            content = new StringBuilder();
+            annotandaOffsets = new HashMap<PreAnnotation, Integer>();
+          }
+          
+          int startOffset = content.length();
+          content.append(tweet.getString());
+          for (PreAnnotation preAnn : tweet.getAnnotations()) {
+            annotandaOffsets.put(preAnn, startOffset);
+          }
+          
+          content.append('\n');
+          tweetCounter++;
         }
-
-        int startOffset = content.length();
-        content.append(tweet.getString());
-        for (PreAnnotation preAnn : tweet.getAnnotations()) {
-          annotandaOffsets.put(preAnn, startOffset);
-        }
-
-        content.append('\n');
-        tweetCounter++;
       } // end of Tweet loop
       
-      if (content.length() > 0) {
-        closeDocument(document, content, annotandaOffsets, corpus);
-      }
-      else {
-        Factory.deleteResource(document);
-      }
+      closeDocument(document, content, annotandaOffsets, corpus);
       
       if(corpus.getDataStore() != null) {
         corpus.getDataStore().sync(corpus);
@@ -112,6 +129,18 @@ public class Population extends ResourceHelper  {
     catch (Exception e) {
       throw new ResourceInstantiationException(e);
     }
+    finally {
+      if (input != null) {
+        try {
+          input.close();
+        } 
+        catch(IOException e) {
+          logger.warn("Error in Twitter Population", e);
+        }
+      }
+      
+    }
+    
   }
 
 
@@ -125,20 +154,30 @@ public class Population extends ResourceHelper  {
     document.getFeatures().put("gate.SourceURL", url.toString());
     return document;
   }
-  
+
   
   private static void closeDocument(Document document, StringBuilder content, Map<PreAnnotation, Integer> annotandaOffsets, Corpus corpus) throws InvalidOffsetException {
-    DocumentContent contentImpl = new DocumentContentImpl(content.toString());
-    document.setContent(contentImpl);
-    AnnotationSet originalMarkups = document.getAnnotations(Gate.ORIGINAL_MARKUPS_ANNOT_SET_NAME);
-    for (PreAnnotation preAnn : annotandaOffsets.keySet()) {
-      preAnn.toAnnotation(originalMarkups, annotandaOffsets.get(preAnn));
-    }
-    corpus.add(document);
-    
-    if (corpus.getLRPersistenceId() != null) {
-      corpus.unloadDocument(document);
+    if (content.length() == 0) {
       Factory.deleteResource(document);
+    }
+    else {    
+      DocumentContent contentImpl = new DocumentContentImpl(content.toString());
+      document.setContent(contentImpl);
+      for (PreAnnotation preAnn : annotandaOffsets.keySet()) {
+        try {
+          preAnn.toAnnotation(document, annotandaOffsets.get(preAnn));
+        } catch (InvalidOffsetException ex) {
+          // show the content in the error message, so it becomes more easy to find the 
+          // cause of an InvalidOffsetException in a large file that has many json entries.
+          throw new GateRuntimeException("Attempt to add annotation "+preAnn+" for text="+contentImpl,ex);
+        }
+      }
+      corpus.add(document);
+      
+      if (corpus.getLRPersistenceId() != null) {
+        corpus.unloadDocument(document);
+        Factory.deleteResource(document);
+      }
     }
   }
 
@@ -168,14 +207,12 @@ public class Population extends ResourceHelper  {
               new Thread(Thread.currentThread().getThreadGroup(),
                   "Twitter JSON Corpus Populator") {
                 public void run() {
-                  try {
-                    for (URL fileUrl : fileUrls) {
-                      populateCorpus((Corpus) handle.getTarget(), fileUrl, dialog.getEncoding(), 
-                          dialog.getContentKeys(), dialog.getFeatureKeys(), dialog.getTweetsPerDoc());
-                    } 
-                  }
-                  catch(ResourceInstantiationException e) {
-                    e.printStackTrace();
+                  for (URL fileUrl : fileUrls) {
+                    try {
+                      populateCorpus((Corpus) handle.getTarget(), fileUrl, dialog.getConfig());
+                    } catch(ResourceInstantiationException e) {
+                      logger.warn("Error in Twitter Population, url="+fileUrl, e);
+                    }
                   }
                 }
               };
@@ -183,7 +220,7 @@ public class Population extends ResourceHelper  {
           thread.start();
         }
         catch(MalformedURLException e0) {
-          e0.printStackTrace();
+          logger.warn("Error in Twitter Population", e0);
         }
       }
     });

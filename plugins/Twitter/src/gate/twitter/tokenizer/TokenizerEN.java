@@ -6,7 +6,9 @@ import gate.creole.tokeniser.DefaultTokeniser;
 
 import java.net.URL;
 
-@CreoleResource(name = "Twitter Tokenizer (EN)")
+@CreoleResource(name = "Twitter Tokenizer (EN)",
+    comment = "Tokenizer tuned for Tweets",
+    helpURL = "http://gate.ac.uk/userguide/sec:social:twitter:prs")
 public class TokenizerEN extends DefaultTokeniser {
 
   private static final long serialVersionUID = -8104798447326556796L;

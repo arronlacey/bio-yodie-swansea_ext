@@ -195,7 +195,7 @@
                 <entry>
                   <string>tokeniserRulesURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../plugins/Twitter/resources/tokeniser/AlternateTokeniser.rules</urlString>
+                    <urlString>$relpath$../plugins/ANNIE/resources/tokeniser/AlternateTokeniser.rules</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>

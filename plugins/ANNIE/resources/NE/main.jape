@@ -10,7 +10,7 @@
 *
 *  Diana Maynard, 02 Aug 2001
 *
-*  $Id: main.jape 17726 2014-03-21 15:10:00Z dgmaynard $
+*  $Id: main.jape 18302 2014-09-09 15:28:58Z dgmaynard $
 */
 
 MultiPhase:	TestTheGrammars
@@ -24,6 +24,7 @@ date_pre
 date
 reldate
 number
+number_clean
 address
 url_pre
 url
@@ -35,4 +36,4 @@ unknown
 name_context
 org_context
 loc_context
-//clean
+clean

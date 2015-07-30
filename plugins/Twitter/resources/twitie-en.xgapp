@@ -5,7 +5,7 @@
         <urlString>$gatehome$plugins/ANNIE/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$gatehome$plugins/Tagger_Stanford/</urlString>
+        <urlString>$gatehome$plugins/Stanford_CoreNLP/</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$gatehome$plugins/Twitter/</urlString>
@@ -265,7 +265,7 @@
                 </entry>
                 <entry>
                   <string>debug</string>
-                  <boolean>true</boolean>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
@@ -343,7 +343,7 @@
                 </entry>
                 <entry>
                   <string>gazetteerFeatureSeparator</string>
-                  <null/>
+                  <string>:</string>
                 </entry>
                 <entry>
                   <string>encoding</string>
@@ -527,7 +527,7 @@
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.twitter.pos.POSTaggerEN</resourceType>
+            <resourceType>gate.stanford.Tagger</resourceType>
             <resourceName>Tweet PoS Tagger (EN)</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
