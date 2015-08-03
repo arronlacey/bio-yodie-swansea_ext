@@ -311,7 +311,7 @@
                 </entry>
                 <entry>
                   <string>operation</string>
-                  <gate.learningframework.classification.Operation>TRAIN</gate.learningframework.classification.Operation>
+                  <gate.learningframework.classification.Operation>EXPORT_ARFF</gate.learningframework.classification.Operation>
                 </entry>
                 <entry>
                   <string>classType</string>
@@ -344,7 +344,7 @@
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
     <resourceType>at.ofai.gate.modularpipelines.ParametrizedCorpusController</resourceType>
-    <resourceName>disambiguation-ml-training</resourceName>
+    <resourceName>disambiguation-ml-export</resourceName>
     <initParams class="gate.util.persistence.MapPersistence">
       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
       <localMap>
