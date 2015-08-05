@@ -13,7 +13,7 @@ if(confidenceThresholdString != null) {
 def frequencyThresholdString = System.getProperty("lodie.disambiguation-libsvm.SelectBestCandidate.frequencyThreshold")
 def frequencyThreshold = 451
 if(frequencyThresholdString != null) {
-  frequencyThreshold = frequencyThresholdString.toInt()
+  frequencyThreshold = new Integer(frequencyThresholdString).intValue()
 }
 
 def frequencyFeatureString = System.getProperty("lodie.disambiguation-libsvm.SelectBestCandidate.frequencyFeature")
