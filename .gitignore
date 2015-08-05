@@ -34,7 +34,7 @@ hs_err_pid*
 *.gazbin
 /resources
 /resources/*
-lodie.config.yaml
+/lodie.config.yaml
 compilePlugins.log
 docs*/*
 log4j.properties
