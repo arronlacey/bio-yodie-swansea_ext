@@ -32,8 +32,8 @@ hs_err_pid*
 
 # yodie-specific stuff to ignore
 *.gazbin
-resources
-resources/*
+/resources
+/resources/*
 lodie.config.yaml
 compilePlugins.log
 docs*/*
