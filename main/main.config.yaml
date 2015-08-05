@@ -297,10 +297,13 @@
   name: featureSpecURL
   value: "../../disambiguation-libsvm/feature-spec.xml"
   
-#- set: propset
-#  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
-#  value: 0.82
-#- set: propset
-#  name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
-#  value: 5
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
+  value: 0.0
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.frequencyThreshold
+  value: 1000
+- set: propset
+  name: lodie.disambiguation-libsvm.SelectBestCandidate.frequencyFeature
+  value: "scUriFreqInWp"
 
