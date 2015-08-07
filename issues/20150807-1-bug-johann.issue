@@ -1,0 +1,9 @@
+summary: Fix problem of temporary files with SSPACE
+due: 2015-08-31
+assignedName: johann
+priority: 8/10
+severity: 5/10
+comments: The sspace library creates a huge number of temporary
+files in /tmp with the name pattern matlab-sparse-matrix999669096918413466.dat.matrix-transform6412567322268105748.dat
+A fix by the SSPACE authors caused other problems (some NPE I think, reinvestigate).
+
