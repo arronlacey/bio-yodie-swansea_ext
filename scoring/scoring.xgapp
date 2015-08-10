@@ -2,25 +2,25 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+        <urlString>$relpath$../plugins/Format_FastInfoset</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/JdbcLookup</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ANNIE/</urlString>
+        <urlString>$relpath$../plugins/ANNIE</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Disambiguation/</urlString>
+        <urlString>$relpath$../plugins/Disambiguation</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ModularPipelines/</urlString>
+        <urlString>$relpath$../plugins/ModularPipelines</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/TwitterExpander/</urlString>
+        <urlString>$relpath$../plugins/TwitterExpander</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/LodiePlugin/</urlString>
+        <urlString>$relpath$../plugins/LodiePlugin</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -37,6 +37,34 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>lookupListType</string>
+                  <string>LookupList</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>flagOrDelete</string>
+                  <gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>DELETE</gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>candNormalizationSpanSetSize</string>
+                  <int>3</int>
+                </entry>
+                <entry>
+                  <string>useCoref</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>lookupTypes</string>
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
@@ -45,34 +73,6 @@
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
-                <entry>
-                  <string>useCoref</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>flagOrDelete</string>
-                  <gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>DELETE</gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>lookupListType</string>
-                  <string>LookupList</string>
-                </entry>
-                <entry>
-                  <string>candNormalizationSpanSetSize</string>
-                  <int>3</int>
-                </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.disambiguation.CorefRationalizationPR</resourceType>
@@ -80,90 +80,6 @@
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap/>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>contextLength</string>
-                  <int>2000</int>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityVector</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>useTwitterExpansion</string>
-                  <boolean>true</boolean>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.disambiguation.VectorContextualSimilarityPR</resourceType>
-            <resourceName>VectSim:AbstractsTFIDF500000new</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>fieldName</string>
-                  <string>abstract</string>
-                </entry>
-                <entry>
-                  <string>sspaceURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/semspace/tfidf-500000.sspace</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>databaseDirectory</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/databases/</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>jdbcTableName</string>
-                  <string>shortabstracts</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>abstracts</string>
-                </entry>
-              </localMap>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -184,20 +100,12 @@
                   <int>2000</int>
                 </entry>
                 <entry>
+                  <string>outputFeature</string>
+                  <string>scContextualSimilarityRDFDirect</string>
+                </entry>
+                <entry>
                   <string>document</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityRDFDirect</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -207,6 +115,14 @@
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>similarityFunction</string>
+                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
                 </entry>
                 <entry>
                   <string>inputASName</string>
@@ -224,22 +140,6 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>fieldName</string>
-                  <string>allliterals</string>
-                </entry>
-                <entry>
-                  <string>sspaceURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/semspace/tfidf-500000.sspace</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>databaseDirectory</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/databases/</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
                   <string>jdbcTableName</string>
                   <string>rdfdirectliterals</string>
                 </entry>
@@ -247,66 +147,6 @@
                   <string>dbName</string>
                   <string>rdfliterals</string>
                 </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>contextLength</string>
-                  <int>2000</int>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityRDFIndirect</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>useTwitterExpansion</string>
-                  <boolean>true</boolean>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.disambiguation.VectorContextualSimilarityPR</resourceType>
-            <resourceName>VectSim:RDFIndirectTFIDF500000new</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
                 <entry>
                   <string>fieldName</string>
                   <string>allliterals</string>
@@ -322,14 +162,6 @@
                   <gate.util.persistence.PersistenceManager-URLHolder>
                     <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>jdbcTableName</string>
-                  <string>rdfindirectliterals</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>rdfliterals</string>
                 </entry>
               </localMap>
             </initParams>
@@ -352,20 +184,12 @@
                   <int>2000</int>
                 </entry>
                 <entry>
+                  <string>outputFeature</string>
+                  <string>scContextualSimilarityTFICF</string>
+                </entry>
+                <entry>
                   <string>document</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityTFICF</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -375,6 +199,14 @@
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>similarityFunction</string>
+                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
                 </entry>
                 <entry>
                   <string>inputASName</string>
@@ -392,178 +224,22 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>fieldName</string>
-                  <string>abstract</string>
+                  <string>dbName</string>
+                  <string>abstracts</string>
                 </entry>
                 <entry>
-                  <string>databaseDirectory</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/databases/</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
+                  <string>fieldName</string>
+                  <string>abstract</string>
                 </entry>
                 <entry>
                   <string>jdbcTableName</string>
                   <string>shortabstracts</string>
                 </entry>
                 <entry>
-                  <string>dbName</string>
-                  <string>abstracts</string>
-                </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>contextLength</string>
-                  <int>2000</int>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityRDFDirectTFICF</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>useTwitterExpansion</string>
-                  <boolean>true</boolean>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.disambiguation.TFICFContextualSimilarityPR</resourceType>
-            <resourceName>TFICFSim:RDFDirect</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>fieldName</string>
-                  <string>allliterals</string>
-                </entry>
-                <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
                     <urlString>$relpath$../resources/databases/</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>jdbcTableName</string>
-                  <string>rdfdirectliterals</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>rdfliterals</string>
-                </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>2</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>contextLength</string>
-                  <int>2000</int>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputFeature</string>
-                  <string>contextualSimilarityRDFIndirectTFICF</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>similarityFunction</string>
-                  <edu.ucla.sspace.common.Similarity-SimType>COSINE</edu.ucla.sspace.common.Similarity-SimType>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>useTwitterExpansion</string>
-                  <boolean>true</boolean>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.disambiguation.TFICFContextualSimilarityPR</resourceType>
-            <resourceName>TFICFSim:RDFIndirect</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>fieldName</string>
-                  <string>allliterals</string>
-                </entry>
-                <entry>
-                  <string>databaseDirectory</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../resources/databases/</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>jdbcTableName</string>
-                  <string>rdfindirectliterals</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>rdfliterals</string>
                 </entry>
               </localMap>
             </initParams>
@@ -581,10 +257,6 @@
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
-                <entry>
-                  <string>outputFeaturePrefix</string>
-                  <string>structSimV2</string>
-                </entry>
                 <entry>
                   <string>document</string>
                   <null/>
@@ -611,6 +283,14 @@
                   <null/>
                 </entry>
                 <entry>
+                  <string>outputFeaturePrefix</string>
+                  <string>scStructSimV2</string>
+                </entry>
+                <entry>
+                  <string>useTwitterExpansion</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
                   <string>wikiLinksDbLR</string>
                   <gate.util.persistence.LRPersistence>
                     <resourceType>com.jpetrak.gate.jdbclookup.JdbcLR</resourceType>
@@ -618,6 +298,14 @@
                     <initParams class="gate.util.persistence.MapPersistence">
                       <mapType>gate.util.SimpleFeatureMapImpl</mapType>
                       <localMap>
+                        <entry>
+                          <string>jdbcUser</string>
+                          <string></string>
+                        </entry>
+                        <entry>
+                          <string>jdbcPassword</string>
+                          <string></string>
+                        </entry>
                         <entry>
                           <string>jdbcUrl</string>
                           <string>jdbc:h2:${dbdirectory}/wikilinks;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
@@ -627,26 +315,14 @@
                           <string>org.h2.Driver</string>
                         </entry>
                         <entry>
-                          <string>jdbcPassword</string>
-                          <string></string>
-                        </entry>
-                        <entry>
-                          <string>jdbcUser</string>
-                          <string></string>
-                        </entry>
-                        <entry>
                           <string>dbDirectoryUrl</string>
                           <gate.util.persistence.PersistenceManager-URLHolder>
-                            <urlString>$relpath$../resources/databases/</urlString>
+                            <urlString>$relpath$../resources/databases</urlString>
                           </gate.util.persistence.PersistenceManager-URLHolder>
                         </entry>
                       </localMap>
                     </initParams>
                   </gate.util.persistence.LRPersistence>
-                </entry>
-                <entry>
-                  <string>useTwitterExpansion</string>
-                  <boolean>true</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -691,15 +367,11 @@
               <localMap>
                 <entry>
                   <string>outputFeature</string>
-                  <string>stringSimilarityBestLabel</string>
+                  <string>scStringSimilarityBestLabel</string>
                 </entry>
                 <entry>
-                  <string>corpus</string>
+                  <string>document</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>wrongCaseAdjustment</string>
-                  <float>0.9</float>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -711,12 +383,16 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>inputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>wrongCaseAdjustment</string>
+                  <float>0.9</float>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -741,19 +417,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -761,105 +433,40 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.creole.Transducer</resourceType>
-            <resourceName>JAPE:ApplyAnnieClassMatch</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>binaryGrammarURL</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>grammarURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$jape/apply-annie-class-match.jape</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>operators</string>
-                  <null/>
-                </entry>
-              </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
-          <featureName></featureName>
-          <featureValue></featureValue>
-          <pr class="gate.util.persistence.LanguageAnalyserPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>inputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.Transducer</resourceType>
-            <resourceName>JAPE:AddRankFeatures</resourceName>
+            <resourceName>JAPE:ApplyNERClassMatch</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>binaryGrammarURL</string>
-                  <null/>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
                 </entry>
                 <entry>
                   <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
+                  <string>operators</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>grammarURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$jape/create-rank-features.jape</urlString>
+                    <urlString>$relpath$jape/apply-ner-class-match.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>operators</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
               </localMap>
@@ -877,19 +484,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -897,8 +500,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
+                  <string>inputASName</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -908,11 +515,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>binaryGrammarURL</string>
-                  <null/>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
                 </entry>
                 <entry>
                   <string>annotationAccessors</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
                 <entry>
@@ -922,11 +533,7 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>operators</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
               </localMap>
@@ -946,19 +553,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -966,8 +569,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
+                  <string>inputASName</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -977,11 +584,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>binaryGrammarURL</string>
-                  <null/>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
                 </entry>
                 <entry>
                   <string>annotationAccessors</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
                 <entry>
@@ -991,11 +602,7 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>operators</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
               </localMap>
@@ -1013,19 +620,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -1033,8 +636,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
+                  <string>inputASName</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -1044,11 +651,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>binaryGrammarURL</string>
-                  <null/>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
                 </entry>
                 <entry>
                   <string>annotationAccessors</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
                 <entry>
@@ -1058,11 +669,7 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>operators</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
               </localMap>
@@ -1082,20 +689,20 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>annotationType</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>annotationSet</string>
-                  <string></string>
+                  <string>document</string>
+                  <null/>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>annotationSet</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>annotationType</string>
+                  <string></string>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -1121,16 +728,11 @@
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[3]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[5]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[6]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[7]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[6]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[7]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[12]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[13]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[14]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[15]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>

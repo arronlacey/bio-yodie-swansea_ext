@@ -1,0 +1,20 @@
+
+How to retrain machine learning model
+=====================================
+
+In order to retrain the machine learning model, you will need a training corpus of GATE documents on which YODIE has already been run right through to and including the scoring pipeline, all gathered together in one directory. Your corpus will at this point have Lookup annotations in the default annotation set, all containing a variety of scores and other data to be used as features. You can create this data easily using the script provided in the ml-training-data-prep directory in yodie-corpora and supplying your choice of XGAPP.
+
+NAMING CONVENTIONS ON FEATURE NAMES ALLOW THE MACHINE LEARNING TO FIGURE OUT WHICH FEATURES YOU WANT TO USE. These comprise a two-letter prefix, and assume that the third character will be in upper case. Numeric features begin with "sc" and nominal features begin with "nm".
+
+Proceed as follows:
+
+1: Run the script called "autogenerate-ranking-jape.sh" on your prepared data. The script takes a single argument indicating the location of a directory of example documents. This will automatically generate the JAPE that will make rank features for all numeric features indicated with the "sc" prefix found on the Lookups. Furthermore it will prepopulate a feature specification file for the machine learning, called "feature-spec.auto", that exhaustively includes all numeric and nominal features found on the Lookups and indicated by the naming convention, and all the rank features that will be present at runtime having run the JAPE that makes the rank features. Only the first 20 documents are used to gather features so there's no problem with passing a large corpus to this script.
+
+2: Edit the feature-spec.auto file to remove any features you aren't interested in using, and CHANGE THE NAME to feature-spec.xml, because this is the filename that the machine learning PR expects.
+
+3. Run "train-model.sh" with a first argument indication the location of the directory of training documents, and a second argument indicating the configuration file to use with this configurable pipeline (probably ../main/main.config.yaml) to train your new model.
+
+
+Advanced notes:
+
+For feature selection or to evaluate Weka classifiers/LibSVM more efficiently, use the training XGAPP and change operation to EXPORT_ARFF. Data is exported to exportedCorpora, and can be imported into Weka to experiment. After selecting your approach, edit the algorithmic choice, features and learner parameters accordingly. Learner parameters should be specified in the config. Algorithm is currently specified in the XGAPP. Features are specified in feature-spec.xml. A confidence threshold can be set in the config file, but this can't be tuned in Weka so you'd have to experiment using GATE.

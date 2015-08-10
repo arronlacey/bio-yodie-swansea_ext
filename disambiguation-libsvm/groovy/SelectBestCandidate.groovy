@@ -13,7 +13,13 @@ if(confidenceThresholdString != null) {
 def frequencyThresholdString = System.getProperty("lodie.disambiguation-libsvm.SelectBestCandidate.frequencyThreshold")
 def frequencyThreshold = 451
 if(frequencyThresholdString != null) {
-  frequencyThreshold = frequencyThresholdString.toInt()
+  frequencyThreshold = new Integer(frequencyThresholdString).intValue()
+}
+
+def frequencyFeatureString = System.getProperty("lodie.disambiguation-libsvm.SelectBestCandidate.frequencyFeature")
+def frequencyFeature = "scUriFreqInWp"
+if(frequencyFeatureString != null) {
+  frequencyFeature = frequencyFeatureString
 }
 
 defaultAS.get("LookupList").each{ ll ->
@@ -40,8 +46,8 @@ defaultAS.get("LookupList").each{ ll ->
       }
 
       int candidatefreq = -1;
-      if (cand.getFeatures().get("uriFreqInWp")!=null){
-        candidatefreq = (int)cand.getFeatures().get("uriFreqInWp");
+      if (cand.getFeatures().get(frequencyFeature)!=null){
+        candidatefreq = (int)cand.getFeatures().get(frequencyFeature);
       }
 
       if(candidatefreq>uriFreqOfCommonestCandidate || commonestCandidate==null){

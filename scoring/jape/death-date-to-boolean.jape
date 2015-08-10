@@ -13,8 +13,8 @@ Rule: deathDateToBoolean
   String deathDate = (String)lu.getFeatures().get("deathDate");
   FeatureMap fm = lu.getFeatures();
   if(deathDate!=null && !deathDate.equals("")){
-    fm.put("dead", "true");
+    fm.put("nmDead", "true");
   } else {
-    fm.put("dead", "false");
+    fm.put("nmDead", "false");
   }
 }

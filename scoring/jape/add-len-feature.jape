@@ -12,6 +12,6 @@ Rule: addTestFeatures
   Annotation lu = bindings.get("match").iterator().next();
   FeatureMap fm = lu.getFeatures();
   int strlen = gate.Utils.cleanStringFor(doc, lu).length();
-  fm.put("stringLength", strlen);
+  fm.put("scStringLength", strlen);
   lu.setFeatures(fm);
 }
