@@ -28,6 +28,8 @@ hs_err_pid*
 .loadpath
 .externalToolBuilders/
 .launch
+.RData
+.Rhistory
 
 
 # yodie-specific stuff to ignore
@@ -48,3 +50,5 @@ unit-tests/d1.*
 unit-tests/debug1
 unit-tests/out
 EvaluateTagging*
+*.tsv
+
