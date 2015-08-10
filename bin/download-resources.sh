@@ -8,7 +8,7 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/home/johann/bigdata/yodie-preparation-data/output-latest/output
+path=/home/johann/bigdata/yodie-preparation-data/output-latest
 server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
