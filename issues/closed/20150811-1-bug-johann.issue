@@ -1,0 +1,43 @@
+summary: Non-deterministic assignment of absent vs. spurious in unit tests
+due: 2015-08-31
+assignedName: johann
+priority: 8/10
+severity: 4/10
+comments: After running reset and then the unit tests on master as of 2015-08-11, 
+there is one document that shows unit tests errors. 
+
+=== UNIT TEST: DIFFERENCE (+-) in document fixed-unique-posts_0000010157.finf_0005E for >Dollar< Mention_SL_A, (44,50) type=Mention_SL_A inst=http://dbpedia.org/resource/Dollar conf=0.9020587032522762
+=== UNIT TEST: DIFFERENCE (+-) in document fixed-unique-posts_0000010157.finf_0005E for >U.S.< Mention_SL_A, (53,57) type=Mention_SL_A inst=http://dbpedia.org/resource/United_States conf=0.9474710646467535
+=== UNIT TEST: DIFFERENCE (+-) in document fixed-unique-posts_0000010157.finf_0005E for >Australian< Mention_A_SL, (33,43) type=Mention_A_SL inst=http://dbpedia.org/resource/Australia conf=0.7905910720637851
+=== UNIT TEST: DIFFERENCE (+-) in document fixed-unique-posts_0000010157.finf_0005E for >Dollar< Mention_A_SL, (58,64) type=Mention_A_SL inst=http://dbpedia.org/resource/Dollar conf=0.9020587032522762
+UNIT TEST DIFFERENCES! Log is in /data/johann/yodie/yodie-pipeline/unit-tests/logs/runUnitTests-20150811_171259.log
+
+There are two pairs of errors which seem to be based on the same situation: a 
+key annotation that spans two tokens, and response annotations for each token separately.
+In the Reference set for the first of the two targets, the second token is annotated as spurious and
+the first of the two tokens as incorrect. 
+In the Response set for the first of the two targets, the second token is annotated as incorrect and
+the first as spurious.
+
+So we have the following situation:
+ key         [------TARGET--------]
+ response    [SPURIOUS] [INCORRECT]
+ reference   [INCORREC] [SPURIOUS-]
+
+When looking at the response and reference sets, 
+in reference the first annotation has id 10270, the second 10272
+in response  the first annotation has id 14044, the second 14029
+
+This could be a problem in the Evaluation plugin, we have opened issue #15 for the Evaluation plugin:
+https://github.com/johann-petrak/gateplugin-Evaluation/issues/15
+
+Added directory unit-tests/debugIssue29 with the document that shows that problem.
+
+An attempt to fix this by sorting all key and response annotations by offset, feature value and annotation id
+has apparently failed, rerunning the unit test after that change still produced one difference for one of the
+two original targets.
+
+Now, in addition to the original annotations, it could still be that the Pairings are sorted in
+a non-deterministic order which causes them to get "used up" in different ways?
+
+Creating an ordering for the pairings seems to have solved the issue, closing this for now.
