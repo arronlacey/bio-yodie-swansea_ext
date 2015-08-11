@@ -51,7 +51,7 @@ public void controllerStarted() {
     evaluationId = "Property_maxRecall.evalId_not_set";  
     //throw new GateRuntimeException("Property maxRecall.evalId needs to be set to the evaluation id!");
   }
-  allStats = new EvalStatsTagging();
+  allStats = new EvalStatsTagging4Score();
   ArrayList<String> types = new ArrayList<String>();
   types.add("Lookup=LookupList");
   annSpecs = new AnnotationTypeSpecs(types);
