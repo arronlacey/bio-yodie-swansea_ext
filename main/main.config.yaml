@@ -1,4 +1,7 @@
-### global settings (needed in many places)
+###
+### GLOBAL SETTINGS, potentially needed in more than one sub-pipeline
+### 
+
 - set: docfeature
   name: keyOverlapsOnly
   value: false
@@ -16,9 +19,11 @@
   name: docType
   value: generic
   
+##############################################################################
 ####
-#### Settings for the preprocess-en sub-pipeline
+#### SUBPIPELINE: preprocess-en
 ####
+##############################################################################
 
 ## the model to use for the NER tagger in the preprocessing sub pipeline
 ## Only leave one value not commented out!
@@ -44,11 +49,11 @@
   value: dummyValue
 
 
-
+##############################################################################
 ####
-#### Settings for the preprocess-en-twitter sub-pipeline
+#### SUBPIPELINE: preprocess-en-twitter 
 ####
-
+##############################################################################
 
 ## the model to use for the NER tagger in the twitter preprocessing sub pipeline
 ## Only leave one value not commented out!
@@ -129,7 +134,11 @@
   prname: MP:preprocess-en-4TwitterExpansions
   value: true
 
-## Settings for the gazetteer-en sub-pipeline
+##############################################################################
+###
+### SUBPIPELINE: gazetteer-en
+### 
+##############################################################################
 - set: prparm
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
@@ -141,16 +150,33 @@
   name: longestMatchOnly
   value: false
 
-## Settings for the gazetteer-postproc sub-pipeline
-- set: prrun
-  controller: gazetteer-postproc
-  prname: JAPE:removeLookups
-  value: false
-- set: prrun
-  controller: gazetteer-postproc
-  prname: Java:filterByNER
-  value: false
 
+###############################################
+### ABANDONED SUBPIPELINE: gazetteer-postproc
+###############################################
+#### NOTE: gazetteer-postproc has been abandoned, what happened in here
+#### is now in spotting and lookupinfo and partly in filter-prescoring.
+##
+#### Settings for the gazetteer-postproc sub-pipeline
+###- set: prrun
+###  controller: gazetteer-postproc
+###  prname: JAPE:removeLookups
+###  value: false
+###- set: prrun
+###  controller: gazetteer-postproc
+###  prname: Java:filterByNER
+###  value: false
+
+##############################################################################
+###
+###  SUBPIPELINE: Spotting
+###
+##############################################################################
+
+
+## TODO: check out where to put the filtering step for preparing the 
+## manual annotation corpora.
+##
 ## if this property is set, the filtering will be done by target annotations
 ## in the given list of annotation sets (separated by semicolons) instead of
 ## based on the POS tags
@@ -159,7 +185,58 @@
 #   value: "annotator1"
 
 
-## Settings for the filter-prescoring sub-pipeline
+## NOTE: the following filtering steps will filter the spots before the
+## candidates get retrieved and merged. Filtering by the same criteria
+## can also be done later, after the candidates have been retrieved
+## in sub-pipeline: ????
+
+- set: prrun
+  controller: spotting
+  prname: FilterAnnotations:filterByDateURI
+  value: true
+
+- set: prrun
+  controller: spotting
+  prname: Java:filterByNESet
+  value: false
+  
+- set: prrun
+  controller: spotting
+  prname: Java:filterByNE
+  value: false 
+  
+- set: prrun
+  controller: spotting
+  prname: Java:filterHeuristic
+  value: true
+
+- set: prrun
+  controller: spotting
+  prname: Java:filterCoextensive
+  value: true
+
+##############################################################################
+###
+### SUBPIPELINE: lookupinfo
+###
+##############################################################################
+
+## Copy the LookupList annotation right after the have been created,
+## merged and features have been added
+- set: prrun
+  controller: lookupinfo
+  prname: Java:copyListAnns
+  value: false
+  
+## TODO: add the run flags for further filtering steps here once we 
+## actually added them to the pipeline!
+
+
+##############################################################################
+###
+### SUBPIPELINE: filter-prescoring
+###
+##############################################################################
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.minUriFreqInWp
   value: "0"
@@ -171,6 +248,9 @@
   name: lodie.filter-prescoring.filterByFrequency.keepCandsWithNullFreq
   value: "false"
 
+
+### TODO: we should move this step into the main pipeline or a separate 
+### sub-pipeline and make it remove anything that got expanded by default.
 ## Related to twitter expansion!  
 ## should a match in the expanded twitter user id get projected back
 ## to the original twitter id?
@@ -185,9 +265,11 @@
   
 
 
-###################################
-## Settings for scoring
-###################################
+##############################################################################
+###
+### SUBPIPELINE: scoring
+###
+##############################################################################
 
 ## We will normalize candidate lists over coref chains. Pool candidates from
 ## top n spans. What should n be?
@@ -247,9 +329,11 @@
   prname: TwitterExpander:Remove
   value: true
 
-
-
-## Settings for the disambiguation-simple pipeline
+##############################################################################
+###
+### SUBPIPELINE: disambiguation-simple
+###
+##############################################################################
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.featureName
   value: relUriFreqByLabelInWp
@@ -260,6 +344,11 @@
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: false
 
+##############################################################################
+###
+### SUBPIPELINE: disambiguation-libsvm
+###
+##############################################################################
 
 ## Settings for the disambiguation-libsvm pipeline
 
@@ -306,4 +395,7 @@
 #- set: propset
 #  name: lodie.disambiguation-libsvm.SelectBestCandidate.frequencyFeature
 #  value: "scUriFreqInWp"
+#- set: propset
+#  name: lodie.disambiguation-libsvm.SelectBestCandidate.commonnessThreshold
+#  value: 5
 
