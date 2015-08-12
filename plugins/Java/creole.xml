@@ -1,6 +1,0 @@
-<CREOLE-DIRECTORY VERSION="0.1" ID="com.jpetral.gate.Java" 
-  DESCRIPTION="Support Java as a rapid prototyping language for creating PRs"
-  HELPURL="https://github.com/johann-petrak/gateplugin-java/wiki" >
-  <JAR SCAN="true">Java.jar</JAR>
-  <JAR>lib/rsyntaxtextarea.jar</JAR> 
-</CREOLE-DIRECTORY>

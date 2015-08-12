@@ -1,3 +1,0 @@
-make it possible to run code before cleanup: this can help when we process a corpus
-  with gcp and we want to process corpus statistics or similar
-  !!! deal with multithreading and custom diplication for this!!!
