@@ -19,3 +19,6 @@
 [submodule "plugins/YodiePlugin"]
 	path = plugins/YodiePlugin
 	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/YodiePlugin.git
+[submodule "plugins/Java"]
+	path = plugins/Java
+	url = git@github.com:johann-petrak/gateplugin-Java.git
