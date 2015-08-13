@@ -82,7 +82,7 @@
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.creole.annotdelete.AnnotationDeletePR<resourceType>
+            <resourceType>gate.creole.annotdelete.AnnotationDeletePR</resourceType>
             <resourceName>Reset:gazetteer-postproc</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
