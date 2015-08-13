@@ -5,9 +5,6 @@
         <urlString>$relpath$../plugins/Format_FastInfoset</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
-      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/ModularPipelines</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
@@ -320,7 +317,7 @@
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
+          <runMode>2</runMode>
           <featureName></featureName>
           <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">

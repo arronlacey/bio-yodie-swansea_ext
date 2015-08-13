@@ -2,31 +2,31 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+        <urlString>$relpath$../plugins/Format_FastInfoset</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Format_FastInfoset/</urlString>
+        <urlString>$relpath$../plugins/VirtualCorpus</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/VirtualCorpus/</urlString>
+        <urlString>$relpath$../plugins/YodiePlugin</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/YodiePlugin/</urlString>
+        <urlString>$relpath$../plugins/JdbcLookup</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/JdbcLookup/</urlString>
+        <urlString>$relpath$../plugins/Disambiguation</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Disambiguation/</urlString>
+        <urlString>$relpath$../plugins/Java</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/Java/</urlString>
+        <urlString>$relpath$../plugins/ANNIE</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ANNIE/</urlString>
+        <urlString>$relpath$../plugins/ModularPipelines</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$relpath$../plugins/ModularPipelines/</urlString>
+        <urlString>$relpath$../plugins/Evaluation</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
@@ -227,6 +227,129 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <string>relUriFreqByLabelInWp</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>inst</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>rankThreshold</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>listType</string>
+                  <string>LookupList</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-lists-filter-prescoring-filterByType</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>lists-filter-prescoring-filterByType</string>
+                </entry>
+                <entry>
+                  <string>edgeFeatureName</string>
+                  <string>ids</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>KeyShortInst</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_RANKS_11FROM0TO100</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>keyType</string>
+                  <string>Mention</string>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>elementType</string>
+                  <string>Lookup</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
+            <resourceName>EvaluateTagging4Lists:afterFilterByType</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -730,6 +853,8 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -787,6 +912,129 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <string>relUriFreqByLabelInWp</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>inst</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>rankThreshold</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>listType</string>
+                  <string>LookupList</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-lists-filter-prescoring-afterMisc</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>lists-filter-prescoring-afterMisc</string>
+                </entry>
+                <entry>
+                  <string>edgeFeatureName</string>
+                  <string>ids</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>KeyShortInst</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_RANKS_11FROM0TO100</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>keyType</string>
+                  <string>Mention</string>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>elementType</string>
+                  <string>Lookup</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
+            <resourceName>EvaluateTagging4Lists:afterMisc</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -863,6 +1111,129 @@
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <string>relUriFreqByLabelInWp</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>inst</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>rankThreshold</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>listType</string>
+                  <string>LookupList</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-lists-filter-prescoring-afterOverlapping</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>lists-filter-prescoring-afterOverlapping</string>
+                </entry>
+                <entry>
+                  <string>edgeFeatureName</string>
+                  <string>ids</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>KeyShortInst</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_RANKS_11FROM0TO100</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>keyType</string>
+                  <string>Mention</string>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>elementType</string>
+                  <string>Lookup</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
+            <resourceName>EvaluateTagging4Lists:afterOverlapping</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
           <featureName></featureName>
           <featureValue></featureValue>
@@ -923,6 +1294,232 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <string>relUriFreqByLabelInWp</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>inst</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>rankThreshold</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>listType</string>
+                  <string>LookupList</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-lists-filter-prescoring-final</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>lists-filter-prescoring-final</string>
+                </entry>
+                <entry>
+                  <string>edgeFeatureName</string>
+                  <string>ids</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>KeyShortInst</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_RANKS_11FROM0TO100</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>keyType</string>
+                  <string>Mention</string>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>elementType</string>
+                  <string>Lookup</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
+            <resourceName>EvaluateTagging4Lists:final</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-spots-filter-prescoring-final</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>spots-filter-prescoring-final</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>Key</string>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALL</gate.plugin.evaluation.api.ThresholdsToUse>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Mention=LookupList</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging</resourceType>
+            <resourceName>EvaluateTagging:spots-final</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -1128,7 +1725,7 @@
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[2]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[3]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[5]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[6]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[7]/pr"/>
@@ -1137,10 +1734,15 @@
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[12]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[13]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[13]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[14]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[15]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[16]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[15]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[16]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[17]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[18]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[19]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[20]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[21]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
