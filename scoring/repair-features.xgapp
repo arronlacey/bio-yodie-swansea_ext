@@ -74,7 +74,7 @@
               <entry>
                 <string>grammarURL</string>
                 <gate.util.persistence.PersistenceManager-URLHolder>
-                  <urlString>$relpath$jape/apply-annie-class-match.jape</urlString>
+                  <urlString>$relpath$jape/apply-ner-class-match.jape</urlString>
                 </gate.util.persistence.PersistenceManager-URLHolder>
               </entry>
               <entry>
