@@ -1,5 +1,14 @@
-<project name="LODIE1 Exporter" basedir=".">
-	<property file="build.properties" />
+<project name="LODIE1 Exporter" basedir="." default="jar" >
+
+  <property environment="env"/> 
+  <property file="build.properties" />
+
+  <condition property="gate.home" value="${env.GATE_HOME}">
+    <isset property="env.GATE_HOME"/>
+  </condition>
+
+
+
 
 	<property name="gate.home" location="../.." />
 	<property name="gate.lib" location="${gate.home}/lib" />
