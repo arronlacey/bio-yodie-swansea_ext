@@ -15,11 +15,11 @@ import static gate.Utils.*;
 
 
 Phase: filterByAnniePerson
-Input: LookupList Person
+Input: LookupList Person PERSON
 Options: control = appelt
 
 Rule: filterByAnniePerson_R01
-( {Person contains {LookupList}} ):person
+( ({Person contains {LookupList}} ) | ({PERSON contains {LookupList}} ) ):person
 -->
 :person{
   final String FN = "filter-prescoring.nrRemovedByAnniePerson";
@@ -35,8 +35,10 @@ Rule: filterByAnniePerson_R01
   // For now we remove all LookupList and linked Lookup annotations where
   // the LookupList is fully contained within the person annotation and 
   // does not in turn contain more than one token.
+  //System.out.println("Person="+person+" length="+lperson);
   for(Annotation ll : lls) {
     if(length(ll) < lperson) {
+      //System.out.println("LookupList="+ll+" length="+length(ll));
       AnnotationSet tokens = getContainedAnnotations(inputAS,ll,"Token");
       if(tokens.size() < 2) {
         //System.out.println("Removing from within Person: "+doc.getName()+"/"+cleanStringFor(doc,ll)+"/"+ll);
