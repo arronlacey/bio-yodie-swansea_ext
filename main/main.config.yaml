@@ -329,32 +329,6 @@
   prname: TwitterExpander:Remove
   value: true
 
-## The following PRs are disabled in the scoring pipeline by default
-## (their run flag is set to No in the pipeline) but we include 
-## run flag configurations for those in here too to make it easier
-## to re-enable, if necessary.
-
-- set: prrun
-  controller: scoring
-  prname: VectSim:RDFIndirectTFIDF500000new
-  value: false
-- set: prrun
-  controller: scoring
-  prname: VectSim:AbstractsTFIDF500000new
-  value: false
-- set: prrun
-  controller: scoring
-  prname: TFICFSim:RDFDirect
-  value: false
-- set: prrun
-  controller: scoring
-  prname: TFICFSim:RDFIndirect
-  value: false
-- set: prrun
-  controller: scoring
-  prname: JAPE:AddPositionalFeatures
-  value: false
-
 ##############################################################################
 ###
 ### SUBPIPELINE: disambiguation-simple
