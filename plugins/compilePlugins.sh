@@ -26,7 +26,7 @@ SCRIPTDIR=`dirname "$PRG"`
 SCRIPTDIR=`cd "$SCRIPTDIR"; pwd -P`
 pushd "$SCRIPTDIR"
 tmpout=/tmp/`whoami`-compilePlugins$$.out
-for file in Evaluation ModularPipelines JdbcLookup TwitterExpander Learning_Framework YodiePlugin Java
+for file in Evaluation ModularPipelines JdbcLookup TwitterExpander Learning_Framework YodiePlugin
 do
   if [ "$file" == ANNIE ] || [ ! -d "$file" ]
   then
@@ -50,6 +50,8 @@ do
           rm $tmpout
         fi
       fi
+    else 
+      echo No build.xml, skipping $file
     fi
     popd
   fi
