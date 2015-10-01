@@ -1,0 +1,6 @@
+summary: Replace Tagger_TagMe plugin by submodule
+due: 2015-10-30
+assignedName: johann
+comments: Now that we have created a separate repository for the 
+plugin, once it is tested and maybe improved replace it in 
+pipelines/plugins (and also in yodie-experiments!) as a submodule.
