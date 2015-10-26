@@ -117,14 +117,14 @@
               </localMap>
             </runtimeParams>
             <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
-            <resourceName>MP:gazetteer-en-bio</resourceName>
+            <resourceName>MP:gazetteer-en</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>pipelineFileURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../gazetteer-en-bio/gazetteer-en-bio.xgapp</urlString>
+                    <urlString>$relpath$../gazetteer-en/gazetteer-en.xgapp</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>

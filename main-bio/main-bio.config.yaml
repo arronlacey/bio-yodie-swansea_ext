@@ -45,12 +45,27 @@
   prname: ExtGaz2:gazetteer-en:labels
   name: longestMatchOnly
   value: false
-- set: prparm
+#- set: prparm
+#  controller: gazetteer-en
+#  prname: ExtGaz2:misc-en
+#  name: longestMatchOnly
+#  value: false
+
+- set: prrun
   controller: gazetteer-en
   prname: ExtGaz2:misc-en
-  name: longestMatchOnly
   value: false
 
+- set: prrun
+  controller: gazetteer-en
+  prname: JAPE:postProcessLookups  
+  value: false
+
+- set: prinit
+  controller: gazetteer-en
+  prname: ExtGaz2:gazetteer-en:labels
+  name: configFileURL
+  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
 
 ##############################################################################
 ###
