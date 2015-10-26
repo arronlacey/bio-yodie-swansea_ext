@@ -150,7 +150,7 @@
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
+          <runMode>2</runMode>
           <featureName></featureName>
           <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
