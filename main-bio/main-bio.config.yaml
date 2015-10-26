@@ -18,7 +18,7 @@
 - set: docfeature
   name: docType
   value: generic
-  
+
 ##############################################################################
 ####
 #### SUBPIPELINE: preprocess-en
@@ -34,105 +34,6 @@
   prname: StanfordNER
   name: modelFile
   value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
-
-## Settings for the precache-twitterinfo pipeline
-## the key and secret for Twitter API access: MUST be replaced by a proper value
-- set: prparm
-  controller: precache-twitterinfo
-  prname: TwitterPreCacheUsers
-  name: twitterApiKey
-  value: dummyValue
-- set: prparm
-  controller: precache-twitterinfo
-  prname: TwitterPreCacheUsers
-  name: twitterApiSecret
-  value: dummyValue
-
-
-##############################################################################
-####
-#### SUBPIPELINE: preprocess-en-twitter 
-####
-##############################################################################
-
-## the model to use for the NER tagger in the twitter preprocessing sub pipeline
-## Only leave one value not commented out!
-## NOTE: this is an init parm!!
-## NOTE: the path seems to be relative to the path of the ModularPipelines plugin!!
-- set: prinit
-  controller: preprocess-en-twitter
-  prname: StanfordNER
-  name: modelFile
-  value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
-
-## Settings for the preprocess-en-twitter sub-pipeline
-## the key and secret for Twitter API access: MUST be replaced by a proper value
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: twitterApiKey
-  value: dummyValue
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: twitterApiSecret
-  value: dummyValue
-  
-## which of the expansions to run, default is to run none, and since none is
-## run, also not run the segment processing which processes the generated text
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: cacheIsReadOnly
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:User
-  name: fromCacheOnly
-  value: true
-  
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Hashtag
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Hashtag
-  name: cacheIsReadOnly
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Hashtag
-  name: fromCacheOnly
-  value: true
-  
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Url
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Url
-  name: cacheIsReadOnly
-  value: true
-- set: prparm
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:Url
-  name: fromCacheOnly
-  value: true
-  
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: TwitterExpander:AnnotateAll
-  value: true
-- set: prrun
-  controller: preprocess-en-twitter
-  prname: MP:preprocess-en-4TwitterExpansions
-  value: true
 
 ##############################################################################
 ###
@@ -151,70 +52,6 @@
   value: false
 
 
-###############################################
-### ABANDONED SUBPIPELINE: gazetteer-postproc
-###############################################
-#### NOTE: gazetteer-postproc has been abandoned, what happened in here
-#### is now in spotting and lookupinfo and partly in filter-prescoring.
-##
-#### Settings for the gazetteer-postproc sub-pipeline
-###- set: prrun
-###  controller: gazetteer-postproc
-###  prname: JAPE:removeLookups
-###  value: false
-###- set: prrun
-###  controller: gazetteer-postproc
-###  prname: Java:filterByNER
-###  value: false
-
-##############################################################################
-###
-###  SUBPIPELINE: Spotting
-###
-##############################################################################
-
-
-## TODO: check out where to put the filtering step for preparing the 
-## manual annotation corpora.
-##
-## if this property is set, the filtering will be done by target annotations
-## in the given list of annotation sets (separated by semicolons) instead of
-## based on the POS tags
-# - set: propset
-#   name: lodie.gazetteer-postproc.filterLookupByPOS.ne-set
-#   value: "annotator1"
-
-
-## NOTE: the following filtering steps will filter the spots before the
-## candidates get retrieved and merged. Filtering by the same criteria
-## can also be done later, after the candidates have been retrieved
-## in sub-pipeline: ????
-
-- set: prrun
-  controller: spotting
-  prname: FilterAnnotations:filterByDateURI
-  value: true
-
-- set: prrun
-  controller: spotting
-  prname: Java:filterByNESet
-  value: false
-  
-- set: prrun
-  controller: spotting
-  prname: Java:filterByNE
-  value: false 
-  
-- set: prrun
-  controller: spotting
-  prname: Java:filterHeuristic
-  value: true
-
-- set: prrun
-  controller: spotting
-  prname: Java:filterCoextensive
-  value: true
-
 ##############################################################################
 ###
 ### SUBPIPELINE: lookupinfo
@@ -227,10 +64,20 @@
   controller: lookupinfo
   prname: Java:copyListAnns
   value: false
-  
-## TODO: add the run flags for further filtering steps here once we 
-## actually added them to the pipeline!
 
+## Location of the labels database
+- set: prinit
+  controller: lookupinfo
+  prname: JdbcJsonLookup:lookupinfo
+  name: dbDirectoryUrl
+  value: ../../bio-yodie-resources/databases/
+
+## String feature for label matching
+- set: prparm
+  controller: lookupinfo
+  prname: JdbcJsonLookup:lookupinfo
+  name: keyFeature
+  value: _string
 
 ##############################################################################
 ###
@@ -247,22 +94,6 @@
 - set: propset
   name: lodie.filter-prescoring.filterByFrequency.keepCandsWithNullFreq
   value: "false"
-
-
-### TODO: we should move this step into the main pipeline or a separate 
-### sub-pipeline and make it remove anything that got expanded by default.
-## Related to twitter expansion!  
-## should a match in the expanded twitter user id get projected back
-## to the original twitter id?
-- set: prrun
-  controller: filter-prescoring
-  prname: Java:projectTwitterUserID
-  value: false
-## when projecting the twitter user id, should we limit to coextensive only?
-- set: propset
-  name: lodie.filter-prescoring.projectTwitterUserID.coextonly
-  value: false
-  
 
 
 ##############################################################################
@@ -315,19 +146,6 @@
   prname: StructuralSimilarity
   name: contextChars
   value: 200
-
-## If for example URL occurs in neighbourhood for an entity,
-## should all entities in the expansion be considered neighbours?
-- set: prparm
-  controller: scoring
-  prname: StructuralSimilarity
-  name: useTwitterExpansion
-  value: true
-
-- set: prrun
-  controller: scoring
-  prname: TwitterExpander:Remove
-  value: true
 
 ##############################################################################
 ###

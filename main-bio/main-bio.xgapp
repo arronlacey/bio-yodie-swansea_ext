@@ -52,6 +52,9 @@
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Evaluation</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../plugins/TwitterExpander</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
@@ -186,14 +189,14 @@
               </localMap>
             </runtimeParams>
             <resourceType>at.ofai.gate.modularpipelines.Pipeline</resourceType>
-            <resourceName>MP:lookupinfo-bio</resourceName>
+            <resourceName>MP:lookupinfo</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
                   <string>pipelineFileURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../lookupinfo-bio/lookupinfo-bio.xgapp</urlString>
+                    <urlString>$relpath$../lookupinfo/lookupinfo.xgapp</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>
