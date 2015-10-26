@@ -169,10 +169,10 @@
 ##############################################################################
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.featureName
-  value: relUriFreqByLabelInWp
+  value: FREQ
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
-  value: 0.05
+  value: 0
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: false
