@@ -44,7 +44,7 @@
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: longestMatchOnly
-  value: false
+  value: true
 #- set: prparm
 #  controller: gazetteer-en
 #  prname: ExtGaz2:misc-en
@@ -54,11 +54,6 @@
 - set: prrun
   controller: gazetteer-en
   prname: ExtGaz2:misc-en
-  value: false
-
-- set: prrun
-  controller: gazetteer-en
-  prname: JAPE:postProcessLookups  
   value: false
 
 - set: prinit
@@ -87,13 +82,6 @@
   name: dbDirectoryUrl
   value: ../../bio-yodie-resources/databases/
 
-## String feature for label matching
-- set: prparm
-  controller: lookupinfo
-  prname: JdbcJsonLookup:lookupinfo
-  name: keyFeature
-  value: _string
-
 ##############################################################################
 ###
 ### SUBPIPELINE: filter-prescoring
@@ -116,6 +104,49 @@
 ### SUBPIPELINE: scoring
 ###
 ##############################################################################
+
+##Turning most of them off for now
+- set: prrun
+  controller: scoring
+  prname: TFICFSim:Abstracts
+  value: false
+- set: prrun
+  controller: scoring
+  prname: StructuralSimilarity
+  value: false
+- set: prrun
+  controller: scoring
+  prname: "Simple String Similarity PR_00016"
+  value: false
+- set: prrun
+  controller: scoring
+  prname: JAPE:ApplyAnnieClassMatch
+  value: false
+- set: prrun
+  controller: scoring
+  prname: JAPE:DeathDateToBoolean
+  value: false
+- set: prrun
+  controller: scoring
+  prname: TwitterExpander:Remove
+  value: false
+- set: prrun
+  controller: scoring
+  prname: EvaluateTagging4Lists:structSimCombined
+  value: false
+- set: prrun
+  controller: scoring
+  prname: EvaluateTagging4Lists:contextualSimilarityRDFDirect
+  value: false
+- set: prrun
+  controller: scoring
+  prname: EvaluateTagging4Lists:contextualSimilarityTFICFSemantic
+  value: false
+- set: prrun
+  controller: scoring
+  prname: EvaluateTagging4Lists:stringSimilarityBestLabel
+  value: false
+
 
 ## We will normalize candidate lists over coref chains. Pool candidates from
 ## top n spans. What should n be?
@@ -155,12 +186,49 @@
   name: contextLength
   value: 2000
 
-## Context window in characters
-- set: prparm
+
+
+## Init params to convert this for Bio-YODIE
+- set: prinit
   controller: scoring
-  prname: StructuralSimilarity
-  name: contextChars
-  value: 200
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: databaseDirectory
+  value: ../../bio-yodie-resources/databases/
+- set: prinit
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: dbName
+  value: umls
+- set: prinit
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: fieldName
+  value: DEF
+- set: prinit
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: identifierName
+  value: CUI
+- set: prinit
+  controller: scoring
+  prname: VectSim:RDFDirectTFIDF500000new
+  name: jdbcTableName
+  value: MRDEF
+#- set: prinit
+#  controller: scoring
+#  prname: VectSim:RDFDirectTFIDF500000new
+#  name: sspaceURL
+#  value: 
+
+
+
+##Not doing Struct Sim for now
+## Context window in characters
+#- set: prparm
+#  controller: scoring
+#  prname: StructuralSimilarity
+#  name: contextChars
+#  value: 200
 
 ##############################################################################
 ###
