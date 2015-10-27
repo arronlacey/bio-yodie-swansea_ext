@@ -16,7 +16,7 @@
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
-  <application class="gate.util.persistence.ConditionalSerialAnalyserControllerPersistence">
+  <application class="at.ofai.gate.modularpipelines.ParametrizedCorpusControllerPersistence">
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
