@@ -120,6 +120,7 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
   private Connection connection;
   private String jdbcUrl;
   private String fieldName;
+  private String identifierName;
   List<String> DEFAULT_STOP_WORDS = new ArrayList<String>(Arrays.asList(",", ".", "?",
           "!", ":", ";", "#", "~", "^", "@", "%", "&", "(", ")", "[", "]", "{", "}",
           "|", "\\", "<", ">", "-", "+", "*", "/", "=", "'", "\"", "'s", "1", "2",
@@ -209,7 +210,7 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
       } else {
         try {
           stSelect = connection.prepareStatement(
-                  "SELECT " + fieldName + " FROM " + jdbcTableName + " WHERE uri = ?");
+                  "SELECT " + fieldName + " FROM " + jdbcTableName + " WHERE " + identifierName + " = ?");
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -463,6 +464,15 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
   @CreoleParameter(defaultValue = "abstract")
   public void setFieldName(String fieldName) {
     this.fieldName = fieldName;
+  }
+
+  public String getIdentifierName() {
+    return this.identifierName;
+  }
+
+  @CreoleParameter(defaultValue = "uri")
+  public void setIdentifierName(String identifierName) {
+    this.identifierName = identifierName;
   }
 
   public Boolean getUseTwitterExpansion() {
