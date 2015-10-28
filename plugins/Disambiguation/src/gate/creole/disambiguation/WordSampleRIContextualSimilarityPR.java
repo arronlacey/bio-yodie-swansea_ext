@@ -98,7 +98,8 @@ public class WordSampleRIContextualSimilarityPR extends AbstractLanguageAnalyser
   /**
    * Output feature.
    */
-  private String outputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY_RI;
+  //private String outputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY_RI;
+  private String outputFeature = "scContextualSimilarityRI";
   
   /**
    * use this method to produce random indexing cache
@@ -267,7 +268,8 @@ public class WordSampleRIContextualSimilarityPR extends AbstractLanguageAnalyser
       if(ann.getFeatures().containsKey(outputFeature))
         continue;
       String instanceUri =
-        (String)ann.getFeatures().get(SemanticConstants.LKB_FEATURE_INST);
+        //(String)ann.getFeatures().get(SemanticConstants.LKB_FEATURE_INST);
+        (String)ann.getFeatures().get("lkbFeat");
       // see if the context annotations were earlier recovered for this
       // particular span?
       List<Annotation> contextAnnotations =

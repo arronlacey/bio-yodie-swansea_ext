@@ -84,12 +84,14 @@ ProcessingResource {
 	/**
 	 * Name of the rank-based output feature
 	 */
-	private String rankOutputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY;
+	//private String rankOutputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY;
+	private String rankOutputFeature = "rnLuceneContextualSimilarity";
 
 	/**
 	 * Name of the score-based output feature
 	 */
-	private String scoreOutputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY_LUCENE_SCORE;
+	//private String scoreOutputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY_LUCENE_SCORE;
+	private String scoreOutputFeature = "scLuceneContextualSimilarity";
 
 	/**
 	 * Whether or not to use coreference information if available.
@@ -138,7 +140,7 @@ ProcessingResource {
 
 
 		DocumentEntitySet ents = new DocumentEntitySet(document, inputASName, 
-				annotationTypes, true, "LodieCoref");
+				true, "LodieCoref");
 
 		Iterator<Entity> entsit = null;
 

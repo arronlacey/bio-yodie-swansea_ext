@@ -35,6 +35,11 @@ public class LookupList {
 	Annotation lookuplistann;
 	Document document;
 	String inputASName;
+	String lookupType;
+	
+	String idsListType = "ids";
+	String instFeat = "inst";
+	String labelFeat = "label";
 	
 	//Lookups are currently keyed on inst and label because this is unique for the span.
 	//inst alone is not necessarily unique.
@@ -51,12 +56,18 @@ public class LookupList {
 	private Map<KeyPair, Annotation> annotationbyinstlabel = new HashMap<KeyPair, Annotation>();
 	
 	public LookupList(Annotation lookuplist, Annotation spanann, 
-			Document document, String inputASName){		
+			Document document, String inputASName, String lookupListType, String lookupType){		
 		//Look for an overlapping twitter expansion type
 		long contStart = 0;
 		long contEnd = (long)document.getContent().toString().length();
-		if(document.getFeatures().get("TwitterExpanderOriginalTextSize")!=null){
-			contEnd = (Long)document.getFeatures().get("TwitterExpanderOriginalTextSize");
+		if(document.getFeatures().get(Constants.twExpOrigTexSzDocFt)!=null){
+			contEnd = (Long)document.getFeatures().get(Constants.twExpOrigTexSzDocFt);
+		}
+		if(document.getFeatures().get(Constants.instFeat)!=null){
+			instFeat = document.getFeatures().get(Constants.instFeat).toString();
+		}
+		if(document.getFeatures().get(Constants.labelFeat)!=null){
+			labelFeat = document.getFeatures().get(Constants.labelFeat).toString();
 		}
 		Annotation contann = DocumentEntitySet.getTwitterExpansionContextAnnotation(spanann, document);
 		if(contann!=null){
@@ -72,24 +83,26 @@ public class LookupList {
 		this.lookuplistann = lookuplist;
 		this.document = document;
 		this.inputASName = inputASName;
+		this.lookupType = lookupType;
 		
 		//If we have a lookup list annotation, link all the annotations
 		//it refers to.
 		if(lookuplist!=null){
-			List<Integer> ids = (List<Integer>)lookuplist.getFeatures().get("ids");
+			List<Integer> ids = (List<Integer>)lookuplist.getFeatures().get(idsListType);
 			for(int i=0;i<ids.size();i++){
 				Annotation ann = document.getAnnotations().get(ids.get(i));
-				KeyPair kp = new KeyPair(ann.getFeatures().get("inst").toString(), ann.getFeatures().get("label").toString());
+				KeyPair kp = new KeyPair(ann.getFeatures().get(instFeat).toString(), 
+						ann.getFeatures().get(labelFeat).toString());
 				this.annotationbyinstlabel.put(kp, ann);
 			}
 		} else { //Otherwise make an empty new one.
 			AnnotationSet inputAS = document.getAnnotations(inputASName);
 			FeatureMap fm = gate.Factory.newFeatureMap();
 			List<Integer> ids = new ArrayList<Integer>();
-			fm.put("ids", ids);
+			fm.put(idsListType, ids);
 
 			try {
-				Integer newid = inputAS.add(this.startoffset, this.endoffset, "LookupList", fm);
+				Integer newid = inputAS.add(this.startoffset, this.endoffset, lookupListType, fm);
 				Annotation newll = inputAS.get(newid);
 				this.lookuplistann = newll;
 			} catch (InvalidOffsetException e) {
@@ -110,7 +123,7 @@ public class LookupList {
 			//lookups so there's nothing to do here.
 		} else {
 			AnnotationSet inputAS = document.getAnnotations(inputASName);
-			List<Integer> annstoadd = (List<Integer>)llann.getFeatures().get("ids");
+			List<Integer> annstoadd = (List<Integer>)llann.getFeatures().get(idsListType);
 			for(int i=0;i<annstoadd.size();i++){
 				Integer id = annstoadd.get(i);
 				Annotation toadd = inputAS.get(id);
@@ -120,7 +133,7 @@ public class LookupList {
 					FeatureMap fm = Factory.newFeatureMap();
 					fm.putAll(toadd.getFeatures());
 					try {
-						Integer newid = inputAS.add(this.startoffset, this.endoffset, "Lookup", fm);
+						Integer newid = inputAS.add(this.startoffset, this.endoffset, lookupType, fm);
 						this.addAnn(newid);
 					} catch (InvalidOffsetException e) {
 						// TODO Auto-generated catch block
@@ -134,11 +147,11 @@ public class LookupList {
 	public void addAnn(Integer item){
 		AnnotationSet as = document.getAnnotations(inputASName);
 		Annotation ann = as.get(item);
-		List<Integer> ids = (List<Integer>)this.lookuplistann.getFeatures().get("ids");
+		List<Integer> ids = (List<Integer>)this.lookuplistann.getFeatures().get(idsListType);
 		
 		if(!ids.contains(item)){
 			ids.add(item);
-			this.lookuplistann.getFeatures().put("ids", ids);
+			this.lookuplistann.getFeatures().put(idsListType, ids);
 			
 			//If we are merging, we might get an ann with the wrong span.
 			//In this case, make a version that has the right span and add that.
@@ -147,7 +160,7 @@ public class LookupList {
 				FeatureMap fm = gate.Factory.newFeatureMap();
 				fm.putAll(ann.getFeatures());
 				try {
-					Integer id = as.add(this.startoffset, this.endoffset, "Lookup", fm);
+					Integer id = as.add(this.startoffset, this.endoffset, lookupType, fm);
 					ann = as.get(id);
 				} catch (InvalidOffsetException e) {
 					// TODO Auto-generated catch block
@@ -157,8 +170,8 @@ public class LookupList {
 			}
 	
 			//Add it to the structure.
-                        // TODO: parameter instead of "inst"?
-			KeyPair kp = new KeyPair((String)ann.getFeatures().get("inst"), (String)ann.getFeatures().get("label"));
+			KeyPair kp = new KeyPair((String)ann.getFeatures().get(instFeat),
+					(String)ann.getFeatures().get(labelFeat));
 			this.annotationbyinstlabel.put(kp , ann);
 		}
 	}
@@ -183,9 +196,9 @@ public class LookupList {
 		Annotation anntoremove = this.getAnnotationbyinstlabel(instlabel);
 		if(anntoremove!=null){ //Will be null if this one isn't on this span.
 			if(this.lookuplistann!=null){
-				List<Integer> ids = (List<Integer>)this.lookuplistann.getFeatures().get("ids");
+				List<Integer> ids = (List<Integer>)this.lookuplistann.getFeatures().get(idsListType);
 				ids.remove(anntoremove.getId());
-				this.lookuplistann.getFeatures().put("ids", ids);
+				this.lookuplistann.getFeatures().put(idsListType, ids);
 				this.annotationbyinstlabel.remove(instlabel);
 			} else {
 				System.out.println("Attempt to remove Lookup from location with "

@@ -37,8 +37,9 @@ ProcessingResource {
 	/**
 	 * List of the annotation types to be used for lookup.
 	 */
-	private List<String> annotationTypes;
+	private String lookupType;
 
+	private String lookupListType;
 	/**
 	 * name of the input annotation set
 	 */
@@ -91,12 +92,12 @@ ProcessingResource {
 
 
 		DocumentEntitySet ents = new DocumentEntitySet(document, inputASName, 
-				annotationTypes, true, "LodieCoref");
+				true, Constants.yodieCorefType);
 
 		Iterator<Entity> entsit = null;
 				
-	    if(document.getFeatures().get("keyOverlapsOnly")!=null
-	    		&& document.getFeatures().get("keyOverlapsOnly")
+	    if(document.getFeatures().get(Constants.tacSwitch)!=null
+	    		&& document.getFeatures().get(Constants.tacSwitch)
 	    		.toString().equals("true")) {
 	    	entsit = ents.getKeyOverlapsIterator(document);
 	    } else {
@@ -225,14 +226,24 @@ ProcessingResource {
 		super.cleanup();
 	}
 
-	public List<String> getAnnotationTypes() {
-		return annotationTypes;
+	public String getLookupType() {
+		return lookupType;
 	}
 
 	@RunTime
 	@CreoleParameter(defaultValue = "Lookup")
-	public void setAnnotationTypes(List<String> annotationTypes) {
-		this.annotationTypes = annotationTypes;
+	public void setLookupType(String lookupType) {
+		this.lookupType = lookupType;
+	}
+
+	public String getLookupListType() {
+		return lookupListType;
+	}
+
+	@RunTime
+	@CreoleParameter(defaultValue = "LookupList")
+	public void setLookupListType(String lookupListType) {
+		this.lookupListType = lookupListType;
 	}
 
 	public String getInputASName() {
@@ -268,26 +279,5 @@ ProcessingResource {
 		this.outputFeature = outputFeature;
 	}
 
-	/*public Boolean getuseCoreference() {
-		return new Boolean(this.useCoreference);
-	}
-
-	@CreoleParameter(defaultValue = "true")
-	@RunTime
-	@Optional
-	public void setuseCoreference(Boolean useCoreference) {
-		this.useCoreference = useCoreference.booleanValue();
-	}*/
-
-	/*public Boolean getstrict() {
-		return new Boolean(this.strict);
-	}
-
-	@CreoleParameter(defaultValue = "true")
-	@RunTime
-	@Optional
-	public void setstrict(Boolean strict) {
-		this.strict = strict.booleanValue();
-	}*/
 
 } // class StringSimilarityPR

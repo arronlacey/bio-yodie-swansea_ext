@@ -46,15 +46,6 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>lookupTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
                   <string>useCoref</string>
                   <boolean>true</boolean>
                 </entry>
@@ -73,10 +64,6 @@
                 <entry>
                   <string>inputASName</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>lookupListType</string>
-                  <string>LookupList</string>
                 </entry>
                 <entry>
                   <string>candNormalizationSpanSetSize</string>
@@ -131,15 +118,6 @@
                 <entry>
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -216,15 +194,6 @@
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
                 </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.disambiguation.VectorContextualSimilarityPR</resourceType>
@@ -299,15 +268,6 @@
                 <entry>
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -384,15 +344,6 @@
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
                 </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.disambiguation.TFICFContextualSimilarityPR</resourceType>
@@ -462,15 +413,6 @@
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
                 </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.disambiguation.TFICFContextualSimilarityPR</resourceType>
@@ -539,15 +481,6 @@
                 <entry>
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -648,18 +581,9 @@
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
                 </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.creole.disambiguation.StructuralSimilarityPRv3</resourceType>
+            <resourceType>gate.creole.disambiguation.StructuralSimilarityPR</resourceType>
             <resourceName>StructuralSimilarity</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -713,15 +637,6 @@
                 <entry>
                   <string>inputASName</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>Lookup</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
                   <string>document</string>

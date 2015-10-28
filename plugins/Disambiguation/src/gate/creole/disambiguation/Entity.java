@@ -345,9 +345,9 @@ public class Entity {
 		String contextString = "";
 		//int docContentLength = document.getContent().toString().length();
 		AnnotationSet inputAS = this.document.getAnnotations(inputASName);
-		AnnotationSet hashtagExpansions = inputAS.get("TwitterExpanderHashtag");
-		AnnotationSet urlExpansions = inputAS.get("TwitterExpanderURL");
-		AnnotationSet userIDExpansions = inputAS.get("TwitterExpanderUserID");
+		AnnotationSet hashtagExpansions = inputAS.get(Constants.hashType);
+		AnnotationSet urlExpansions = inputAS.get(Constants.urlType);
+		AnnotationSet userIDExpansions = inputAS.get(Constants.idType);
 
 		Iterator<LookupList> spanit = spans.iterator();
 
@@ -363,9 +363,9 @@ public class Entity {
 					document, startOffset, endOffset);
 
 			if(useTwitterExpansion){ //Add all expansions for the string
-				AnnotationSet hashtags = inputAS.get("Hashtag", startOffset, endOffset);
-				AnnotationSet urls = inputAS.get("URL", startOffset, endOffset);
-				AnnotationSet userIDs = inputAS.get("UserID", startOffset, endOffset);
+				AnnotationSet hashtags = inputAS.get(Constants.hash, startOffset, endOffset);
+				AnnotationSet urls = inputAS.get(Constants.url, startOffset, endOffset);
+				AnnotationSet userIDs = inputAS.get(Constants.id, startOffset, endOffset);
 
 				Set<Integer> idsToExpand = new HashSet<Integer>();
 
@@ -392,7 +392,7 @@ public class Entity {
 				Iterator<Annotation> heit = hashtagExpansions.iterator();
 				while(heit.hasNext()){
 					Annotation he = heit.next();
-					Integer mentionId = (Integer)he.getFeatures().get("mentionId");
+					Integer mentionId = (Integer)he.getFeatures().get(Constants.mentionId);
 					if(idsToExpand.contains(mentionId)){
 						context = context + " " + Utils.cleanStringFor(document, he);
 					}
@@ -401,7 +401,7 @@ public class Entity {
 				Iterator<Annotation> ueit = urlExpansions.iterator();
 				while(ueit.hasNext()){
 					Annotation ue = ueit.next();
-					Integer mentionId = (Integer)ue.getFeatures().get("mentionId");
+					Integer mentionId = (Integer)ue.getFeatures().get(Constants.mentionId);
 					if(idsToExpand.contains(mentionId)){
 						context = context + " " + Utils.cleanStringFor(document, ue);
 					}
@@ -410,7 +410,7 @@ public class Entity {
 				Iterator<Annotation> ieit = userIDExpansions.iterator();
 				while(ieit.hasNext()){
 					Annotation ie = ieit.next();
-					Integer mentionId = (Integer)ie.getFeatures().get("mentionId");
+					Integer mentionId = (Integer)ie.getFeatures().get(Constants.mentionId);
 					if(idsToExpand.contains(mentionId)){
 						context = context + " " + Utils.cleanStringFor(document, ie);
 					}

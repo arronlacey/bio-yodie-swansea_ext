@@ -3,31 +3,24 @@ package gate.creole.disambiguation;
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Document;
-import gate.FeatureMap;
 import gate.Utils;
-import gate.util.InvalidOffsetException;
-import gate.util.compilers.eclipse.jdt.internal.compiler.ast.ThisReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.thoughtworks.xstream.core.util.Pool.Factory;
 import gate.util.Benchmark;
 
 public class DocumentEntitySet {
 
 	private String inputASName = "";
 
-	private List<String> annotationTypes = null;
+	private String annotationType = null;
 
 	private List<Entity> entities = null;
 
@@ -38,8 +31,10 @@ public class DocumentEntitySet {
 	//Should we use coreference information to group entities
 	//or just make a separate entity for each span?
 	private boolean useCoreference = true;
-
-	private String corefDocFeatName;
+	
+	private String matchesAnnotsName;
+	private String lookupType = "Lookup";
+	private String lookupListType = "LookupList";
 
 	Document document;
 
@@ -53,17 +48,23 @@ public class DocumentEntitySet {
 	 * @param corefDocFeatName 
 	 */
 	public DocumentEntitySet(Document document, String iasn, 
-			List<String> atypes, boolean useCoref, String corefDocFeatName) {
+			boolean useCoref, String matchesAnnotsName) {
                 long startTime = Benchmark.startPoint();
 
 		this.inputASName = iasn;
-		// REMOVE
-		this.annotationTypes = atypes;
 		this.useCoreference = useCoref;
 		this.document = document;
-		this.corefDocFeatName = corefDocFeatName;
+		this.matchesAnnotsName = matchesAnnotsName;
+		
+		if(document.getFeatures().get(Constants.lookupTypeDocFeat)!=null){
+			lookupType = document.getFeatures().get(Constants.lookupTypeDocFeat).toString();
+		}
 
-		this.populate(document);
+		if(document.getFeatures().get(Constants.lookupListTypeDocFeat)!=null){
+			lookupListType = document.getFeatures().get(Constants.lookupListTypeDocFeat).toString();
+		}
+
+		this.populate(document, lookupListType, lookupType);
                 benchmarkCheckpoint(startTime, "__createDocumentEntitySet");
 
 	}
@@ -80,7 +81,8 @@ public class DocumentEntitySet {
 
 	//Return an iterator for entities that overlap with key mentions only.
 	public Iterator<Entity> getKeyOverlapsIterator(Document document){
-		AnnotationSet keyMentionsSet = document.getAnnotations("Key").get("Mention");
+		AnnotationSet keyMentionsSet = document.getAnnotations(Constants.key)
+				.get(Constants.mentionType);
 		keyOverlapEntities = new ArrayList<Entity>();
 		Iterator<Entity> entit = this.getIterator();
 		while(entit!=null && entit.hasNext()){
@@ -93,10 +95,10 @@ public class DocumentEntitySet {
 		return keyOverlapEntities.iterator();
 	}
 
-	public Iterator<Entity> getTweetSpanIterator(Document document){
+	public Iterator<Entity> getTweetSpanIterator(Document document, String otsFeature){
                 long startTime = Benchmark.startPoint();
-		if(document.getFeatures().get("TwitterExpanderOriginalTextSize")!=null){
-			long endDoc = (Long)document.getFeatures().get("TwitterExpanderOriginalTextSize");
+		if(document.getFeatures().get(otsFeature)!=null){
+			long endDoc = (Long)document.getFeatures().get(otsFeature);
 			tweetSpanEntities = new ArrayList<Entity>();
 			Iterator<Entity> entit = this.getIterator();
 			while(entit!=null && entit.hasNext()){
@@ -113,7 +115,7 @@ public class DocumentEntitySet {
 		}
 	}
 
-	private void populate(Document document){
+	private void populate(Document document, String lookupListType, String lookupType){
 
 		Map<String, List<List<Integer>>> corefs = null;
 
@@ -121,7 +123,7 @@ public class DocumentEntitySet {
 		if(this.useCoreference==true){
 			try {
 				corefs = 
-						(Map<String, List<List<Integer>>>)document.getFeatures().get(corefDocFeatName);
+						(Map<String, List<List<Integer>>>)document.getFeatures().get(matchesAnnotsName);
 			} catch(ClassCastException e){
 				e.printStackTrace();
 			}
@@ -133,12 +135,13 @@ public class DocumentEntitySet {
 				List<List<Integer>> entchains = (List<List<Integer>>)corefs.get(inputASName);
 
 				if(entchains!=null){
-					entities = populateCoreffedEntities(document, entchains, inputASName);
+					entities = populateCoreffedEntities(document, entchains, inputASName, 
+							lookupListType, lookupType);
 				}
 			}
 		}
 
-		this.makeEntitiesNotCoreffed(document);
+		this.makeEntitiesNotCoreffed(document, lookupListType, lookupType);
 	}
 
 	public class AnnotationComparator implements Comparator<Annotation> {
@@ -148,12 +151,12 @@ public class DocumentEntitySet {
 		}
 	}
 
-	private void makeEntitiesNotCoreffed(Document document){
+	private void makeEntitiesNotCoreffed(Document document, String lookupListType, String lookupType){
 		if(entities==null){
 			entities = new ArrayList<Entity>();
 		}
 
-		AnnotationSet lls = document.getAnnotations(inputASName).get("LookupList");
+		AnnotationSet lls = document.getAnnotations(inputASName).get(lookupListType);
 
 		//Make the order deterministic
 		List<Annotation> annlist = new ArrayList<Annotation>(lls);
@@ -177,7 +180,8 @@ public class DocumentEntitySet {
 			}
 
 			if(matchent==null){ //Will make new entity based on this list
-				LookupList span = new LookupList(ll, ll, document, inputASName);
+				LookupList span = new LookupList(ll, ll, document, inputASName, lookupListType,
+						lookupType);
 				List<LookupList> lll = new ArrayList<LookupList>();
 				lll.add(span);
 				Entity newEnt = new Entity(lll, document, inputASName);
@@ -187,7 +191,7 @@ public class DocumentEntitySet {
 	}
 
 	private List<Entity> populateCoreffedEntities(Document doc, List<List<Integer>> entchains, 
-			String iasn){
+			String iasn, String lookupListType, String lookupType){
 		List<Entity> entities = new ArrayList<Entity>();
 		AnnotationSet as = doc.getAnnotations(iasn);
 		Iterator<List<Integer>> entsit = entchains.iterator();
@@ -207,15 +211,15 @@ public class DocumentEntitySet {
 				if(corefann!=null && corefann.getStartNode()!=null
 						&& corefann.getEndNode()!=null){
 
-					// JP: parametrize ann type for the lists
-					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get("LookupList"), corefann);
+					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get(lookupListType), corefann);
 					Annotation ll = null;
 					if(llcands.size()==1){
 						ll = Utils.getOnlyAnn(llcands);
 					}
 					if(ll!=null) numberofllsfound++;
 					//Add it even if it is null--we might populate it later
-					LookupList span = new LookupList(ll, corefann, doc, inputASName);
+					LookupList span = new LookupList(ll, corefann, doc, inputASName, lookupListType,
+							lookupType);
 					lll.add(span);
 				}
 			}
@@ -254,13 +258,13 @@ public class DocumentEntitySet {
 	public static Annotation getTwitterExpansionContextAnnotation(
 			Annotation corefann, Document document){
 		AnnotationSet contas1 = Utils.getCoveringAnnotations(
-				document.getAnnotations().get("TwitterExpanderHashtag"), 
+				document.getAnnotations().get(Constants.hashType), 
 				corefann);
 		AnnotationSet contas2 = Utils.getCoveringAnnotations(
-				document.getAnnotations().get("TwitterExpanderURL"), 
+				document.getAnnotations().get(Constants.urlType), 
 				corefann);
 		AnnotationSet contas3 = Utils.getCoveringAnnotations(
-				document.getAnnotations().get("TwitterExpanderUserID"), 
+				document.getAnnotations().get(Constants.idType), 
 				corefann);
 		if(contas1.size()==1){
 			return Utils.getOnlyAnn(contas1);
@@ -345,12 +349,12 @@ public class DocumentEntitySet {
 		this.inputASName = inputASName;
 	}
 
-	public List<String> getAnnotationTypes() {
-		return annotationTypes;
+	public String getAnnotationType() {
+		return annotationType;
 	}
 
-	public void setAnnotationTypes(List<String> annotationTypes) {
-		this.annotationTypes = annotationTypes;
+	public void setAnnotationTypes(String annotationType) {
+		this.annotationType = annotationType;
 	}
 
 	public List<Entity> getEntities() {

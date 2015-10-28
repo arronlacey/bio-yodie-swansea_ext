@@ -1,12 +1,3 @@
-<!-- creole.xml Disambiguate PR -->
-<!--  danica, 14/12/2011 -->
-<!-- $Id: creole.xml 9992 2008-10-31 16:53:29Z ian_roberts $ -->
-
-<!--
-This file just references the JAR file that contains the compiled resource.
-Configuration is contained in the @CreoleResource annotation on 
-gate.creole.disambiguation.DisambiguatePR.
--->
 
 <CREOLE-DIRECTORY>
   <JAR SCAN="true">Disambiguation.jar</JAR>
@@ -18,27 +9,5 @@ gate.creole.disambiguation.DisambiguatePR.
   <JAR>lib/trove4j-3.0.3.jar</JAR>
   <JAR>lib/h2-1.3.174.jar</JAR>
   <JAR>lib/fastutil-6.5.15.jar</JAR>
-  <JAR>../LuceneGaz/lucene-gaz.jar</JAR>
-
-  <CREOLE>
-      <!--creole.xml for Flexible Gazetteer -->
-    <RESOURCE>
-      <NAME>Flexible Gazetteer</NAME>
-      <CLASS>gate.creole.disambiguation.FlexibleGazetteer</CLASS>
-      <COMMENT>A more flexible list lookup component.</COMMENT>
-      <PARAMETER NAME="document" RUNTIME="true"
-        COMMENT="The document to be processed">gate.Document</PARAMETER>
-      <PARAMETER NAME="inputASName" RUNTIME="true"
-        COMMENT="The annotation set to be used for getting features from"
-        OPTIONAL="true">java.lang.String</PARAMETER>
-      <PARAMETER NAME="outputASName" RUNTIME="true"
-        COMMENT="The annotation set to be used for the generated annotations"
-        OPTIONAL="true">java.lang.String</PARAMETER>
-      <PARAMETER NAME="inputFeatureNames"
-        COMMENT="Annotation.feature names to be considered for the gazetteer">
-        java.util.List</PARAMETER>
-      <PARAMETER NAME="gazetteerInst" COMMENT="Gazetteer Instance to be used"
-        OPTIONAL="false">gate.creole.AbstractLanguageAnalyser</PARAMETER>
-    </RESOURCE>
-  </CREOLE>
+  <JAR>lib/lucene-gaz.jar</JAR>
 </CREOLE-DIRECTORY>

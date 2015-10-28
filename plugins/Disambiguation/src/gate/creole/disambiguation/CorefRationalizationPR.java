@@ -51,7 +51,12 @@ ProcessingResource {
 	/**
 	 * name of the input annotation set
 	 */
-	private List<String> lookupTypes;
+	private String lookupType;
+
+	/**
+	 * name of the document feature containing the ANNIE coref
+	 */
+	private String matchesAnnotsType;
 
 	/**
 	 * name of the input annotation set
@@ -106,7 +111,7 @@ ProcessingResource {
 
 		if(useCoref){
 			DocumentEntitySet ents = new DocumentEntitySet(document, inputASName,
-					lookupTypes, true, "MatchesAnnots");
+					true, this.matchesAnnotsType);
 
 			//System.out.println("BEFORE DOING ANYTHING");
 			//ents.print();
@@ -135,15 +140,15 @@ ProcessingResource {
 			//version of our own and put it on the document. This will also
 			//help PRs to know if this PR has been run or not. Using coref
 			//won't really work out if this PR hasn't been run.
-			document.getFeatures().put("LodieCoref", this.getLatestCorefStructure(ents));
+			document.getFeatures().put(Constants.yodieCorefType, this.getLatestCorefStructure(ents));
 		} else {
 			//If we don't want to use coref, we still need to create the
 			//"LodieCoref" document feature, because that is what the other
 			//PRs will use. It will contain a single item for each LL.
 			DocumentEntitySet ents = new DocumentEntitySet(document, inputASName,
-					lookupTypes, false, "");
+					false, "");
 
-			document.getFeatures().put("LodieCoref", this.getLatestCorefStructure(ents));
+			document.getFeatures().put(Constants.yodieCorefType, this.getLatestCorefStructure(ents));
 		}
 
 		long end = System.currentTimeMillis();
@@ -230,7 +235,7 @@ ProcessingResource {
 				Integer id;
 				try {
 					id = inputAS.add(sp.startoffset, sp.endoffset, 
-							"Lookup", fm);
+							this.lookupType, fm);
 					sp.addAnn(id);
 				} catch (InvalidOffsetException e) {
 					// TODO Auto-generated catch block
@@ -340,14 +345,22 @@ ProcessingResource {
 		this.inputASName = inputASName;
 	}
 
-	public List<String> getLookupTypes() {
-		return lookupTypes;
+	public String getLookupType() {
+		return lookupType;
 	}
 
-	@RunTime
 	@CreoleParameter(defaultValue = "Lookup")
-	public void setLookupTypes(List<String> lookupTypes) {
-		this.lookupTypes = lookupTypes;
+	public void setLookupType(String lookupType) {
+		this.lookupType = lookupType;
+	}
+
+	public String getMatchesAnnotsType() {
+		return this.matchesAnnotsType;
+	}
+
+	@CreoleParameter(defaultValue = "MatchesAnnots")
+	public void setMatchesAnnotsType(String matchesAnnotsType) {
+		this.matchesAnnotsType = matchesAnnotsType;
 	}
 
 	public String getLookupListType() {
