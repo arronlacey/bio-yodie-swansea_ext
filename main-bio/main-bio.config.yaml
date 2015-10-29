@@ -64,6 +64,50 @@
 
 ##############################################################################
 ###
+### SUBPIPELINE: gazetteer-postproc
+###
+##############################################################################
+
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JdbcLookup:countMentionsNoCase
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Transfer:Annie2GazetteerEN
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:filterLookupsByPOS
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:filterLookupsSpurious
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Java:filterByNER
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Java:filterByNERSet
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:removeLookups
+  value: false
+- set: prrun
+  controller: gazetteer-postproc
+  prname: JAPE:removeContainedLookups
+  value: true
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Reset:AnnieFromGazetteerEN
+  value: false
+
+
+##############################################################################
+###
 ### SUBPIPELINE: lookupinfo
 ###
 ##############################################################################
@@ -81,6 +125,12 @@
   prname: JdbcJsonLookup:lookupinfo
   name: dbDirectoryUrl
   value: ../../bio-yodie-resources/databases/
+
+- set: prparm
+  controller: lookupinfo
+  prname: JdbcJsonLookup:lookupinfo
+  name: keyFeature
+  value: string_orig
 
 ##############################################################################
 ###
@@ -198,7 +248,7 @@
   controller: scoring
   prname: VectSim:RDFDirectTFIDF500000new
   name: dbName
-  value: umls
+  value: abstracts
 - set: prinit
   controller: scoring
   prname: VectSim:RDFDirectTFIDF500000new
@@ -213,7 +263,7 @@
   controller: scoring
   prname: VectSim:RDFDirectTFIDF500000new
   name: jdbcTableName
-  value: MRDEF
+  value: abstracts
 #- set: prinit
 #  controller: scoring
 #  prname: VectSim:RDFDirectTFIDF500000new
