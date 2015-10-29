@@ -62,11 +62,6 @@ ProcessingResource {
 	private Searcher searcher;
 
 	/**
-	 * List of the annotation types to be used for lookup.
-	 */
-	private List<String> annotationTypes;
-
-	/**
 	 * name of the input annotation set
 	 */
 	private String inputASName;
@@ -140,12 +135,12 @@ ProcessingResource {
 
 
 		DocumentEntitySet ents = new DocumentEntitySet(document, inputASName, 
-				true, "LodieCoref");
+				true, Constants.yodieCorefType);
 
 		Iterator<Entity> entsit = null;
 
-		if(document.getFeatures().get("lodie.scoring.keyOverlapsOnly")!=null
-				&& document.getFeatures().get("lodie.scoring.keyOverlapsOnly")
+		if(document.getFeatures().get(Constants.tacSwitch)!=null
+				&& document.getFeatures().get(Constants.tacSwitch)
 				.toString().equals("true")) {
 			entsit = ents.getKeyOverlapsIterator(document);
 		} else {
@@ -235,16 +230,6 @@ ProcessingResource {
 		} catch(IndexException e) {
 			throw new GateRuntimeException("could not close the searcher", e);
 		}
-	}
-
-	public List<String> getAnnotationTypes() {
-		return annotationTypes;
-	}
-
-	@RunTime
-	@CreoleParameter(defaultValue = "Lookup")
-	public void setAnnotationTypes(List<String> annotationTypes) {
-		this.annotationTypes = annotationTypes;
 	}
 
 	public URL getLuceneIndexDirURL() {

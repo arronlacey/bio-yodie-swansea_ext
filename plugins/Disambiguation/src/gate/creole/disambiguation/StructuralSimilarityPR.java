@@ -476,24 +476,4 @@ public class StructuralSimilarityPR extends AbstractLanguageAnalyser implements
   }
   private boolean useCoreference;*/
 
-  @RunTime
-  @CreoleParameter(defaultValue = "Lookup")
-  public void setLookupType(String lookupType) {
-    this.lookupType = lookupType;
-  }
-  public String getLookupType() {
-    return lookupType;
-  }
-  private String lookupType;
-
-  @RunTime
-  @CreoleParameter(defaultValue = "LookupList")
-  public void setLookupListType(String lookupListType) {
-    this.lookupListType = lookupListType;
-  }
-  public String getLookupListType() {
-    return lookupListType;
-  }
-  private String lookupListType;
-  
 } // class StructuralSimilarityPRv2

@@ -49,19 +49,9 @@ ProcessingResource {
 	private String inputASName;
 
 	/**
-	 * name of the input annotation set
-	 */
-	private String lookupType;
-
-	/**
 	 * name of the document feature containing the ANNIE coref
 	 */
 	private String matchesAnnotsType;
-
-	/**
-	 * name of the input annotation set
-	 */
-	private String lookupListType;
 
 	/**
 	 * Whether or not to use coref
@@ -235,7 +225,7 @@ ProcessingResource {
 				Integer id;
 				try {
 					id = inputAS.add(sp.startoffset, sp.endoffset, 
-							this.lookupType, fm);
+							Constants.lookupType, fm);
 					sp.addAnn(id);
 				} catch (InvalidOffsetException e) {
 					// TODO Auto-generated catch block
@@ -345,15 +335,6 @@ ProcessingResource {
 		this.inputASName = inputASName;
 	}
 
-	public String getLookupType() {
-		return lookupType;
-	}
-
-	@CreoleParameter(defaultValue = "Lookup")
-	public void setLookupType(String lookupType) {
-		this.lookupType = lookupType;
-	}
-
 	public String getMatchesAnnotsType() {
 		return this.matchesAnnotsType;
 	}
@@ -361,16 +342,6 @@ ProcessingResource {
 	@CreoleParameter(defaultValue = "MatchesAnnots")
 	public void setMatchesAnnotsType(String matchesAnnotsType) {
 		this.matchesAnnotsType = matchesAnnotsType;
-	}
-
-	public String getLookupListType() {
-		return lookupListType;
-	}
-
-	@RunTime
-	@CreoleParameter(defaultValue = "LookupList")
-	public void setLookupListType(String lookupListType) {
-		this.lookupListType = lookupListType;
 	}
 
 	public Integer getCandNormalizationSpanSetSize() {

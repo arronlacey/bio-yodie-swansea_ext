@@ -232,12 +232,12 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
       long start = System.currentTimeMillis(); // record the start time
 
       DocumentEntitySet ents = new DocumentEntitySet(document, inputASName,
-              annotationTypes, true, "LodieCoref");
+              true, Constants.yodieCorefType);
 
       Iterator<Entity> entsit = null;
 
-      if (document.getFeatures().get("keyOverlapsOnly") != null
-              && document.getFeatures().get("keyOverlapsOnly")
+      if (document.getFeatures().get(Constants.tacSwitch) != null
+              && document.getFeatures().get(Constants.tacSwitch)
               .toString().equals("true")) {
         entsit = ents.getKeyOverlapsIterator(document);
       } else {
@@ -245,7 +245,7 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
           //an expanded tweet. If it is, it just returns an iterator
           //over entities that feature in the tweet body. Otherwise, all 
           //of them.
-        entsit = ents.getTweetSpanIterator(document);
+        entsit = ents.getTweetSpanIterator(document, Constants.twExpOrigTexSzDocFt);
       }
       
       while (entsit != null && entsit.hasNext()) {
@@ -354,16 +354,6 @@ public class VectorContextualSimilarityPR extends AbstractLanguageAnalyser imple
       e.printStackTrace();
     }
 
-  }
-
-  public List<String> getAnnotationTypes() {
-    return annotationTypes;
-  }
-
-  @RunTime
-  @CreoleParameter(defaultValue = "Lookup")
-  public void setAnnotationTypes(List<String> annotationTypes) {
-    this.annotationTypes = annotationTypes;
   }
 
   public String getInputASName() {

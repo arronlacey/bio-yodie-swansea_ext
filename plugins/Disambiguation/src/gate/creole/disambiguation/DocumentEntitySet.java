@@ -20,8 +20,6 @@ public class DocumentEntitySet {
 
 	private String inputASName = "";
 
-	private String annotationType = null;
-
 	private List<Entity> entities = null;
 
 	private List<Entity> keyOverlapEntities = null;
@@ -33,8 +31,6 @@ public class DocumentEntitySet {
 	private boolean useCoreference = true;
 	
 	private String matchesAnnotsName;
-	private String lookupType = "Lookup";
-	private String lookupListType = "LookupList";
 
 	Document document;
 
@@ -56,15 +52,7 @@ public class DocumentEntitySet {
 		this.document = document;
 		this.matchesAnnotsName = matchesAnnotsName;
 		
-		if(document.getFeatures().get(Constants.lookupTypeDocFeat)!=null){
-			lookupType = document.getFeatures().get(Constants.lookupTypeDocFeat).toString();
-		}
-
-		if(document.getFeatures().get(Constants.lookupListTypeDocFeat)!=null){
-			lookupListType = document.getFeatures().get(Constants.lookupListTypeDocFeat).toString();
-		}
-
-		this.populate(document, lookupListType, lookupType);
+		this.populate(document);
                 benchmarkCheckpoint(startTime, "__createDocumentEntitySet");
 
 	}
@@ -115,7 +103,7 @@ public class DocumentEntitySet {
 		}
 	}
 
-	private void populate(Document document, String lookupListType, String lookupType){
+	private void populate(Document document){
 
 		Map<String, List<List<Integer>>> corefs = null;
 
@@ -135,13 +123,12 @@ public class DocumentEntitySet {
 				List<List<Integer>> entchains = (List<List<Integer>>)corefs.get(inputASName);
 
 				if(entchains!=null){
-					entities = populateCoreffedEntities(document, entchains, inputASName, 
-							lookupListType, lookupType);
+					entities = populateCoreffedEntities(document, entchains, inputASName);
 				}
 			}
 		}
 
-		this.makeEntitiesNotCoreffed(document, lookupListType, lookupType);
+		this.makeEntitiesNotCoreffed(document);
 	}
 
 	public class AnnotationComparator implements Comparator<Annotation> {
@@ -151,12 +138,12 @@ public class DocumentEntitySet {
 		}
 	}
 
-	private void makeEntitiesNotCoreffed(Document document, String lookupListType, String lookupType){
+	private void makeEntitiesNotCoreffed(Document document){
 		if(entities==null){
 			entities = new ArrayList<Entity>();
 		}
 
-		AnnotationSet lls = document.getAnnotations(inputASName).get(lookupListType);
+		AnnotationSet lls = document.getAnnotations(inputASName).get(Constants.lookupListType);
 
 		//Make the order deterministic
 		List<Annotation> annlist = new ArrayList<Annotation>(lls);
@@ -180,8 +167,7 @@ public class DocumentEntitySet {
 			}
 
 			if(matchent==null){ //Will make new entity based on this list
-				LookupList span = new LookupList(ll, ll, document, inputASName, lookupListType,
-						lookupType);
+				LookupList span = new LookupList(ll, ll, document, inputASName);
 				List<LookupList> lll = new ArrayList<LookupList>();
 				lll.add(span);
 				Entity newEnt = new Entity(lll, document, inputASName);
@@ -191,7 +177,7 @@ public class DocumentEntitySet {
 	}
 
 	private List<Entity> populateCoreffedEntities(Document doc, List<List<Integer>> entchains, 
-			String iasn, String lookupListType, String lookupType){
+			String iasn){
 		List<Entity> entities = new ArrayList<Entity>();
 		AnnotationSet as = doc.getAnnotations(iasn);
 		Iterator<List<Integer>> entsit = entchains.iterator();
@@ -211,15 +197,14 @@ public class DocumentEntitySet {
 				if(corefann!=null && corefann.getStartNode()!=null
 						&& corefann.getEndNode()!=null){
 
-					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get(lookupListType), corefann);
+					AnnotationSet llcands = Utils.getCoextensiveAnnotations(as.get(Constants.lookupListType), corefann);
 					Annotation ll = null;
 					if(llcands.size()==1){
 						ll = Utils.getOnlyAnn(llcands);
 					}
 					if(ll!=null) numberofllsfound++;
 					//Add it even if it is null--we might populate it later
-					LookupList span = new LookupList(ll, corefann, doc, inputASName, lookupListType,
-							lookupType);
+					LookupList span = new LookupList(ll, corefann, doc, inputASName);
 					lll.add(span);
 				}
 			}
@@ -347,14 +332,6 @@ public class DocumentEntitySet {
 
 	public void setInputASName(String inputASName) {
 		this.inputASName = inputASName;
-	}
-
-	public String getAnnotationType() {
-		return annotationType;
-	}
-
-	public void setAnnotationTypes(String annotationType) {
-		this.annotationType = annotationType;
 	}
 
 	public List<Entity> getEntities() {

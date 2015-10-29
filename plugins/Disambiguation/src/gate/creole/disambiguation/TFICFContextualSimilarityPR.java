@@ -71,12 +71,6 @@ ProcessingResource {
 	  private Logger logger = Logger.getLogger(gate.creole.disambiguation.VectorContextualSimilarityPR.class);    
 	  
 	  /**
-	   * List of the annotation types to be used for lookup.
-	   */
-	  private String lookupType;
-	  
-	  private String lookupListType;
-	  /**
 	   * name of the input annotation set
 	   */
 	  private String inputASName;
@@ -106,6 +100,7 @@ ProcessingResource {
 	  private Connection connection;
 	  private String jdbcUrl;
 	  private String fieldName;
+	  private String identifierName;
 	  List<String> DEFAULT_STOP_WORDS = new ArrayList<String>(Arrays.asList(",", ".", "?",
 	          "!", ":", ";", "#", "~", "^", "@", "%", "&", "(", ")", "[", "]", "{", "}",
 	          "|", "\\", "<", ">", "-", "+", "*", "/", "=", "'", "\"", "'s", "1", "2",
@@ -184,7 +179,7 @@ ProcessingResource {
 	      } else {
 	        try {
 	          stSelect = connection.prepareStatement(
-	                  "SELECT " + fieldName + " FROM " + jdbcTableName + " WHERE uri = ?");
+	                  "SELECT " + fieldName + " FROM " + jdbcTableName + " WHERE " + identifierName + " = ?");
 	        } catch (Exception e) {
 	          e.printStackTrace();
 	        }
@@ -393,26 +388,6 @@ ProcessingResource {
 
 	  }
 
-	  public String getLookupType() {
-	    return lookupType;
-	  }
-
-	  @RunTime
-	  @CreoleParameter(defaultValue = "Lookup")
-	  public void setLookupType(String lookupType) {
-	    this.lookupType = lookupType;
-	  }
-
-	  public String getLookupListType() {
-	    return lookupListType;
-	  }
-
-	  @RunTime
-	  @CreoleParameter(defaultValue = "Lookup")
-	  public void setLookupListType(String lookupListType) {
-	    this.lookupListType = lookupListType;
-	  }
-
 	  public String getInputASName() {
 	    return inputASName;
 	  }
@@ -439,7 +414,7 @@ ProcessingResource {
 	    return this.outputFeature;
 	  }
 
-	  @CreoleParameter(defaultValue = "contextualSimilarityTFICF")
+	  @CreoleParameter(defaultValue = "scContextualSimilarityTFICF")
 	  @RunTime
 	  @Optional
 	  public void setOutputFeature(String outputFeature) {
@@ -502,6 +477,15 @@ ProcessingResource {
 	  @CreoleParameter(defaultValue = "abstract")
 	  public void setFieldName(String fieldName) {
 	    this.fieldName = fieldName;
+	  }
+
+	  public String getIdentifierName() {
+	    return this.identifierName;
+	  }
+
+	  @CreoleParameter(defaultValue = "uri")
+	  public void setIdentifierName(String identifierName) {
+	    this.identifierName = identifierName;
 	  }
 
 	  public Boolean getUseTwitterExpansion() {

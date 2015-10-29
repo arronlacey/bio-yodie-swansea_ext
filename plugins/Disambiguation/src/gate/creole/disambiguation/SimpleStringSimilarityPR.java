@@ -35,12 +35,6 @@ ProcessingResource {
 	private static final long serialVersionUID = 4836781098219171384L;
 
 	/**
-	 * List of the annotation types to be used for lookup.
-	 */
-	private String lookupType;
-
-	private String lookupListType;
-	/**
 	 * name of the input annotation set
 	 */
 	private String inputASName;
@@ -224,26 +218,6 @@ ProcessingResource {
 	@Override
 	public void cleanup() {
 		super.cleanup();
-	}
-
-	public String getLookupType() {
-		return lookupType;
-	}
-
-	@RunTime
-	@CreoleParameter(defaultValue = "Lookup")
-	public void setLookupType(String lookupType) {
-		this.lookupType = lookupType;
-	}
-
-	public String getLookupListType() {
-		return lookupListType;
-	}
-
-	@RunTime
-	@CreoleParameter(defaultValue = "LookupList")
-	public void setLookupListType(String lookupListType) {
-		this.lookupListType = lookupListType;
 	}
 
 	public String getInputASName() {
