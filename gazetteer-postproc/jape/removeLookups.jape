@@ -1,49 +1,11 @@
-// This will remove Lookup annotations which are fully contained in a longer
-// Lookup. All the Lookups here are still without inst feature, they are 
-// the candidates which will be used to query by string and create lookups
-// for each matching row later on.
-// This will also remove Lookup annotations which overlap with ANNIE 
+// This will remove Lookup annotations which overlap with ANNIE 
 // Date or ANNIE URL (Address.kind = url)
 // The deleted Lookups are actually copied into the outputAS for debugging.
-// TODO: eventually we may want to have exceptions here, e.g. when 
-// the Lookup overlaps with a Location, we may want to not remove contained
-// lookups so that "Exeter, UK" can be split into two separate annotations.
 
 // NOTE: this removes the lookups from the inputAS, moves them to the outputAS
 // and expects the ANNIE annotations to be in the inputAS, so relevant 
 // ANNIE annotations have to get copied from the original set, if necessary!
 
-
-Phase: removeContainedLookups
-Input: Lookup
-Options: control = appelt
-
-// NOTE: this will remove fully contained lookups but not lookups which
-// overlap, e.g.
-//    xxxxxx xxxx
-//        xxx   xxxxxx
-// We also remove exactly coextensive lookups
-
-Rule: removeContainedLookups_01
-({Lookup}):label
--->
-:label{ 
-  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
-  AnnotationSet containeds = gate.Utils.getContainedAnnotations(inputAS,lookup,"Lookup");
-  int len = gate.Utils.length(lookup);
-  
-  for(Annotation contained : containeds) {
-    // if(gate.Utils.length(contained) < len) {  // for fully contained lookups
-    // CAUTION: with control = all, all lookups get deleted because the one
-    // that just has been deleted is still matched, causing the other one to get deleted!
-    if(contained.getId() != lookup.getId()) { // also delete co-extensive lookups
-      outputAS.get(gate.Utils.addAnn(outputAS,contained,contained.getType(),contained.getFeatures())).
-        getFeatures().put("deletedBecause","LookupWithinLookup");
-      inputAS.remove(contained);
-    } 
-  }
-  
-}
 
 // This removes Lookups, Location, Organization annotations if they overlap with an 
 // ANNIE date or a URL. The ANNIE Date and Address annotations need to get copied
