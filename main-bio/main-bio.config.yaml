@@ -62,6 +62,12 @@
   name: configFileURL
   value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
 
+- set: prinit
+  controller: gazetteer-en
+  prname: ExtGaz2:gazetteer-en:labels
+  name: caseSensitive
+  value: true
+
 ##############################################################################
 ###
 ### SUBPIPELINE: gazetteer-postproc
@@ -72,6 +78,12 @@
   controller: gazetteer-postproc
   prname: JdbcLookup:countMentionsNoCase
   value: false
+## Even though we don't run the above, it still complains if it can't find the DB
+- set: prinit
+  controller: gazetteer-postproc
+  prname: JdbcLookup:countMentionsNoCase
+  name: dbDirectoryUrl
+  value: ../../bio-yodie-resources/databases
 - set: prrun
   controller: gazetteer-postproc
   prname: Transfer:Annie2GazetteerEN
