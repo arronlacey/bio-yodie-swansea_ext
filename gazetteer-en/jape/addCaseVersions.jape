@@ -1,0 +1,37 @@
+
+// For the gazetteer, we want to be able to try more specific case
+// combinations than just case-insensitive. UMLS is case-sensitive,
+// in that capitalization is meaningful, but it may not always include
+// both initial upper and all lower case versions.
+
+Phase: addCaseVersions
+Input: Token
+Options: control = all
+
+Rule: addCaseVersions
+({Token}):tok
+-->
+:tok{
+  Annotation token = gate.Utils.getOnlyAnn(tokAnnots);
+  FeatureMap fm = token.getFeatures();
+
+  if(fm.get("orth")!=null && fm.get("orth").equals("upperInitial")){
+    if(fm.get("string")!=null){
+      String string = (String)fm.get("string");
+      fm.put("string-alt", string.toLowerCase());
+    }
+    if(fm.get("root")!=null){
+      String root = (String)fm.get("root");
+      fm.put("root-alt", root.toLowerCase());
+    }
+  } else if(fm.get("orth")!=null && fm.get("orth").equals("lowercase")){
+    if(fm.get("string")!=null){
+      String string = (String)fm.get("string");
+      fm.put("string-alt", new String(Character.toUpperCase(string.charAt(0)) + string.substring(1)));
+    }
+    if(fm.get("root")!=null){
+      String root = (String)fm.get("root");
+      fm.put("root-alt", new String(Character.toUpperCase(root.charAt(0)) + root.substring(1)));
+    }
+  }
+}
