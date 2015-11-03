@@ -35,11 +35,6 @@
   name: modelFile
   value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
 
-- set: prrun
-  controller: gazetteer-en
-  prname: GATE Morphological analyser   
-  value: false
-
 ## Settings for the precache-twitterinfo pipeline
 ## the key and secret for Twitter API access: MUST be replaced by a proper value
 - set: prparm

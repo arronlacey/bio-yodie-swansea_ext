@@ -35,131 +35,38 @@
   name: modelFile
   value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
 
-- set: prrun
-  controller: preprocess-en
-  prname: ANNIE POS Tagger
-  value: true
-
-#- set: prrun
-#  controller: preprocess-en
-#  prname: GATE Morphological analyser
-#  value: false
-
-- set: prparm
-  controller: preprocess-en
-  prname: GATE Morphological analyser
-  name: caseSensitive
-  value: true
-
 ##############################################################################
 ###
 ### SUBPIPELINE: gazetteer-en
 ### 
 ##############################################################################
-
-- set: prrun
-  controller: gazetteer-en
-  prname: JAPE:addCaseVersions
-  value: true
-
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz2:gazetteer-en:labels
-  name: configFileURL
-  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
 - set: prparm
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: longestMatchOnly
   value: true
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz2:gazetteer-en:labels
-  name: caseSensitive
-  value: true
-- set: prrun
-  controller: gazetteer-en
-  prname: ExtGaz2:gazetteer-en:labels
-  value: true
-
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots
-  name: configFileURL
-  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
-- set: prparm
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots
-  name: longestMatchOnly
-  value: true
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots
-  name: caseSensitive
-  value: true
-- set: prrun
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots
-  value: true
-
-
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:labels-alt
-  name: configFileURL
-  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
-- set: prparm
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:labels-alt
-  name: longestMatchOnly
-  value: true
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:labels-alt
-  name: caseSensitive
-  value: true
-- set: prrun
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:labels-alt
-  value: true
-
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots-alt
-  name: configFileURL
-  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
-- set: prparm
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots-alt
-  name: longestMatchOnly
-  value: true
-- set: prinit
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots-alt
-  name: caseSensitive
-  value: true
-- set: prrun
-  controller: gazetteer-en
-  prname: ExtGaz:gazetteer-en:roots-alt
-  value: true
-
-
 #- set: prparm
 #  controller: gazetteer-en
 #  prname: ExtGaz2:misc-en
 #  name: longestMatchOnly
 #  value: false
+
 - set: prrun
   controller: gazetteer-en
   prname: ExtGaz2:misc-en
   value: false
 
-- set: prrun
+- set: prinit
   controller: gazetteer-en
-  prname: JAPE:dedupeCuiLabels
+  prname: ExtGaz2:gazetteer-en:labels
+  name: configFileURL
+  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
+
+- set: prinit
+  controller: gazetteer-en
+  prname: ExtGaz2:gazetteer-en:labels
+  name: caseSensitive
   value: true
-
-
 
 ##############################################################################
 ###
