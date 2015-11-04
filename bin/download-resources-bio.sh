@@ -8,7 +8,7 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/export/data/bio-yodie/bio-yodie-resources
+path=/export/data/gate/bio-yodie/bio-yodie-resources
 server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
@@ -30,7 +30,7 @@ ROOTDIR=`cd "$SCRIPTDIR/.."; pwd -P`
 
 echo SCRIPTDIR=$SCRIPTDIR
 echo ROOTDIR=$ROOTDIR
-dest="$ROOTDIR"/resources
+dest="$ROOTDIR"/bio-yodie-resources
 
 mkdir $dest 2>/dev/null
 if [[ ! -d $dest ]]
