@@ -1,0 +1,19 @@
+// This will remove Lookup annotations which are coextensive with a stopword
+
+
+Phase: removeStopWords
+Input: Lookup
+Options: control = all
+
+Rule: removeStopWords
+({Lookup}):label
+-->
+:label{ 
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  AnnotationSet coextensiveStops = gate.Utils.getCoextensiveAnnotations(inputAS, lookup, "Stopword");
+  if(coextensiveStops.size()>0){
+    outputAS.add(lookup);
+    inputAS.remove(lookup);
+  }  
+}
+

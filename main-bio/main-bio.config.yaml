@@ -53,6 +53,11 @@
 
 - set: prrun
   controller: gazetteer-en
+  prname: ExtGaz2:stopwords
+  value: true
+
+- set: prrun
+  controller: gazetteer-en
   prname: ExtGaz2:misc-en
   value: false
 
@@ -66,7 +71,13 @@
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: caseSensitive
-  value: true
+  value: false
+
+- set: prinit
+  controller: gazetteer-en
+  prname: ExtGaz2:stopwords
+  name: caseSensitive
+  value: false
 
 ##############################################################################
 ###
@@ -114,6 +125,10 @@
   value: true
 - set: prrun
   controller: gazetteer-postproc
+  prname: JAPE:removeStopWords
+  value: true
+- set: prrun
+  controller: gazetteer-postproc
   prname: Reset:AnnieFromGazetteerEN
   value: false
 
@@ -142,7 +157,7 @@
   controller: lookupinfo
   prname: JdbcJsonLookup:lookupinfo
   name: keyFeature
-  value: string_orig
+  value: string
 
 ##############################################################################
 ###
