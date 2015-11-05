@@ -84,6 +84,8 @@ public void execute() {
       // if the feature value of the best one is less than the minScore, set isNull
       Number val = (Number)bestFm.get(featureName);
       // this val MUST be non-null because we prevented null values from getting included earlier!
+      // GG: changed above to allow nulls
+      if (val==null) val = 0;
       if(val.doubleValue() < minScore) {
         isNull = true;
         // System.out.println("This is a NULL");
@@ -94,7 +96,7 @@ public void execute() {
       // we have to create a Mention annotation which is a Nil or 
       // a NilMention annotation (if we do not want explicit NIL Mention annotations)
       String type="Mention";
-      if(!createNilMentions) {
+      if(createNilMentions) {
         type = "NilMention";
       }
       FeatureMap newFm = Factory.newFeatureMap();

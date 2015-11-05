@@ -224,40 +224,6 @@
 
 
 
-## Init params to convert this for Bio-YODIE
-- set: prinit
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: databaseDirectory
-  value: ../../bio-yodie-resources/databases/
-- set: prinit
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: dbName
-  value: abstracts
-- set: prinit
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: fieldName
-  value: DEF
-- set: prinit
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: identifierName
-  value: CUI
-- set: prinit
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: jdbcTableName
-  value: abstracts
-#- set: prinit
-#  controller: scoring
-#  prname: VectSim:RDFDirectTFIDF500000new
-#  name: sspaceURL
-#  value: 
-
-
-
 ##Not doing Struct Sim for now
 ## Context window in characters
 #- set: prparm
@@ -273,10 +239,10 @@
 ##############################################################################
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.featureName
-  value: FREQ
+  value: scMeshFreq
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
-  value: 0
+  value: -1
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: false
