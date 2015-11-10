@@ -1,0 +1,26 @@
+Phase: correctNullFeatures
+Input: Lookup
+Options: control=all
+
+
+Rule: correctNullFeatures
+(
+  {Lookup}
+):match
+-->
+{
+  Annotation lu = bindings.get("match").iterator().next();
+  FeatureMap fm = lu.getFeatures();
+  if(fm.get("scMeshFreq")!=null){
+    Object feat = fm.get("scMeshFreq");
+    if(feat instanceof String){
+      String featstr = (String)feat;
+      if(featstr.isEmpty() || featstr.toLowerCase().equals("null") || featstr.equals("")){
+        fm.put("scMeshFreq", null);
+      }
+    }
+    if(!(feat instanceof Number)){
+      fm.put("scMeshFreq", null);
+    }
+  }
+}

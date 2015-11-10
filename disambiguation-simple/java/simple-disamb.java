@@ -30,6 +30,7 @@ public void init() {
   String conf = System.getProperty("lodie.disambiguation-simple.simple-disamb.featureName");
   if(conf != null) {
     featureName = conf;
+    System.out.println("INFO: using feature name "+conf);
   }
   String minScoreString = System.getProperty("lodie.disambiguation-simple.simple-disamb.minScore");
   if(minScoreString != null) {
@@ -63,7 +64,7 @@ public void execute() {
     // last parameter=false: do not include candidates with null values for the feature
     List<FeatureMap> best = new ArrayList<FeatureMap>(); 
     try {
-      best = LodieUtils.sortCandidatesDescOn(cands,featureName,1,false);
+      best = LodieUtils.sortCandidatesDescOn(cands,featureName,1,true);
       // To make the following code useful for debugging, use >1 results in the previous line:
       //System.out.println("BEST feature maps:");
       //for(FeatureMap tmpfm : best) {
@@ -82,10 +83,10 @@ public void execute() {
       // get the 0-th one, if there is more than one, this will be a random one
       bestFm = best.get(0);
       // if the feature value of the best one is less than the minScore, set isNull
-      Number val = (Number)bestFm.get(featureName);
-      // this val MUST be non-null because we prevented null values from getting included earlier!
-      // GG: changed above to allow nulls
-      if (val==null) val = 0;
+      Number val = 0;
+      if(bestFm.get(featureName)!=null && bestFm.get(featureName) instanceof Number){
+        val = (Number)bestFm.get(featureName); 
+      }    
       if(val.doubleValue() < minScore) {
         isNull = true;
         // System.out.println("This is a NULL");
