@@ -30,7 +30,7 @@ public class DocumentEntitySet {
 	//or just make a separate entity for each span?
 	private boolean useCoreference = true;
 	
-	private String matchesAnnotsName;
+	private String corefType;
 
 	Document document;
 
@@ -44,13 +44,13 @@ public class DocumentEntitySet {
 	 * @param corefDocFeatName 
 	 */
 	public DocumentEntitySet(Document document, String iasn, 
-			boolean useCoref, String matchesAnnotsName) {
+			boolean useCoref, String corefType) {
                 long startTime = Benchmark.startPoint();
 
 		this.inputASName = iasn;
 		this.useCoreference = useCoref;
 		this.document = document;
-		this.matchesAnnotsName = matchesAnnotsName;
+		this.corefType = corefType;
 		
 		this.populate(document);
                 benchmarkCheckpoint(startTime, "__createDocumentEntitySet");
@@ -111,7 +111,7 @@ public class DocumentEntitySet {
 		if(this.useCoreference==true){
 			try {
 				corefs = 
-						(Map<String, List<List<Integer>>>)document.getFeatures().get(matchesAnnotsName);
+						(Map<String, List<List<Integer>>>)document.getFeatures().get(corefType);
 			} catch(ClassCastException e){
 				e.printStackTrace();
 			}
@@ -211,6 +211,12 @@ public class DocumentEntitySet {
 			if(numberofllsfound>0){ //Got candidates, so worth adding
 				Entity newEnt = new Entity(lll, doc, inputASName);
 				entities.add(newEnt);
+			} else {
+				//Tidy up
+				Iterator<LookupList> lllit = lll.iterator();
+				while(lllit.hasNext()){
+					lllit.next().removeAllAnns();
+				}
 			}
 		}
 		return entities;
