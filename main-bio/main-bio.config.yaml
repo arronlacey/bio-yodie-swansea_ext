@@ -247,6 +247,11 @@
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: false
 
+- set: prrun
+  controller: disambiguation-simple
+  prname: JAPE:fix-urls
+  value: false
+
 ##############################################################################
 ###
 ### SUBPIPELINE: disambiguation-libsvm
