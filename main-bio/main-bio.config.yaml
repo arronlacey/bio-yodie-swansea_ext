@@ -247,6 +247,24 @@
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: false
 
+- set: propset
+  name: lodie.disambiguation-simple.mix-disamb.featureNames
+  value: scMeshFreq, scContextualSimilarityTFICF, scContextualSimilarityAbstracts
+
+- set: propset
+  name: lodie.disambiguation-simple.mix-disamb.featureWeights
+  value: 1, 1, 1
+
+- set: prrun
+  controller: disambiguation-simple
+  prname: Java:simple-disamb
+  value: false
+
+- set: prrun
+  controller: disambiguation-simple
+  prname: Java:mix-disamb
+  value: false
+
 ##############################################################################
 ###
 ### SUBPIPELINE: disambiguation-libsvm
