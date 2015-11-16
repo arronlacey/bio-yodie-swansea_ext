@@ -22,7 +22,6 @@ public void init() {
     for(int i=0;i<fn.length;i++){
       featureNames.add(fn[i].trim());
     }
-    System.out.println("INFO: using feature names "+conf);
   }
 
   String weights = System.getProperty("lodie.disambiguation-simple.mix-disamb.featureWeights");
@@ -32,7 +31,6 @@ public void init() {
     for(int i=0;i<fw.length;i++){
       featureWeights.add(Double.parseDouble(fw[i].trim()));
     }
-    System.out.println("INFO: using feature weights "+weights);
   }
 
   if(featureNames.size()!=featureWeights.size()){
@@ -77,13 +75,14 @@ public void execute() {
       for(int i=0;i<featureNames.size();i++){
         String feat = featureNames.get(i);
         if(lookupfm.get(feat) instanceof Number){
-          score+=(Double)lookupfm.get(feat)*featureWeights.get(i);
+          score+=((Number)lookupfm.get(feat)).doubleValue()*featureWeights.get(i);
         } else {
-          System.out.println("WARNING: skipping " + feat + "; not a number.");
+          //System.out.println("WARNING: skipping " + feat + " " + lookupfm.get(feat) + "; not a number.");
         }
       }
       if(score>bestScore || bestFm==null){
         bestFm = lookupfm;
+        bestScore = score;
       }
     }
     
