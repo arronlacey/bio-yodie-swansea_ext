@@ -335,6 +335,59 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>outputFeature</string>
+                  <string>scPageRank</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>useTwitterExpansion</string>
+                  <boolean>true</boolean>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.disambiguation.GraphSimilarityPR</resourceType>
+            <resourceName>GraphSimilarityPR</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>graphURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$../bio-yodie-resources/ukb/umls_ukbgraph.bin</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+                <entry>
+                  <string>dictionaryURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$../bio-yodie-resources/ukb/umls_ukbdictionary.txt</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
           <featureName></featureName>
           <featureValue></featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
@@ -584,12 +637,12 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>whichThresholds</string>
                   <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>elementType</string>
@@ -707,12 +760,12 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>whichThresholds</string>
                   <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>elementType</string>
@@ -830,12 +883,12 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>whichThresholds</string>
                   <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
+                </entry>
+                <entry>
+                  <string>scoreThreshold</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>elementType</string>
@@ -916,12 +969,13 @@
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[2]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[3]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[4]/pr"/>
-        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[5]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[5]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[6]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[7]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
