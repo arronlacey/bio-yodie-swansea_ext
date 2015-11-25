@@ -15,11 +15,9 @@ import java.lang.ProcessBuilder.Redirect;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +40,11 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
   
   private Logger logger = Logger.getLogger(gate.creole.disambiguation.StructuralSimilarityPR.class);  
     
+  /*public enum Mode {
+		STATIC,
+		PERSONALIZEDPAGERANK;
+  }*/
+  
   @Override
   public void execute() throws ExecutionException {
     long start = System.currentTimeMillis();
@@ -97,7 +100,7 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
 		e1.printStackTrace();
 	}
 
-    ProcessBuilder pb = new ProcessBuilder("ukb_wsd", "--nopos", "--static", "--allranks", "-K" + graphURL.getPath(),
+    ProcessBuilder pb = new ProcessBuilder("ukb_wsd", "--nopos", "--static", "--allranks", "--prank_weight", "-K" + graphURL.getPath(),
     		"-D" + dictionaryURL.getPath(), contextfile.getPath());
     pb.redirectOutput(Redirect.to(outfile));
     pb.redirectError(Redirect.INHERIT);
@@ -202,6 +205,17 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
   }
   private String outputFeature;
 
+  /*@CreoleParameter(defaultValue = "scMeshFreq")
+  @RunTime
+  @Optional
+  public void setPPRFeature(String pPRFeature) {
+    this.pPRFeature = pPRFeature;
+  }
+  public String getPPRFeature() {
+    return this.pPRFeature;
+  }
+  private String pPRFeature;*/
+
   public Boolean getUseTwitterExpansion() {
     return this.useTwitterExpansion;
   }
@@ -232,6 +246,17 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
   }
   private URL graphURL;
 
+	/*@RunTime
+	@CreoleParameter(defaultValue = "STATIC", comment = "Which PageRank to compute.")
+	public void setMode(Mode mode) {
+		this.mode = mode;
+	}
+	
+	public Mode getMode() {
+		return this.mode;
+	}
+	private Mode mode;*/
+	
   /*@CreoleParameter(defaultValue = "true")
   @RunTime
   @Optional
