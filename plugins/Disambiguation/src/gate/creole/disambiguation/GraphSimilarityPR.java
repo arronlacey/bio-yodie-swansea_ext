@@ -1,36 +1,28 @@
 package gate.creole.disambiguation;
 
-import com.jpetrak.gate.jdbclookup.JdbcLR;
-
 import gate.Annotation;
 import gate.ProcessingResource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
-import gate.creole.disambiguation.fastgraph.FastGraphLR;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.Benchmark;
 import gate.util.Benchmarkable;
-import gate.util.GateRuntimeException;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
 
 import org.apache.log4j.Logger;
 
@@ -94,7 +86,9 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     
     FileWriter fw;
 	try {
-		fw = new FileWriter(contextfile); //Need to make sure this is a fresh new file!!
+		Files.deleteIfExists(contextfile.toPath());
+		Files.deleteIfExists(outfile.toPath());
+		fw = new FileWriter(contextfile);
 	    fw.write(ukbcontext);
 	    fw.flush();
 	    fw.close();
@@ -102,15 +96,25 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
-    
-    String commandstr = "ukb_wsd --nopos --static --allranks -K "
-    		+ graphURL.getPath() + " -D " + dictionaryURL.getPath() + " " + contextfile.getPath()
-    		+ " > " + outfile.getPath();
+
+    ProcessBuilder pb = new ProcessBuilder("ukb_wsd", "--nopos", "--static", "--allranks", "-K" + graphURL.getPath(),
+    		"-D" + dictionaryURL.getPath(), contextfile.getPath());
+    pb.redirectOutput(Redirect.to(outfile));
+    pb.redirectError(Redirect.INHERIT);
+    Process p = null;
     try {
-		Runtime.getRuntime().exec(commandstr);
-	} catch (IOException e) {
+		p = pb.start();
+	} catch (IOException e1) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		e1.printStackTrace();
+	}
+    
+
+	try {
+		p.waitFor();
+	} catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
 	}
     
     List<String> ukboutput = null;
@@ -126,7 +130,6 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     		String line = ukboutput.get(i);
     		String[] parts = line.split("\\s+");
     		for(int j=2;j<parts.length-2;j++){
-    			System.out.println("Working on " + parts[j]);
     			String[] cuivalpair = parts[j].split("/");
     			if(cuivalpair.length==2){
     				Entity thisent = entmap.get(parts[1]);
@@ -137,7 +140,7 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
 		    			}
     				}
     			} else {
-    				System.out.println("Graph PR: Failed to parse cui/val pair: " + parts[j]);
+    				//System.out.println("Graph PR: Failed to parse cui/val pair: " + parts[j]);
     			}
     		}
     	}
