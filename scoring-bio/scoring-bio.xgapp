@@ -56,7 +56,7 @@
         <urlString>$relpath$../plugins/Learning_Framework</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
-        <urlString>$gatehome$plugins/Tagger_ConText</urlString>
+        <urlString>$relpath$../plugins/Tagger_ConText</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
