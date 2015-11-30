@@ -243,20 +243,20 @@
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
   value: -1
-- set: propset
-  name: lodie.disambiguation-simple.mix-disamb.minScore
-  value: -1
+#- set: propset
+#  name: lodie.disambiguation-simple.mix-disamb.minScore
+#  value: -1
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
-  value: false
+  value: true
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureNames
-  value: scMeshFreq, scContextualSimilarityTFICF, scContextualSimilarityAbstracts
+  value: scMeshFreqLog, scPageRank, scContextualSimilarityTFICFSemantic, scContextualSimilarityTFICFSimple, scContextualSimilarityAbstracts, scStructSimV2Combined
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureWeights
-  value: 1.0, 0.5, 0.5
+  value: 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
 
 - set: prrun
   controller: disambiguation-simple
