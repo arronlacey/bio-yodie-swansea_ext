@@ -121,6 +121,10 @@
   value: false
 - set: prrun
   controller: gazetteer-postproc
+  prname: JAPE:removeLookupsUnderDateAddress
+  value: true
+- set: prrun
+  controller: gazetteer-postproc
   prname: JAPE:removeContainedLookups
   value: true
 - set: prrun
