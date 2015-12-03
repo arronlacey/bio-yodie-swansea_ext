@@ -1,0 +1,18 @@
+
+// Add features required to look things up from this in the Ontotext
+// sparql endpoint.
+
+Phase: prepForSparql
+Input: Mention
+Options: control = all
+
+Rule: prepForSparql
+({Mention}):m
+-->
+:m{
+
+  Annotation mention = gate.Utils.getOnlyAnn(mAnnots);
+  FeatureMap fm = mention.getFeatures();
+  fm.put("inst_full", "http://linkedlifedata.com/resource/umls/id/" + fm.get("inst"));
+  fm.put("tui_full", "http://linkedlifedata.com/resource/semanticnetwork/id/" + fm.get("TUI"));
+}
