@@ -12,6 +12,7 @@ Rule: tidyTypesAndNils
 :label{
 
   String[] goodTypes = new String[]{
+    "Body Location or Region",
     "Body Part, Organ, or Organ Component",
     "Body Space or Junction",
     "Body System",
@@ -34,7 +35,7 @@ Rule: tidyTypesAndNils
     "Laboratory or Test Result",
     "Research Activity",
     "Molecular Biology Research Technique",
-    "Drug (Clinical Drug)",
+    "Clinical Drug",
     "Pharmacologic Substance",
     "Antibiotic"
   };
