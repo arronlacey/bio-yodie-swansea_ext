@@ -15,4 +15,10 @@ Rule: prepForSparql
   FeatureMap fm = mention.getFeatures();
   fm.put("inst_full", "http://linkedlifedata.com/resource/umls/id/" + fm.get("inst"));
   fm.put("tui_full", "http://linkedlifedata.com/resource/semanticnetwork/id/" + fm.get("TUI"));
+  String sty = fm.get("STY").toString();
+  //WordUtils.capitalize(sty);
+  sty = sty.trim().replaceAll("\\s+","_");
+  FeatureMap newfm = Factory.newFeatureMap();
+  newfm.putAll(fm);
+  gate.Utils.addAnn(outputAS, mention, sty, newfm);
 }
