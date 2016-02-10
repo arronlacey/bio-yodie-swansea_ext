@@ -18,6 +18,7 @@ Rule: prepForSparql
   String sty = fm.get("STY").toString();
   //WordUtils.capitalize(sty);
   sty = sty.trim().replaceAll("\\s+","_");
+  sty = sty.replaceAll(",","");
   FeatureMap newfm = Factory.newFeatureMap();
   newfm.putAll(fm);
   gate.Utils.addAnn(outputAS, mention, sty, newfm);
