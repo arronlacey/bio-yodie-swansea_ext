@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -84,8 +85,9 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     ukbcontext = "ctx_01\n" + ukbcontext;
     
     File workingdir = (new File(graphURL.getFile())).getParentFile();
-    File contextfile = new File(workingdir, ".ukbcontext");
-    File outfile = new File(workingdir, ".ukbout");
+    Random random = new Random();
+    File contextfile = new File(workingdir, ".ukbcontext" + System.currentTimeMillis() + random.nextInt(1000)+1);
+    File outfile = new File(workingdir, ".ukbout" + System.currentTimeMillis() + random.nextInt(1000)+1);
     
     FileWriter fw;
 	try {
