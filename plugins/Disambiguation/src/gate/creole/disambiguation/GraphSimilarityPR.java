@@ -91,8 +91,6 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     
     FileWriter fw;
 	try {
-		Files.deleteIfExists(contextfile.toPath());
-		Files.deleteIfExists(outfile.toPath());
 		fw = new FileWriter(contextfile);
 	    fw.write(ukbcontext);
 	    fw.flush();
@@ -153,6 +151,16 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     
     ents = null;
 
+
+	try {
+		Files.deleteIfExists(contextfile.toPath());
+		Files.deleteIfExists(outfile.toPath());
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+		
+    
     long end = System.currentTimeMillis();
     System.out.println("Graph PR:" + (end - start));
   }
