@@ -239,11 +239,11 @@
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureNames
-  value: scMeshFreqLog, scPageRank, scStructSimV2Combined
+  value: scMeshFreqLog, scPageRank, scStructSimV2Combined, scContextualSimilarityTFICFSimple
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureWeights
-  value: 1.0, 1.0, 1.0
+  value: 1.0, 1.0, 1.0, 1.0
 
 - set: prrun
   controller: disambiguation-simple
