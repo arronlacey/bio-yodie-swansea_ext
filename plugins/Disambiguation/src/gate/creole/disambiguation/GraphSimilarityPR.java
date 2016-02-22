@@ -203,7 +203,8 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     return this.ukbServiceURL;
   }
 
-  @CreoleParameter
+  @RunTime
+  @CreoleParameter(defaultValue = "http://localhost:8080")
   public void setUkbServiceURL(URL ukbServiceURL) {
     this.ukbServiceURL = ukbServiceURL;
   }
