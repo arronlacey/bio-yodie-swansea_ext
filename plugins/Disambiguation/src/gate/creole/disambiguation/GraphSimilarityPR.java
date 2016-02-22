@@ -10,18 +10,17 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.Benchmark;
 import gate.util.Benchmarkable;
+import gate.util.GateRuntimeException;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+
+import org.apache.http.client.fluent.Request;
 
 import org.apache.log4j.Logger;
 
@@ -82,51 +81,25 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
       entmap.put("w" + entmap.size(), ent);
     }
     ukbcontext.trim();
-    ukbcontext = "ctx_01\n" + ukbcontext;
-    
-    File workingdir = (new File(graphURL.getFile())).getParentFile();
-    Random random = new Random();
-    File contextfile = new File(workingdir, ".ukbcontext" + System.currentTimeMillis() + random.nextInt(1000)+1);
-    File outfile = new File(workingdir, ".ukbout" + System.currentTimeMillis() + random.nextInt(1000)+1);
-    
-    FileWriter fw;
+    ukbcontext = "ctx_01\n" + ukbcontext + "\n";
+    String urlencodedukbcontext = "";
 	try {
-		fw = new FileWriter(contextfile);
-	    fw.write(ukbcontext);
-	    fw.flush();
-	    fw.close();
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-
-    ProcessBuilder pb = new ProcessBuilder("ukb_wsd", "--nopos", "--static", "--allranks", "--prank_weight", "-K" + graphURL.getPath(),
-    		"-D" + dictionaryURL.getPath(), contextfile.getPath());
-    pb.redirectOutput(Redirect.to(outfile));
-    pb.redirectError(Redirect.INHERIT);
-    Process p = null;
-    try {
-		p = pb.start();
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-    
-
-	try {
-		p.waitFor();
-	} catch (InterruptedException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-    
-    List<String> ukboutput = null;
-    try {
-		ukboutput = Files.readAllLines(outfile.toPath(), Charset.defaultCharset());
-	} catch (IOException e) {
+		urlencodedukbcontext = URLEncoder.encode(ukbcontext, "UTF-8");
+	} catch (UnsupportedEncodingException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+    
+    String url = ukbServiceURL + "?data=" + urlencodedukbcontext;
+    
+    Request rq = Request.Get(url);
+    String result;
+    try {
+    	result = rq.execute().returnContent().asString();
+    } catch (Exception ex) {
+      throw new GateRuntimeException("Could not retrieve result from Twitter for URL " + url);
+    }
+    List<String> ukboutput = Arrays.asList(result.split("\n"));
 
     if(ukboutput!=null){ //we got a result	
     	for(int i=1;i<ukboutput.size();i++){
@@ -150,16 +123,6 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     }
     
     ents = null;
-
-
-	try {
-		Files.deleteIfExists(contextfile.toPath());
-		Files.deleteIfExists(outfile.toPath());
-	} catch (IOException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-		
     
     long end = System.currentTimeMillis();
     System.out.println("Graph PR:" + (end - start));
@@ -236,25 +199,15 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
     this.useTwitterExpansion = useTwitterExpansion;
   }
 
-  public URL getDictionaryURL() {
-    return this.dictionaryURL;
+  public URL getUkbServiceURL() {
+    return this.ukbServiceURL;
   }
 
   @CreoleParameter
-  public void setDictionaryURL(URL dictionaryURL) {
-    this.dictionaryURL = dictionaryURL;
+  public void setUkbServiceURL(URL ukbServiceURL) {
+    this.ukbServiceURL = ukbServiceURL;
   }
-  private URL dictionaryURL;
-
-  public URL getGraphURL() {
-    return this.graphURL;
-  }
-
-  @CreoleParameter
-  public void setGraphURL(URL graphURL) {
-    this.graphURL = graphURL;
-  }
-  private URL graphURL;
+  private URL ukbServiceURL;
 
 	/*@RunTime
 	@CreoleParameter(defaultValue = "STATIC", comment = "Which PageRank to compute.")
