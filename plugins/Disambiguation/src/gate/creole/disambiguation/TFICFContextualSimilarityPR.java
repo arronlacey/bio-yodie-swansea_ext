@@ -2,12 +2,11 @@ package gate.creole.disambiguation;
 
 import edu.ucla.sspace.common.DocumentVectorBuilder;
 import edu.ucla.sspace.common.SemanticSpace;
-import edu.ucla.sspace.common.SemanticSpaceIO;
 import edu.ucla.sspace.common.Similarity;
-import edu.ucla.sspace.util.LoggerUtil;
 import edu.ucla.sspace.vector.DoubleVector;
 import edu.ucla.sspace.vector.DenseVector;
 import edu.ucla.sspace.vsm.VectorSpaceModel;
+
 import gate.ProcessingResource;
 import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
@@ -19,11 +18,9 @@ import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
-import gate.creole.metadata.Sharable;
 import gate.util.Benchmark;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
@@ -45,7 +42,7 @@ import org.apache.log4j.Logger;
 /**
  *
  */
-@CreoleResource(name = "TFICF Contextual Similarity PR", comment = "This PR calculates similarity for every candidate URI using the TF/ICF approach.")
+@CreoleResource(name = "TFICF Contextual Similarity PR", comment = "This PR calculates similarity for every candidate URI using the TFICF approach.")
 public class TFICFContextualSimilarityPR extends AbstractLanguageAnalyser implements
 ProcessingResource {
 
@@ -92,10 +89,6 @@ ProcessingResource {
 	  	  
 	  //private String rankOutputFeature = SemanticConstants.CONTEXTUAL_SIMILARITY; TODO!!!!
 	  private String outputFeature;
-	  /**
-	   * The vector builder for building similarity vectors.
-	   */
-	  private DocumentVectorBuilder vectorBuilder;
 	  private PreparedStatement stSelect;
 	  private Connection connection;
 	  private String jdbcUrl;
@@ -147,6 +140,12 @@ ProcessingResource {
 	          "whoever", "whole", "whom", "whose", "why", "will", "with", "within",
 	          "without", "would", "x", "y", "yet", "you", "your", "yours", "yourself",
 	          "yourselves", "z"));
+	  
+
+	  /**
+	   * The vector builder for building similarity vectors.
+	   */
+	  private DocumentVectorBuilder vectorBuilder;
 
 	  /**
 	   * Initialise this resource, and return it.
@@ -224,15 +223,19 @@ ProcessingResource {
 
 			//A simple document word matrix for simple TFIDF
 			DocumentWordMatrix dwm = new DocumentWordMatrix();
-			
-	        //Small semantic space for this candidate list.
-	        SemanticSpace candidateListSemSpace = null;
 
-	        try {
-				candidateListSemSpace = new VectorSpaceModel();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+	        SemanticSpace candidateListSemSpace = null;
+			if(useSSpace){
+		        //Small semantic space for this candidate list.
+				//Using candidates rather than words as dimensions should reduce
+				//dimensionality a bit and perhaps improve the result. However
+				//it's optional. We have some problems with SSpace making temp files.
+		        try {
+					candidateListSemSpace = new VectorSpaceModel();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 	        String contextString = ent.getContext(contextLength, useTwitterExpansion);
@@ -250,7 +253,6 @@ ProcessingResource {
 
 	        //Store the candidate vectors. We're going to use them later.
 	        Map<String, String> candTexts = new HashMap<String, String>();
-	        
 	        while (candsit != null && candsit.hasNext()) {
 
 	          if (interrupted) {
@@ -281,14 +283,15 @@ ProcessingResource {
 			  dwm.addDocument(candidateText);
 				
 	          //Add it to the candidate-list-specific model
-	          try {
-				candidateListSemSpace.processDocument(
-						  new BufferedReader(new StringReader(candidateText)));
-			  } catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			  if(useSSpace && candidateListSemSpace!=null){
+		          try {
+					candidateListSemSpace.processDocument(
+							  new BufferedReader(new StringReader(candidateText)));
+				  } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+				  }
 			  }
-	          
 	        }
 
 			//Set up the simple context vector for comparison
@@ -297,24 +300,27 @@ ProcessingResource {
 			DoubleVector simpleContextVector = 
 					dwm.sparseVectorToCompactSparseVector(tfidfContextVector);
 			
-			//Semantic version
-	        Properties tficfConfig = new Properties();
-	        // JP: the sspace seems to store vectors in transposed form: 
-	        // rows are documents and columns are terms, while the 
-	        // edu.ucla.sspace.matrix.TfIdfTransform transform expects it the 
-	        // other way round.
-	        //tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
-	        //  "edu.ucla.sspace.matrix.TfIdfDocStripedTransform");
-	        tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
-	          "edu.ucla.sspace.matrix.TfIdfTransform");
-	        candidateListSemSpace.processSpace(tficfConfig);
-
-	        DocumentVectorBuilder tficfVectorBuilder = 
-	        		new DocumentVectorBuilder(candidateListSemSpace);
-
-	        DoubleVector tficfContextVector = tficfVectorBuilder.buildVector(
-	                new BufferedReader(new StringReader(contextString)),
-	                new DenseVector(candidateListSemSpace.getVectorLength()));
+			DocumentVectorBuilder tficfVectorBuilder = null;
+			DoubleVector tficfContextVector = null;
+			if(useSSpace && candidateListSemSpace!=null){
+				//Semantic version
+		        Properties tficfConfig = new Properties();
+		        // JP: the sspace seems to store vectors in transposed form: 
+		        // rows are documents and columns are terms, while the 
+		        // edu.ucla.sspace.matrix.TfIdfTransform transform expects it the 
+		        // other way round.
+		        //tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
+		        //  "edu.ucla.sspace.matrix.TfIdfDocStripedTransform");
+		        tficfConfig.put(VectorSpaceModel.MATRIX_TRANSFORM_PROPERTY,
+		          "edu.ucla.sspace.matrix.TfIdfTransform");
+		        candidateListSemSpace.processSpace(tficfConfig);
+	
+		        tficfVectorBuilder = new DocumentVectorBuilder(candidateListSemSpace);
+	
+		        tficfContextVector = tficfVectorBuilder.buildVector(
+		                new BufferedReader(new StringReader(contextString)),
+		                new DenseVector(candidateListSemSpace.getVectorLength()));
+			}
 
 	        //System.out.println("\nNow doing " + ent.getCleanStringForBestSpan());
 	        //System.out.println("CONTEXT STRING: " + contextString);
@@ -325,33 +331,34 @@ ProcessingResource {
 	        while (candsit != null && candsit.hasNext()) {
 	        	String cand = candsit.next();
 	        	String candtext = candTexts.get(cand);
-	        	
-				//Simple candidate vector
 				SparseVector tfidfCandidateVector = dwm.tfidf(candtext);
 				DoubleVector simpleCandidateVector = 
 						dwm.sparseVectorToCompactSparseVector(tfidfCandidateVector);
 
-				//Semantic candidate vector
-	        	DoubleVector candidateVector = tficfVectorBuilder.buildVector(
-	                    new BufferedReader(new StringReader(candtext)),
-	                    new DenseVector(candidateListSemSpace.getVectorLength()));
-	        	
-	            //System.out.println("CAND STRING: " + candtext);
-	            //System.out.println("CAND: " + candidateVector.toString());
-
-				//Simple
+				//Create simple feature
 				Double simpleSimilarity = Similarity.getSimilarity(
 						similarityFunction, simpleCandidateVector, 
 						simpleContextVector);
 				ent.putFeatureFloat(cand, this.outputFeature + "Simple", 
 						simpleSimilarity.floatValue());
 				
-				//Semantic
-	            Double similarity = Similarity.getSimilarity(
-	            		similarityFunction, candidateVector, tficfContextVector);
-	            //System.out.println("Similarity: " + similarity);
-	            ent.putFeatureFloat(cand, this.outputFeature + "Semantic", similarity.floatValue());
-	        }
+				if(useSSpace && candidateListSemSpace!=null 
+						&& tficfVectorBuilder!=null && tficfContextVector!=null){
+				//Semantic candidate vector
+		        	DoubleVector candidateVector = tficfVectorBuilder.buildVector(
+		                    new BufferedReader(new StringReader(candtext)),
+		                    new DenseVector(candidateListSemSpace.getVectorLength()));
+
+					//Semantic
+		            Double similarity = Similarity.getSimilarity(
+		            		similarityFunction, candidateVector, tficfContextVector);
+		            //System.out.println("Similarity: " + similarity);
+		            ent.putFeatureFloat(cand, this.outputFeature + "Semantic", similarity.floatValue());
+				}
+	        	
+	            //System.out.println("CAND STRING: " + candtext);
+	            //System.out.println("CAND: " + candidateVector.toString());
+        	 }
 	      }
 
 	      ents = null;
@@ -496,6 +503,18 @@ ProcessingResource {
 	  @CreoleParameter(defaultValue = "true")
 	  public void setUseTwitterExpansion(Boolean useTwitterExpansion) {
 	    this.useTwitterExpansion = useTwitterExpansion;
+	  }
+
+	  private Boolean useSSpace;
+	  
+	  public Boolean getUseSSpace() {
+	    return this.useSSpace;
+	  }
+
+	  @RunTime
+	  @CreoleParameter(defaultValue = "true")
+	  public void setUseSSpace(Boolean useSSpace) {
+	    this.useSSpace = useSSpace;
 	  }
 	  
 	  protected void benchmarkCheckpoint(long startTime, String name) {
