@@ -85,9 +85,8 @@ ProcessingResource, Benchmarkable {
 			entmap.put("w" + entmap.size(), ent);
 			entcounter++;	
 
-			//Send batches of 100 max to avoid problems with crazy documents
-			//UKB can probably handle it but these are going as post requests
-			if(entcounter>=10){
+			//Send batches of 500 max to avoid problems with crazy documents
+			if(entcounter>=500){
 				process(ukbcontext, entmap);
 				entmap = new HashMap<String, Entity>();
 				ukbcontext = "";
@@ -119,7 +118,7 @@ ProcessingResource, Benchmarkable {
 	
 			String url = ukbServiceURL + "?data=" + urlencodedukbcontext;
 	
-			Request rq = Request.Post(url);
+			Request rq = Request.Get(url);
 	
 			String result = "";
 			try {
