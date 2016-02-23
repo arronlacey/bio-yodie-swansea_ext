@@ -73,15 +73,19 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>document</string>
+                  <string>corpus</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>useCoref</string>
+                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>flagOrDelete</string>
                   <gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>DELETE</gate.creole.disambiguation.CorefRationalizationPR-FlagOrDelete>
                 </entry>
                 <entry>
-                  <string>corpus</string>
+                  <string>inputASName</string>
                   <null/>
                 </entry>
                 <entry>
@@ -89,12 +93,8 @@
                   <int>3</int>
                 </entry>
                 <entry>
-                  <string>inputASName</string>
+                  <string>document</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>useCoref</string>
-                  <boolean>true</boolean>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -128,12 +128,12 @@
                   <int>2000</int>
                 </entry>
                 <entry>
-                  <string>outputFeature</string>
-                  <string>scContextualSimilarityAbstracts</string>
-                </entry>
-                <entry>
                   <string>document</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>outputFeature</string>
+                  <string>scContextualSimilarityAbstracts</string>
                 </entry>
                 <entry>
                   <string>corpus</string>
@@ -159,16 +159,8 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>jdbcTableName</string>
-                  <string>abstracts</string>
-                </entry>
-                <entry>
                   <string>identifierName</string>
                   <string>CUI</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>abstracts</string>
                 </entry>
                 <entry>
                   <string>fieldName</string>
@@ -185,6 +177,14 @@
                   <gate.util.persistence.PersistenceManager-URLHolder>
                     <urlString>$relpath$../bio-yodie-resources/databases</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+                <entry>
+                  <string>jdbcTableName</string>
+                  <string>abstracts</string>
+                </entry>
+                <entry>
+                  <string>dbName</string>
+                  <string>abstracts</string>
                 </entry>
               </localMap>
             </initParams>
@@ -203,16 +203,20 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>useSSpace</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
                   <string>contextLength</string>
                   <int>2000</int>
                 </entry>
                 <entry>
-                  <string>outputFeature</string>
-                  <string>scContextualSimilarityTFICF</string>
-                </entry>
-                <entry>
                   <string>document</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>outputFeature</string>
+                  <string>scContextualSimilarityTFICF</string>
                 </entry>
                 <entry>
                   <string>corpus</string>
@@ -238,16 +242,8 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>jdbcTableName</string>
-                  <string>abstracts</string>
-                </entry>
-                <entry>
                   <string>identifierName</string>
                   <string>CUI</string>
-                </entry>
-                <entry>
-                  <string>dbName</string>
-                  <string>abstracts</string>
                 </entry>
                 <entry>
                   <string>fieldName</string>
@@ -258,6 +254,14 @@
                   <gate.util.persistence.PersistenceManager-URLHolder>
                     <urlString>$relpath$../bio-yodie-resources/databases</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+                <entry>
+                  <string>jdbcTableName</string>
+                  <string>abstracts</string>
+                </entry>
+                <entry>
+                  <string>dbName</string>
+                  <string>abstracts</string>
                 </entry>
               </localMap>
             </initParams>
@@ -276,7 +280,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>outputFeaturePrefix</string>
+                  <string>scStructSimV2</string>
+                </entry>
+                <entry>
                   <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -284,16 +296,8 @@
                   <int>50</int>
                 </entry>
                 <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>inputASName</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>outputFeaturePrefix</string>
-                  <string>scStructSimV2</string>
                 </entry>
                 <entry>
                   <string>useTwitterExpansion</string>
@@ -347,12 +351,14 @@
                   <string>scPageRank</string>
                 </entry>
                 <entry>
-                  <string>document</string>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>corpus</string>
-                  <null/>
+                  <string>ukbServiceURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>http://localhost:9090/exec</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>inputASName</string>
@@ -362,20 +368,17 @@
                   <string>useTwitterExpansion</string>
                   <boolean>true</boolean>
                 </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.disambiguation.GraphSimilarityPR</resourceType>
             <resourceName>GraphSimilarityPR</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>ukbServiceURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>http://localhost:9090/exec</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-              </localMap>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -392,19 +395,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
+                  <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
@@ -412,8 +411,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -423,15 +426,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -441,7 +440,11 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
@@ -461,19 +464,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
+                  <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
@@ -481,8 +480,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -492,15 +495,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -510,7 +509,11 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
@@ -530,19 +533,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
+                  <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
@@ -550,8 +549,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -561,15 +564,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -579,7 +578,11 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
@@ -599,16 +602,8 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>inputAnnotationName</string>
                   <string>Sentence</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
                 </entry>
                 <entry>
                   <string>corpus</string>
@@ -619,7 +614,15 @@
                   <string>Lookup</string>
                 </entry>
                 <entry>
+                  <string>outputASName</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>inputASName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
                   <null/>
                 </entry>
               </localMap>
@@ -643,19 +646,15 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
+                  <string>outputASName</string>
                   <null/>
                 </entry>
                 <entry>
@@ -663,8 +662,12 @@
                   <null/>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -674,15 +677,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -692,379 +691,14 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>4</runMode>
-          <featureName>runEvaluation</featureName>
-          <featureValue>true</featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>evaluationId</string>
-                  <string>$prop{runPipeline.inDirName}-lists-scoring-structSimCombined</string>
-                </entry>
-                <entry>
-                  <string>addDocumentFeatures</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>listType</string>
-                  <string>LookupList</string>
-                </entry>
-                <entry>
-                  <string>referenceASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>containingASNameAndType</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>edgeFeatureName</string>
-                  <string>ids</string>
-                </entry>
-                <entry>
-                  <string>nilTreatment</string>
-                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
-                </entry>
-                <entry>
-                  <string>featureNames</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>inst</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>whichThresholds</string>
-                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
-                </entry>
-                <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>elementType</string>
-                  <string>Lookup</string>
-                </entry>
-                <entry>
-                  <string>scoreFeatureName</string>
-                  <string>structSimV2Combined</string>
-                </entry>
-                <entry>
-                  <string>containmentType</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>featureComparison</string>
-                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
-                </entry>
-                <entry>
-                  <string>outputASPrefix</string>
-                  <string>lists-scoring-structSimCombined</string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryUrl</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>keyType</string>
-                  <string>Mention</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>rankThreshold</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>nilValue</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>keyASName</string>
-                  <string>KeyShortInst</string>
-                </entry>
-                <entry>
-                  <string>responseASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryString</string>
-                  <string>$prop{runPipeline.curDirPath}</string>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
-            <resourceName>EvaluateTagging4Lists:structSimCombined</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>4</runMode>
-          <featureName>runEvaluation</featureName>
-          <featureValue>true</featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>evaluationId</string>
-                  <string>$prop{runPipeline.inDirName}-lists-scoring-contSimRDFDirect</string>
-                </entry>
-                <entry>
-                  <string>addDocumentFeatures</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>listType</string>
-                  <string>LookupList</string>
-                </entry>
-                <entry>
-                  <string>referenceASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>containingASNameAndType</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>edgeFeatureName</string>
-                  <string>ids</string>
-                </entry>
-                <entry>
-                  <string>nilTreatment</string>
-                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
-                </entry>
-                <entry>
-                  <string>featureNames</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>inst</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>whichThresholds</string>
-                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
-                </entry>
-                <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>elementType</string>
-                  <string>Lookup</string>
-                </entry>
-                <entry>
-                  <string>scoreFeatureName</string>
-                  <string>contextualSimilarityRDFDirect</string>
-                </entry>
-                <entry>
-                  <string>containmentType</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>featureComparison</string>
-                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
-                </entry>
-                <entry>
-                  <string>outputASPrefix</string>
-                  <string>lists-scoring-contSimRDFDirect</string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryUrl</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>keyType</string>
-                  <string>Mention</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>rankThreshold</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>nilValue</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>keyASName</string>
-                  <string>KeyShortInst</string>
-                </entry>
-                <entry>
-                  <string>responseASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryString</string>
-                  <string>$prop{runPipeline.curDirPath}</string>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
-            <resourceName>EvaluateTagging4Lists:contextualSimilarityRDFDirect</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </initParams>
-            <features class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
-            </features>
-          </pr>
-        </gate.util.persistence.AnalyserRunningStrategyPersistence>
-        <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>4</runMode>
-          <featureName>runEvaluation</featureName>
-          <featureValue>true</featureValue>
-          <pr class="gate.util.persistence.PRPersistence">
-            <runtimeParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap>
-                <entry>
-                  <string>evaluationId</string>
-                  <string>$prop{runPipeline.inDirName}-lists-scoring-contSimTFICFSemantic</string>
-                </entry>
-                <entry>
-                  <string>addDocumentFeatures</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>listType</string>
-                  <string>LookupList</string>
-                </entry>
-                <entry>
-                  <string>referenceASName</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>containingASNameAndType</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>edgeFeatureName</string>
-                  <string>ids</string>
-                </entry>
-                <entry>
-                  <string>nilTreatment</string>
-                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
-                </entry>
-                <entry>
-                  <string>featureNames</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>inst</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>whichThresholds</string>
-                  <gate.plugin.evaluation.api.ThresholdsOrRanksToUse>USE_TH_ALLROUNDED</gate.plugin.evaluation.api.ThresholdsOrRanksToUse>
-                </entry>
-                <entry>
-                  <string>scoreThreshold</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>elementType</string>
-                  <string>Lookup</string>
-                </entry>
-                <entry>
-                  <string>scoreFeatureName</string>
-                  <string>contextualSimilarityTFICFSemantic</string>
-                </entry>
-                <entry>
-                  <string>containmentType</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>featureComparison</string>
-                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
-                </entry>
-                <entry>
-                  <string>outputASPrefix</string>
-                  <string>lists-scoring-contSimTFICFSemantic</string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryUrl</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>keyType</string>
-                  <string>Mention</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>rankThreshold</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>nilValue</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>keyASName</string>
-                  <string>KeyShortInst</string>
-                </entry>
-                <entry>
-                  <string>responseASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>outputDirectoryString</string>
-                  <string>$prop{runPipeline.curDirPath}</string>
-                </entry>
-              </localMap>
-            </runtimeParams>
-            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging4Lists</resourceType>
-            <resourceName>EvaluateTagging4Lists:contextualSimilarityTFICFSemantic</resourceName>
-            <initParams class="gate.util.persistence.MapPersistence">
-              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
-              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -1087,9 +721,6 @@
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[12]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[13]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
