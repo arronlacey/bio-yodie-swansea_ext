@@ -370,15 +370,9 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>graphURL</string>
+                  <string>ukbServiceURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../bio-yodie-resources/ukb/umls_ukbgraph.bin</urlString>
-                  </gate.util.persistence.PersistenceManager-URLHolder>
-                </entry>
-                <entry>
-                  <string>dictionaryURL</string>
-                  <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../bio-yodie-resources/ukb/umls_ukbdictionary.txt</urlString>
+                    <urlString>http://localhost:9090/exec</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
               </localMap>

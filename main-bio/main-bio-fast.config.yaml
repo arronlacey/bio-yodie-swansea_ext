@@ -180,12 +180,21 @@
   controller: scoring-bio
   prname: VectSim:AbstractsTFIDF500000new
   value: false
-- set: prparm
+#- set: prparm
+#  controller: scoring-bio
+#  prname: TFICFSim:Abstracts
+#  name: useSSpace
+#  value: false
+- set: prrun
   controller: scoring-bio
   prname: TFICFSim:Abstracts
-  name: useSSpace
   value: false
 
+## Turn off UKB because we need it really fast--disambiguation can make do with MeSH freq
+#- set: prrun
+#  controller: scoring-bio
+#  prname: GraphSimilarityPR
+#  value: false
 
 ## We will normalize candidate lists over coref chains. Pool candidates from
 ## top n spans. What should n be?

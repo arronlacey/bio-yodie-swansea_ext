@@ -29,156 +29,186 @@ import org.apache.log4j.Logger;
  */
 @CreoleResource(name = "Graph Similarity PR", comment = "finds relations between the sem annotations using PageRank.")
 public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
-        ProcessingResource, Benchmarkable {
+ProcessingResource, Benchmarkable {
 
-  /**
-   * serial version id
-   */
-  private static final long serialVersionUID = 1634599221705298081L;
+	/**
+	 * serial version id
+	 */
+	private static final long serialVersionUID = 1634599221705298081L;
 
-  private Boolean useTwitterExpansion;
-  
-  private Logger logger = Logger.getLogger(gate.creole.disambiguation.StructuralSimilarityPR.class);  
-    
-  /*public enum Mode {
+	private Boolean useTwitterExpansion;
+
+	private Logger logger = Logger.getLogger(gate.creole.disambiguation.StructuralSimilarityPR.class);  
+
+	/*public enum Mode {
 		STATIC,
 		PERSONALIZEDPAGERANK;
   }*/
-  
-  @Override
-  public void execute() throws ExecutionException {
-    long start = System.currentTimeMillis();
 
-    //No coref for GraphSimilarityPR. It's because UKB uses its own precompiled
-    //dictionary to map labels to candidates so we can't do a context-dependent
-    //one.
-    DocumentEntitySet ents = new DocumentEntitySet(document, inputASName,
-            false, Constants.yodieCorefType);
-    //ents.print();
+	@Override
+	public void execute() throws ExecutionException {
+		long start = System.currentTimeMillis();
+
+		//No coref for GraphSimilarityPR. It's because UKB uses its own precompiled
+		//dictionary to map labels to candidates so we can't do a context-dependent
+		//one.
+		DocumentEntitySet ents = new DocumentEntitySet(document, inputASName,
+				false, Constants.yodieCorefType);
+		//ents.print();
 
 
-    Iterator<Entity> entit = null;
+		Iterator<Entity> entit = null;
 
-    if (document.getFeatures().get(Constants.tacSwitch) != null
-            && document.getFeatures().get(Constants.tacSwitch)
-            .toString().equals("true")) {
-      entit = ents.getKeyOverlapsIterator(document);
-    } else {
-        //Tweet span iterator will figure out for itself if this is
-        //an expanded tweet. If it is, it just returns an iterator
-        //over entities that feature in the tweet body. Otherwise, all 
-        //of them.
-        entit = ents.getTweetSpanIterator(document, Constants.twExpOrigTexSzDocFt);
-      }
-    
-    //System.out.println(ents.getTweetSpanEntities().size() + " tweet span entities.");
+		if (document.getFeatures().get(Constants.tacSwitch) != null
+				&& document.getFeatures().get(Constants.tacSwitch)
+				.toString().equals("true")) {
+			entit = ents.getKeyOverlapsIterator(document);
+		} else {
+			//Tweet span iterator will figure out for itself if this is
+			//an expanded tweet. If it is, it just returns an iterator
+			//over entities that feature in the tweet body. Otherwise, all 
+			//of them.
+			entit = ents.getTweetSpanIterator(document, Constants.twExpOrigTexSzDocFt);
+		}
 
-    HashMap<String, Entity> entmap = new HashMap<String, Entity>();
-    String ukbcontext = "";
-    while (entit != null && entit.hasNext()) { //For each entity
-      Entity ent = entit.next();
-      ukbcontext = ukbcontext + ent.getCleanStringForBestSpan().replace(' ', '_') + "##w" + entmap.size() + "#1 ";
-      entmap.put("w" + entmap.size(), ent);
-    }
-    ukbcontext.trim();
-    ukbcontext = "ctx_01\n" + ukbcontext + "\n";
-    String urlencodedukbcontext = "";
-	try {
-		urlencodedukbcontext = URLEncoder.encode(ukbcontext, "UTF-8");
-	} catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		//System.out.println(ents.getTweetSpanEntities().size() + " tweet span entities.");
+
+		HashMap<String, Entity> entmap = new HashMap<String, Entity>();
+		String ukbcontext = "";
+		int entcounter = 0;
+		while (entit != null && entit.hasNext()) { //For each entity
+           if (interrupted) {
+	            return;
+	        }
+			Entity ent = entit.next();
+			ukbcontext = ukbcontext + ent.getCleanStringForBestSpan().replace(' ', '_') + "##w" + entmap.size() + "#1 ";
+			entmap.put("w" + entmap.size(), ent);
+			entcounter++;	
+
+			//Send batches of 100 max to avoid problems with crazy documents
+			//UKB can probably handle it but these are going as post requests
+			if(entcounter>=10){
+				process(ukbcontext, entmap);
+				entmap = new HashMap<String, Entity>();
+				ukbcontext = "";
+				entcounter = 0;
+			}
+		}
+		//Process any remaining
+		process(ukbcontext, entmap);
+
+		ents = null;
+
+		long end = System.currentTimeMillis();
+		System.out.println("Graph PR:" + (end - start));
 	}
-    
-    String url = ukbServiceURL + "?data=" + urlencodedukbcontext;
-    
-    Request rq = Request.Get(url);
-    String result;
-    try {
-    	result = rq.execute().returnContent().asString();
-    } catch (Exception ex) {
-      throw new GateRuntimeException("Could not retrieve result from Twitter for URL " + url);
-    }
-    List<String> ukboutput = Arrays.asList(result.split("\n"));
 
-    if(ukboutput!=null){ //we got a result	
-    	for(int i=1;i<ukboutput.size();i++){
-    		String line = ukboutput.get(i);
-    		String[] parts = line.split("\\s+");
-    		for(int j=2;j<parts.length-2;j++){
-    			String[] cuivalpair = parts[j].split("/");
-    			if(cuivalpair.length==2){
-    				Entity thisent = entmap.get(parts[1]);
-    				if(thisent!=null){
-		    			List<Annotation> annstoscore = thisent.getAnnsByInst(cuivalpair[0]);
-		    			for(Annotation ann : annstoscore){
-		    				ann.getFeatures().put(outputFeature, cuivalpair[1]);
-		    			}
-    				}
-    			} else {
-    				//System.out.println("Graph PR: Failed to parse cui/val pair: " + parts[j]);
-    			}
-    		}
-    	}
-    }
-    
-    ents = null;
-    
-    long end = System.currentTimeMillis();
-    System.out.println("Graph PR:" + (end - start));
-  }
+	private void process(String ukbcontext, HashMap<String, Entity> entmap){
+		//Send to UKB
+		ukbcontext = ukbcontext.trim();
+		ukbcontext = ukbcontext.replaceAll("\n", "");
+		if(ukbcontext.length()>0){
+			ukbcontext = ukbcontext + "\n";
+			String urlencodedukbcontext = "";
+			try {
+				urlencodedukbcontext = URLEncoder.encode(ukbcontext, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			String url = ukbServiceURL + "?data=" + urlencodedukbcontext;
+	
+			Request rq = Request.Post(url);
+	
+			String result = "";
+			try {
+				result = rq.execute().returnContent().asString();
+			} catch (Exception ex) {
+				System.out.println("Could not retrieve result from UKB server for URL " + url);
+				ex.printStackTrace();
+			}
+	
+			//Assign result to the annotations
+			List<String> ukboutput = null;
+			if(!result.equals("")){
+				ukboutput = Arrays.asList(result.split("||"));
+	
+				if(ukboutput!=null){ //we got a result	
+					for(int i=1;i<ukboutput.size();i++){
+						String line = ukboutput.get(i);
+						String[] parts = line.split("\\s+");
+						for(int j=2;j<parts.length-2;j++){
+							String[] cuivalpair = parts[j].split("/");
+							if(cuivalpair.length==2){
+								Entity thisent = entmap.get(parts[1]);
+								if(thisent!=null){
+									List<Annotation> annstoscore = thisent.getAnnsByInst(cuivalpair[0]);
+									for(Annotation ann : annstoscore){
+										ann.getFeatures().put(outputFeature, cuivalpair[1]);
+									}
+								}
+							} else {
+								//System.out.println("Graph PR: Failed to parse cui/val pair: " + parts[j]);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
-  // returns the elapsed Time in millisecods since the time passed as parameter
-  private long elapsedTime(long startMillis) {
-    return (System.currentTimeMillis()-startMillis);
-  }
-  
-  // **** BENCHMARK-RELATED
-  protected void benchmarkCheckpoint(long startTime, String name) {
-    if (Benchmark.isBenchmarkingEnabled()) {
-      Benchmark.checkPointWithDuration(
-              Benchmark.startPoint() - startTime,
-              Benchmark.createBenchmarkId(name, this.getBenchmarkId()),
-              this, null);
-    }
-  }
+	// returns the elapsed Time in millisecods since the time passed as parameter
+	private long elapsedTime(long startMillis) {
+		return (System.currentTimeMillis()-startMillis);
+	}
 
-  public String getBenchmarkId() {
-    return benchmarkId;
-  }
+	// **** BENCHMARK-RELATED
+	protected void benchmarkCheckpoint(long startTime, String name) {
+		if (Benchmark.isBenchmarkingEnabled()) {
+			Benchmark.checkPointWithDuration(
+					Benchmark.startPoint() - startTime,
+					Benchmark.createBenchmarkId(name, this.getBenchmarkId()),
+					this, null);
+		}
+	}
 
-  public void setBenchmarkId(String string) {
-    benchmarkId = string;
-  }
-  private String benchmarkId = this.getName();
+	public String getBenchmarkId() {
+		return benchmarkId;
+	}
 
-  
-  // ********** PR PARAMETERS
-  
-  @CreoleParameter
-  @RunTime
-  @Optional
-  public void setInputASName(String inputASName) {
-    this.inputASName = inputASName;
-  }
-  public String getInputASName() {
-    return inputASName;
-  }
-  private String inputASName;
+	public void setBenchmarkId(String string) {
+		benchmarkId = string;
+	}
+	private String benchmarkId = this.getName();
 
 
-  @CreoleParameter(defaultValue = "scPageRank")
-  @RunTime
-  @Optional
-  public void setoutputFeature(String outputFeature) {
-    this.outputFeature = outputFeature;
-  }
-  public String getoutputFeature() {
-    return this.outputFeature;
-  }
-  private String outputFeature;
+	// ********** PR PARAMETERS
 
-  /*@CreoleParameter(defaultValue = "scMeshFreq")
+	@CreoleParameter
+	@RunTime
+	@Optional
+	public void setInputASName(String inputASName) {
+		this.inputASName = inputASName;
+	}
+	public String getInputASName() {
+		return inputASName;
+	}
+	private String inputASName;
+
+
+	@CreoleParameter(defaultValue = "scPageRank")
+	@RunTime
+	@Optional
+	public void setoutputFeature(String outputFeature) {
+		this.outputFeature = outputFeature;
+	}
+	public String getoutputFeature() {
+		return this.outputFeature;
+	}
+	private String outputFeature;
+
+	/*@CreoleParameter(defaultValue = "scMeshFreq")
   @RunTime
   @Optional
   public void setPPRFeature(String pPRFeature) {
@@ -189,39 +219,40 @@ public class GraphSimilarityPR extends AbstractLanguageAnalyser implements
   }
   private String pPRFeature;*/
 
-  public Boolean getUseTwitterExpansion() {
-    return this.useTwitterExpansion;
-  }
+	public Boolean getUseTwitterExpansion() {
+		return this.useTwitterExpansion;
+	}
 
-  @RunTime
-  @CreoleParameter(defaultValue = "true")
-  public void setUseTwitterExpansion(Boolean useTwitterExpansion) {
-    this.useTwitterExpansion = useTwitterExpansion;
-  }
+	@RunTime
+	@CreoleParameter(defaultValue = "true")
+	public void setUseTwitterExpansion(Boolean useTwitterExpansion) {
+		this.useTwitterExpansion = useTwitterExpansion;
+	}
 
-  public URL getUkbServiceURL() {
-    return this.ukbServiceURL;
-  }
+	public URL getUkbServiceURL() {
+		return this.ukbServiceURL;
+	}
 
-  @RunTime
-  @CreoleParameter(defaultValue = "http://localhost:8080")
-  public void setUkbServiceURL(URL ukbServiceURL) {
-    this.ukbServiceURL = ukbServiceURL;
-  }
-  private URL ukbServiceURL;
+	@RunTime
+	@Optional
+	@CreoleParameter(defaultValue = "http://localhost:9090")
+	public void setUkbServiceURL(URL ukbServiceURL) {
+		this.ukbServiceURL = ukbServiceURL;
+	}
+	private URL ukbServiceURL;
 
 	/*@RunTime
 	@CreoleParameter(defaultValue = "STATIC", comment = "Which PageRank to compute.")
 	public void setMode(Mode mode) {
 		this.mode = mode;
 	}
-	
+
 	public Mode getMode() {
 		return this.mode;
 	}
 	private Mode mode;*/
-	
-  /*@CreoleParameter(defaultValue = "true")
+
+	/*@CreoleParameter(defaultValue = "true")
   @RunTime
   @Optional
   public void setUseCoreference(Boolean useCoreference) {
