@@ -130,8 +130,8 @@ ProcessingResource, Benchmarkable {
 	
 			//Assign result to the annotations
 			List<String> ukboutput = null;
-			if(!result.equals("")){
-				ukboutput = Arrays.asList(result.split("||"));
+			if(!result.equals("") && result!=null){
+				ukboutput = Arrays.asList(result.split("\\|\\|"));
 	
 				if(ukboutput!=null){ //we got a result	
 					for(int i=1;i<ukboutput.size();i++){
@@ -153,6 +153,8 @@ ProcessingResource, Benchmarkable {
 						}
 					}
 				}
+			} else {
+				System.out.println("Graph PR: Failed to retrieve result for " + ukbcontext);
 			}
 		}
 	}
