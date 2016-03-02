@@ -8,7 +8,10 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/home/johann/bigdata/yodie-preparation-data/output-latest
+#path=/home/johann/bigdata/yodie-preparation-data/output-latest
+#Below is our best attempt at matching yodie prep to the current master branch,
+#which is behind the latest resources, which match JPs current development branch.
+path=/home/johann/bigdata/yodie-preparation-data/20150331-output
 server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
