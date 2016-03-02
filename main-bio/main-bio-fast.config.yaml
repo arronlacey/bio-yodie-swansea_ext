@@ -131,10 +131,7 @@
   controller: gazetteer-postproc
   prname: JAPE:removeStopWords
   value: true
-- set: prrun
-  controller: gazetteer-postproc
-  prname: Reset:AnnieFromGazetteerEN
-  value: false
+
 
 
 ##############################################################################
