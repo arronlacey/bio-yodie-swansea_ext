@@ -2,6 +2,9 @@
   <urlList class="gate.util.persistence.CollectionPersistence">
     <localList>
       <gate.util.persistence.PersistenceManager-URLHolder>
+        <urlString>$relpath$../../yodie-pipeline/plugins/Format_FastInfoset</urlString>
+      </gate.util.persistence.PersistenceManager-URLHolder>
+      <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/Format_FastInfoset</urlString>
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
@@ -54,7 +57,6 @@
       </gate.util.persistence.PersistenceManager-URLHolder>
       <gate.util.persistence.PersistenceManager-URLHolder>
         <urlString>$relpath$../plugins/TwitterExpander</urlString>
-      </gate.util.persistence.PersistenceManager-URLHolder>
     </localList>
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
@@ -79,20 +81,12 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>annotationTypes</string>
-                  <null/>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>keepOriginalMarkupsAS</string>
-                  <boolean>true</boolean>
                 </entry>
                 <entry>
                   <string>setsToRemove</string>
@@ -103,6 +97,14 @@
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -127,34 +129,14 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>containingAnnotationType</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>inputAnnotationSet</string>
-                  <string>GazetteerEN</string>
-                </entry>
-                <entry>
-                  <string>outputAnnotationSet</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>sqlQuery</string>
-                  <string>SELECT total,links,linkprop FROM countMentions WHERE mention = ?</string>
-                </entry>
-                <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
                   <string>nameMappings</string>
                   <gate.util.persistence.MapPersistence>
                     <mapType>gate.util.SimpleFeatureMapImpl</mapType>
                     <localMap>
+                      <entry>
+                        <string>TOTAL</string>
+                        <string>scMentionFreq</string>
+                      </entry>
                       <entry>
                         <string>LINKS</string>
                         <string>scMentionLinkFreq</string>
@@ -163,32 +145,52 @@
                         <string>LINKPROP</string>
                         <string>scLinkProb</string>
                       </entry>
-                      <entry>
-                        <string>TOTAL</string>
-                        <string>scMentionFreq</string>
-                      </entry>
                     </localMap>
                   </gate.util.persistence.MapPersistence>
                 </entry>
                 <entry>
-                  <string>outputAnnotationType</string>
-                  <string>LookupData</string>
+                  <string>inputAnnotationType</string>
+                  <string>Lookup</string>
                 </entry>
                 <entry>
-                  <string>keyFeature</string>
-                  <string>string</string>
+                  <string>sqlQuery</string>
+                  <string>SELECT total,links,linkprop FROM countMentions WHERE mention = ?</string>
+                </entry>
+                <entry>
+                  <string>outputAnnotationSet</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>listAnnotationType</string>
                   <string></string>
                 </entry>
                 <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containingAnnotationType</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>keyFeature</string>
+                  <string>string</string>
+                </entry>
+                <entry>
+                  <string>inputAnnotationSet</string>
+                  <string>GazetteerEN</string>
+                </entry>
+                <entry>
                   <string>processingMode</string>
                   <com.jpetrak.gate.jdbclookup.JdbcLookup-ProcessingMode>AddFeaturesFromFirst</com.jpetrak.gate.jdbclookup.JdbcLookup-ProcessingMode>
                 </entry>
                 <entry>
-                  <string>inputAnnotationType</string>
-                  <string>Lookup</string>
+                  <string>outputAnnotationType</string>
+                  <string>LookupData</string>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -198,20 +200,20 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>jdbcUser</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>jdbcPassword</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>jdbcUrl</string>
                   <string>jdbc:h2:${dbdirectory}/countMentionsNoCase;ACCESS_MODE_DATA=r;FILE_LOCK=NO;IFEXISTS=TRUE</string>
                 </entry>
                 <entry>
                   <string>jdbcDriver</string>
                   <string>org.h2.Driver</string>
+                </entry>
+                <entry>
+                  <string>jdbcPassword</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>jdbcUser</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>dbDirectoryUrl</string>
@@ -236,6 +238,10 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>tagASName</string>
+                  <string>Original markups</string>
+                </entry>
+                <entry>
                   <string>textTagName</string>
                   <null/>
                 </entry>
@@ -252,8 +258,12 @@
                   <boolean>true</boolean>
                 </entry>
                 <entry>
-                  <string>tagASName</string>
-                  <string>Original markups</string>
+                  <string>outputASName</string>
+                  <string>GazetteerEN</string>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <string></string>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -267,14 +277,6 @@
                     </localList>
                     <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
-                </entry>
-                <entry>
-                  <string>inputASName</string>
-                  <string></string>
-                </entry>
-                <entry>
-                  <string>outputASName</string>
-                  <string>GazetteerEN</string>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -299,28 +301,28 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <string>DEBUG_filterLookupsByPOS</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
-                  <null/>
+                  <string>outputASName</string>
+                  <string>DEBUG_filterLookupsByPOS</string>
                 </entry>
                 <entry>
                   <string>inputASName</string>
                   <string>GazetteerEN</string>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -330,15 +332,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -348,7 +346,11 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
@@ -368,28 +370,28 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <string>DEBUG_filterLookupsByPOS</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
-                  <null/>
+                  <string>outputASName</string>
+                  <string>DEBUG_filterLookupsByPOS</string>
                 </entry>
                 <entry>
                   <string>inputASName</string>
                   <string>GazetteerEN</string>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -399,15 +401,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -417,7 +415,11 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
@@ -437,31 +439,27 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>libDirUrl</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>document</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputAS</string>
-                  <string>DEBUG_filterLookupsByPOS</string>
-                </entry>
-                <entry>
-                  <string>resource3</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>libDirUrl</string>
-                  <null/>
+                  <string>inputAS</string>
+                  <string>GazetteerEN</string>
                 </entry>
                 <entry>
                   <string>resource2</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>resource1</string>
+                  <string>resource3</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -472,8 +470,12 @@
                   </gate.util.persistence.MapPersistence>
                 </entry>
                 <entry>
-                  <string>inputAS</string>
-                  <string>GazetteerEN</string>
+                  <string>outputAS</string>
+                  <string>DEBUG_filterLookupsByPOS</string>
+                </entry>
+                <entry>
+                  <string>resource1</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -505,31 +507,27 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
+                  <string>libDirUrl</string>
+                  <null/>
+                </entry>
+                <entry>
                   <string>document</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>corpus</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>outputAS</string>
-                  <string>DEBUG_filterLookupsByPOS</string>
-                </entry>
-                <entry>
-                  <string>resource3</string>
-                  <null/>
-                </entry>
-                <entry>
-                  <string>libDirUrl</string>
-                  <null/>
+                  <string>inputAS</string>
+                  <string>GazetteerEN</string>
                 </entry>
                 <entry>
                   <string>resource2</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>resource1</string>
+                  <string>resource3</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
@@ -540,8 +538,12 @@
                   </gate.util.persistence.MapPersistence>
                 </entry>
                 <entry>
-                  <string>inputAS</string>
-                  <string>GazetteerEN</string>
+                  <string>outputAS</string>
+                  <string>DEBUG_filterLookupsByPOS</string>
+                </entry>
+                <entry>
+                  <string>resource1</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -711,28 +713,28 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>outputASName</string>
-                  <string>DEBUG_removeLookups</string>
-                </entry>
-                <entry>
-                  <string>document</string>
-                  <null/>
+                  <string>enableDebugging</string>
+                  <boolean>false</boolean>
                 </entry>
                 <entry>
                   <string>corpus</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>ontology</string>
-                  <null/>
+                  <string>outputASName</string>
+                  <string>DEBUG_removeLookups</string>
                 </entry>
                 <entry>
                   <string>inputASName</string>
                   <string>GazetteerEN</string>
                 </entry>
                 <entry>
-                  <string>enableDebugging</string>
-                  <boolean>false</boolean>
+                  <string>ontology</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -742,15 +744,11 @@
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap>
                 <entry>
-                  <string>encoding</string>
-                  <string>UTF-8</string>
-                </entry>
-                <entry>
-                  <string>annotationAccessors</string>
+                  <string>binaryGrammarURL</string>
                   <null/>
                 </entry>
                 <entry>
-                  <string>operators</string>
+                  <string>annotationAccessors</string>
                   <null/>
                 </entry>
                 <entry>
@@ -760,10 +758,117 @@
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
-                  <string>binaryGrammarURL</string>
+                  <string>encoding</string>
+                  <string>UTF-8</string>
+                </entry>
+                <entry>
+                  <string>operators</string>
                   <null/>
                 </entry>
               </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>4</runMode>
+          <featureName>runEvaluation</featureName>
+          <featureValue>true</featureValue>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>nilValue</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>scoreFeatureName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>featureNames</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>referenceASName</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryString</string>
+                  <string>$prop{runPipeline.curDirPath}</string>
+                </entry>
+                <entry>
+                  <string>featureComparison</string>
+                  <gate.plugin.evaluation.api.FeatureComparison>FEATURE_EQUALITY</gate.plugin.evaluation.api.FeatureComparison>
+                </entry>
+                <entry>
+                  <string>nilTreatment</string>
+                  <gate.plugin.evaluation.api.NilTreatment>NO_NILS</gate.plugin.evaluation.api.NilTreatment>
+                </entry>
+                <entry>
+                  <string>evaluationId</string>
+                  <string>$prop{runPipeline.inDirName}-gazetteer-postproc</string>
+                </entry>
+                <entry>
+                  <string>responseASName</string>
+                  <string>GazetteerEN</string>
+                </entry>
+                <entry>
+                  <string>outputASPrefix</string>
+                  <string>gazetteer-postproc</string>
+                </entry>
+                <entry>
+                  <string>outputDirectoryUrl</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>containmentType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>keyASName</string>
+                  <string>Key</string>
+                </entry>
+                <entry>
+                  <string>containingASNameAndType</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>whichThresholds</string>
+                  <gate.plugin.evaluation.api.ThresholdsToUse>USE_ALL</gate.plugin.evaluation.api.ThresholdsToUse>
+                </entry>
+                <entry>
+                  <string>addDocumentFeatures</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>Mention=Lookup</string>
+                    </localList>
+                    <collectionType>java.util.Arrays$ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.plugin.evaluation.resources.EvaluateTagging</resourceType>
+            <resourceName>EvaluateTagging:gazetteer-postproc-final</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
             </initParams>
             <features class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -858,8 +963,21 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>document</string>
+                  <string>keepOriginalMarkupsAS</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>corpus</string>
                   <null/>
+                </entry>
+                <entry>
+                  <string>setsToRemove</string>
+                  <gate.util.persistence.CollectionPersistence>
+                    <localList>
+                      <string>GazetteerEN</string>
+                    </localList>
+                    <collectionType>java.util.ArrayList</collectionType>
+                  </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
                   <string>annotationTypes</string>
@@ -872,21 +990,8 @@
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
                 <entry>
-                  <string>corpus</string>
+                  <string>document</string>
                   <null/>
-                </entry>
-                <entry>
-                  <string>keepOriginalMarkupsAS</string>
-                  <boolean>true</boolean>
-                </entry>
-                <entry>
-                  <string>setsToRemove</string>
-                  <gate.util.persistence.CollectionPersistence>
-                    <localList>
-                      <string>GazetteerEN</string>
-                    </localList>
-                    <collectionType>java.util.ArrayList</collectionType>
-                  </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
@@ -915,10 +1020,15 @@
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[6]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[7]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
+<<<<<<< HEAD
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[12]/pr"/>
+=======
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
+>>>>>>> origin/master
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>

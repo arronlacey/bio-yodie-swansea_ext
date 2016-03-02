@@ -65,9 +65,7 @@ $ROOTDIR/../yodie-tools/bin/runPipeline.sh \
  -DmaxRecall.evalId=$evalId -Dmodularpipelines.prrun.lookupinfo.Java:copyListAnns=true \
  -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.evaluationId=$evalId \
  -Dmodularpipelines.prparm.compareAndEvaluate.Evaluate.outputDirectoryUrl=$outUrl \
- -c $ROOTDIR/main/main.config.yaml \
- -Dmodularpipelines.docfeature.docType=tweet \
- -Dmodularpipelines.prrun.filter-prescoring.Java:projectTwitterUserID=true \
+ -c $ROOTDIR/main/main-tweets.config.yaml \
  -nl -d \
  -P $SCRIPTDIR/compareAndEvaluate.xgapp \
  $ROOTDIR/main/main.xgapp \

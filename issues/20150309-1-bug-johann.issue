@@ -13,3 +13,39 @@ In filterOverlapping, there is a check for coextensive Lists and some pre-annota
 documents in the directory docsLoc01 (e.g. NYT_ENG_20080416.0228.LDC2009T13.sgm.finf) 
 do have that - we need to find out if the latest pipeline still produces this and
 how it can happen.
+
+The overlap handling probably needs to depend on what kind of entity we think we
+have. For example if we have 
+  [[Barack] [Obama]] then both Barack and Obama can be removed, especially if
+    we observe that both Barack and Obama contain a candidate for the label "Barack Obama"
+  But in the general case, we could have a situation [[term1] [term2]] where 
+  "term1 term2" would be incorrect and e.g. "term2" would be correct. The simplest
+  examples are "[[The] [Whitehouse]]" or "[In [Berlin]]" but there are probably others
+  where both terms are NEs too. 
+
+A different kind of overlap is overlap of a NE classification with a mention candidate.
+For example we could have just "Obama" as a label for Barack_Obama, and we find 
+"John Obama". If we annotate this "John [Obama]" we could incorrectly link to Barack_Obama,
+but if we consider that "John Obama" is a person name with high confidence, then 
+either Obama should not get annoatated or "John Obama" should 
+get annotated as a NIL.
+
+So our heuristics need to be specific, because these kinds of overlaps need to get 
+resolved in different ways, depending on what type of entity candidates we have
+for the mention candidate, and what NE type we think each span represents.
+
+A related issue is if something that is contained in something else is known 
+to be a short-form or a nick for the longer form. So for example if "Barack Obama" 
+would be the only "Obama" in the KB, then if we also have "Obama", we know that
+this must be a short form, either because we generated it or because it comes
+from a redirect page or similar:
+  "Barack Obama" - Barack_Obama  
+  "Obama"        - Barack_Obama, person-last     (comes from our own shorten to last-name algo)
+  "Obama"        - Barack_Obama, prop:last-name  (comes from a last-name property)
+  "Obama"        - Barack_Obama, redirect        (comes from a redirect page)
+  -> if we would have that full information we could immediately remove the shorter
+  candidates because we know this is just a short form of the longer label. 
+However, there could be many candidates for both the short and long form. Then we can
+only remove those short forms, which are the short form of any of the candidates for
+the longer form. 
+

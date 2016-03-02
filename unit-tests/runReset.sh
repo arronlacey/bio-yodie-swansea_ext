@@ -33,4 +33,4 @@ $ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $ROOTDIR/main/main.config.yaml -nl
 ##  prname: Java:projectTwitterUserID
 ##  value: true
 
-$ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $ROOTDIR/main/main.config.yaml -Dmodularpipelines.docfeature.docType=tweet -Dmodularpipelines.prrun.filter-prescoring.Java:projectTwitterUserID=true -nl -d -P transferShef2Ref.xgapp $ROOTDIR/main/main.xgapp en-tweets-training-sample1
+$ROOTDIR/../yodie-tools/bin/runPipeline.sh -c $ROOTDIR/main/main-tweets.config.yaml -nl -d -P transferShef2Ref.xgapp $ROOTDIR/main/main.xgapp en-tweets-training-sample1
