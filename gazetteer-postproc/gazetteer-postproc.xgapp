@@ -637,7 +637,7 @@
           </pr>
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
-          <runMode>1</runMode>
+          <runMode>2</runMode>
           <featureName>run-removeLookups</featureName>
           <featureValue>true</featureValue>
           <pr class="gate.util.persistence.LanguageAnalyserPersistence">
