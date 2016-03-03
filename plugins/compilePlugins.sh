@@ -26,7 +26,7 @@ SCRIPTDIR=`dirname "$PRG"`
 SCRIPTDIR=`cd "$SCRIPTDIR"; pwd -P`
 pushd "$SCRIPTDIR"
 tmpout=/tmp/`whoami`-compilePlugins$$.out
-for file in Evaluation ModularPipelines JdbcLookup TwitterExpander Learning_Framework YodiePlugin Java
+for file in Evaluation ModularPipelines JdbcLookup TwitterExpander Learning_Framework YodiePlugin Java Disambiguation
 do
   if [ "$file" == ANNIE ] || [ ! -d "$file" ]
   then
