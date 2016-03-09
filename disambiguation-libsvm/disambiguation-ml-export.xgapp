@@ -251,7 +251,7 @@
                 </entry>
                 <entry>
                   <string>trainingAlgo</string>
-                  <gate.learningframework.classification.Algorithm>LIBSVM</gate.learningframework.classification.Algorithm>
+                  <gate.learningframework.Algorithm>LIBSVM</gate.learningframework.Algorithm>
                 </entry>
                 <entry>
                   <string>confidenceThreshold</string>
@@ -275,7 +275,7 @@
                 </entry>
                 <entry>
                   <string>mode</string>
-                  <gate.learningframework.classification.Mode>CLASSIFICATION</gate.learningframework.classification.Mode>
+                  <gate.learningframework.Mode>CLASSIFICATION</gate.learningframework.Mode>
                 </entry>
                 <entry>
                   <string>saveDirectory</string>
@@ -311,7 +311,7 @@
                 </entry>
                 <entry>
                   <string>operation</string>
-                  <gate.learningframework.classification.Operation>EXPORT_ARFF</gate.learningframework.classification.Operation>
+                  <gate.learningframework.Operation>EXPORT_ARFF</gate.learningframework.Operation>
                 </entry>
                 <entry>
                   <string>classType</string>
@@ -319,7 +319,7 @@
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.learningframework.classification.LearningFrameworkPR</resourceType>
+            <resourceType>gate.learningframework.LearningFrameworkPR</resourceType>
             <resourceName>LF:LibSVM-training</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
