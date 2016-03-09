@@ -19,3 +19,7 @@
 [submodule "plugins/Java"]
 	path = plugins/Java
 	url = https://github.com/johann-petrak/gateplugin-Java.git
+[submodule "plugins/LearningFramework"]
+	path = plugins/LearningFramework
+	url = https://github.com/GenevieveGorrell/gateplugin-LearningFramework.git
+	branch = version_1_0
