@@ -1,3 +1,4 @@
+
 [submodule "plugins/gateplugin-JdbcLookup"]
 	path = plugins/JdbcLookup
 	url = gateservice2.dcs.shef.ac.uk:/data/git/gate-plugins/JdbcLookup
@@ -19,7 +20,7 @@
 [submodule "plugins/Java"]
 	path = plugins/Java
 	url = https://github.com/johann-petrak/gateplugin-Java.git
-[submodule "plugins/LearningFramework"]
-	path = plugins/LearningFramework
+[submodule "plugins/Learning_Framework"]
+	path = plugins/Learning_Framework
 	url = https://github.com/GenevieveGorrell/gateplugin-LearningFramework.git
 	branch = version_1_0
