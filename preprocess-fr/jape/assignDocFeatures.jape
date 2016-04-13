@@ -1,0 +1,18 @@
+Phase: languageFeature
+Input: Token
+Options: control=once
+
+Rule: assignLanguage
+(
+  {Token}
+):m
+-->
+{
+  // if the language feature is not set, set it to English
+  // this will be the case when, instead of choosing the english preprocessing
+  // because of the feature, we deliberately use the english preprocessing
+  // In that case, we the document must be in German
+  if(doc.getFeatures().get("lang") == null) {
+    doc.getFeatures().put("lang","fr");
+  }
+}
