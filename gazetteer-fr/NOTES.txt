@@ -1,0 +1,30 @@
+IMPORTANT: we need to re-think the way how the country demonyms and adjectivals
+  are annotated and used. 
+  At the moment, the misc-en gazetteer just produces Lookup annotations which are 
+  later used to look up the underlying string in the labelinfo db
+However: 
+  if the Lookup is coextensive with a lookup from the gazetteer-en, we will get
+  two identical lookupList annotations with identical candidates
+  If the Lookup is not coextensive, how can we expect to get any candidates?
+  Also, what should a candidate really look like?
+
+We need to do this differently: essentially we have the following possible situations
+  = the two are coextensive and the URI of the misc-en gaz is in the candidate list
+    we get from label info: in that case we do not need the misc-en match at all
+  = the two are coextensive and the URI is not in the candidate list: then the label
+    for that URI is not found during preparation, and we should add the label to 
+    that URI during preparation. However the label is present in preparation for 
+    other URIs, therefore we get the coextensive annotations
+  = there is no coextensive lookup, so the country annotation is the only one.
+    In that case too, the label is missing from the preparation phase and we 
+    should just add a "synthetic"  label/URI pair
+ 
+One other issue is that demonyms may not be labeled as NNP by the pos tagger,
+so we should not filter by pos tag!
+
+For now we do filter by POS tag (but see ideas about how to use ANNIE/Stanford
+NER and other things to filter less strictly) so this is actually the only 
+case where our lookups are now useful:
+  if it is a lookup from misc, do not filter by postag before doing 
+  the lookup, but before doing the lookup, filter coextensive ones!!
+
