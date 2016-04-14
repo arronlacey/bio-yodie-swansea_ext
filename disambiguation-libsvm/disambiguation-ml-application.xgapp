@@ -273,7 +273,7 @@
                 </entry>
                 <entry>
                   <string>mode</string>
-                  <gate.learningframework.Mode>CLASSIFICATION</gate.learningframework.Mode>
+                  <gate.learningframework.classification.Mode>CLASSIFICATION</gate.learningframework.classification.Mode>
                 </entry>
                 <entry>
                   <string>identifierFeature</string>
@@ -281,7 +281,7 @@
                 </entry>
                 <entry>
                   <string>operation</string>
-                  <gate.learningframework.Operation>APPLY_CURRENT_MODEL</gate.learningframework.Operation>
+                  <gate.learningframework.classification.Operation>APPLY_CURRENT_MODEL</gate.learningframework.classification.Operation>
                 </entry>
                 <entry>
                   <string>document</string>
@@ -309,7 +309,7 @@
                 </entry>
               </localMap>
             </runtimeParams>
-            <resourceType>gate.learningframework.LearningFrameworkPR</resourceType>
+            <resourceType>gate.learningframework.classification.LearningFrameworkPR</resourceType>
             <resourceName>LF:LibSVM-application</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
