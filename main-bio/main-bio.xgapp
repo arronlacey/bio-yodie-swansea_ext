@@ -62,6 +62,66 @@
     <collectionType>java.util.ArrayList</collectionType>
   </urlList>
   <application class="at.ofai.gate.modularpipelines.ParametrizedCorpusControllerPersistence">
+    <corpus class="gate.util.persistence.CorpusPersistence">
+      <docList>
+        <gate.util.persistence.LRPersistence>
+          <resourceType>gate.corpora.DocumentImpl</resourceType>
+          <resourceName>GATE Document_0001B</resourceName>
+          <initParams class="gate.util.persistence.MapPersistence">
+            <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+            <localMap>
+              <entry>
+                <string>sourceUrl</string>
+                <null/>
+              </entry>
+              <entry>
+                <string>preserveOriginalContent</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>collectRepositioningInfo</string>
+                <boolean>false</boolean>
+              </entry>
+              <entry>
+                <string>markupAware</string>
+                <boolean>true</boolean>
+              </entry>
+              <entry>
+                <string>sourceUrlEndOffset</string>
+                <null/>
+              </entry>
+              <entry>
+                <string>stringContent</string>
+                <string>Mrs ZZZ has a bad head.</string>
+              </entry>
+              <entry>
+                <string>mimeType</string>
+                <null/>
+              </entry>
+              <entry>
+                <string>encoding</string>
+                <string>UTF-8</string>
+              </entry>
+              <entry>
+                <string>sourceUrlStartOffset</string>
+                <null/>
+              </entry>
+            </localMap>
+          </initParams>
+        </gate.util.persistence.LRPersistence>
+      </docList>
+      <resourceType>gate.corpora.CorpusImpl</resourceType>
+      <resourceName>Corpus for GATE Document_0001B</resourceName>
+      <initParams class="gate.util.persistence.MapPersistence">
+        <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+        <localMap>
+          <entry>
+            <string>documentsList</string>
+            <null/>
+          </entry>
+        </localMap>
+      </initParams>
+    </corpus>
     <strategiesList class="gate.util.persistence.CollectionPersistence">
       <localList>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
@@ -497,13 +557,65 @@
                     <localList>
                       <string>Sentence</string>
                     </localList>
-                    <collectionType>java.util.Arrays$ArrayList</collectionType>
+                    <collectionType>java.util.ArrayList</collectionType>
                   </gate.util.persistence.CollectionPersistence>
                 </entry>
               </localMap>
             </runtimeParams>
             <resourceType>gate.creole.annotransfer.AnnotationSetTransfer</resourceType>
             <resourceName>AST:copy-sentences-for-mimir</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <pr class="gate.util.persistence.PRPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>tagASName</string>
+                  <string>Original markups</string>
+                </entry>
+                <entry>
+                  <string>textTagName</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>transferAllUnlessFound</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>copyAnnotations</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>outputASName</string>
+                  <string>Bio</string>
+                </entry>
+                <entry>
+                  <string>inputASName</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
+                  <string>annotationTypes</string>
+                  <null/>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>gate.creole.annotransfer.AnnotationSetTransfer</resourceType>
+            <resourceName>AST:shef-to-bio</resourceName>
             <initParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
               <localMap/>
@@ -529,6 +641,7 @@
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
