@@ -1,0 +1,36 @@
+
+// Add features required to look things up from this in the Ontotext
+// sparql endpoint.
+
+Phase: prepForSparql
+Input: Mention
+Options: control = all
+
+Rule: prepForSparql
+({Mention}):m
+-->
+:m{
+
+  Annotation mention = gate.Utils.getOnlyAnn(mAnnots);
+  FeatureMap fm = mention.getFeatures();
+  fm.put("inst_full", "http://linkedlifedata.com/resource/umls/id/" + fm.get("inst"));
+  fm.put("tui_full", "http://linkedlifedata.com/resource/semanticnetwork/id/" + fm.get("TUI"));
+
+  //Make type annotations
+  String sty = fm.get("STY").toString();
+  //WordUtils.capitalize(sty);
+  sty = sty.trim().replaceAll("\\s+","_");
+  sty = sty.replaceAll(",","");
+  FeatureMap newfm = Factory.newFeatureMap();
+  newfm.putAll(fm);
+  gate.Utils.addAnn(outputAS, mention, sty, newfm);
+
+  //Make vocab annotations
+  String vocabs = fm.get("VOCABS").toString();
+  String[] vs = vocabs.split(",");
+  for(int i=0;i<vs.length;i++){
+    FeatureMap anothernewfm = Factory.newFeatureMap();
+    anothernewfm.put("vocab", vs[i]);
+    gate.Utils.addAnn(outputAS, mention, "Vocabulary", anothernewfm);
+  }
+}

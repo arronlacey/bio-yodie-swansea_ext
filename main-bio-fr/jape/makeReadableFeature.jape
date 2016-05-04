@@ -1,0 +1,16 @@
+
+// Make a readable feature for the annotator to use to select a cui.
+
+Phase: makeReadableFeature
+Input: Lookup
+Options: control = all
+
+Rule: makeReadableFeature
+({Lookup}):label
+-->
+:label{
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  FeatureMap fm = lookup.getFeatures();
+  String readable = fm.get("PREF") + ": " + fm.get("STY");
+  fm.put("readable", readable);
+}
