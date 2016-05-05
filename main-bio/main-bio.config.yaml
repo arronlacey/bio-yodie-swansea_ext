@@ -131,7 +131,10 @@
   controller: gazetteer-postproc
   prname: JAPE:removeStopWords
   value: true
-
+- set: prrun
+  controller: gazetteer-postproc
+  prname: Reset:AnnieFromGazetteerEN
+  value: false
 
 
 ##############################################################################
@@ -168,27 +171,41 @@
 
   
 - set: prrun
-  controller: scoring
+  controller: scoring-bio
   prname: StructuralSimilarity
   value: false
+
+## Turn off all S-Space use due to unsolved problem with temp files
 - set: prrun
-  controller: scoring
-  prname: EvaluateTagging4Lists:structSimCombined
+  controller: scoring-bio
+  prname: VectSim:AbstractsTFIDF500000new
   value: false
+#- set: prparm
+#  controller: scoring-bio
+#  prname: TFICFSim:Abstracts
+#  name: useSSpace
+#  value: false
 - set: prrun
-  controller: scoring
-  prname: EvaluateTagging4Lists:contextualSimilarityRDFDirect
-  value: false
-- set: prrun
-  controller: scoring
-  prname: EvaluateTagging4Lists:contextualSimilarityTFICFSemantic
+  controller: scoring-bio
+  prname: TFICFSim:Abstracts
   value: false
 
+## Turn off UKB PR--use server instead (params below)
+#- set: prrun
+#  controller: scoring-bio
+#  prname: GraphSimilarityPR
+#  value: false
+
+- set: prparm
+  controller: scoring-bio
+  prname: GraphSimilarityPR
+  name: urlString
+  value: http://localhost:9090/exec
 
 ## We will normalize candidate lists over coref chains. Pool candidates from
 ## top n spans. What should n be?
 - set: prparm
-  controller: scoring
+  controller: scoring-bio
   prname: CorefRationalization
   name: candNormalizationSpanSetSize
   value: 2
@@ -196,39 +213,23 @@
 ## If a candidate is rejected from a coref chain for not being on one of the
 ## top n spans, should it be deleted or merely flagged?
 - set: prparm
-  controller: scoring
+  controller: scoring-bio
   prname: CorefRationalization
   name: flagOrDelete
   value: FLAG
 
 ## Use coref at all?
 - set: prparm
-  controller: scoring
+  controller: scoring-bio
   prname: CorefRationalization
   name: useCoref
   value: false
-
-## If for example URL occurs in context window for an entity,
-## should the entire expansion be included in the context?
-- set: prparm
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: useTwitterExpansion
-  value: true
-
-## Context length in characters
-- set: prparm
-  controller: scoring
-  prname: VectSim:RDFDirectTFIDF500000new
-  name: contextLength
-  value: 2000
-
 
 
 ##Not doing Struct Sim for now
 ## Context window in characters
 #- set: prparm
-#  controller: scoring
+#  controller: scoring-bio
 #  prname: StructuralSimilarity
 #  name: contextChars
 #  value: 200
@@ -253,11 +254,11 @@
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureNames
-  value: scMeshFreqLog, scPageRank, scContextualSimilarityTFICFSemantic, scContextualSimilarityTFICFSimple, scContextualSimilarityAbstracts, scStructSimV2Combined
+  value: scMeshFreqLog, scPageRank, scStructSimV2Combined, scContextualSimilarityTFICFSimple
 
 - set: propset
   name: lodie.disambiguation-simple.mix-disamb.featureWeights
-  value: 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+  value: 1.0, 1.0, 1.0, 1.0
 
 - set: prrun
   controller: disambiguation-simple
