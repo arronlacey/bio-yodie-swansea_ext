@@ -200,7 +200,7 @@
 - set: prparm
   controller: scoring-bio
   prname: GraphSimilarityPR
-  name: urlString
+  name: ukbServiceURL
   value: http://localhost:40123/exec
 
 ## We will normalize candidate lists over coref chains. Pool candidates from
