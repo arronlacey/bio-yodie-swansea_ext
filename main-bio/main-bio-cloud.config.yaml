@@ -33,7 +33,7 @@
   controller: preprocess-en
   prname: StanfordNER
   name: modelFile
-  value: ../Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
+  value: file:/export/data/yodie/yodie-pipeline/plugins/Stanford_CoreNLP/resources/english.conll.4class.distsim.crf.ser.gz
 
 ##############################################################################
 ###
@@ -65,7 +65,7 @@
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: configFileURL
-  value: ../../bio-yodie-resources/gazetteer-en-bio/labels.def
+  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/gazetteer-en-bio/labels.def
 
 - set: prinit
   controller: gazetteer-en
@@ -94,7 +94,7 @@
   controller: gazetteer-postproc
   prname: JdbcLookup:countMentionsNoCase
   name: dbDirectoryUrl
-  value: ../../bio-yodie-resources/databases
+  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/databases
 - set: prrun
   controller: gazetteer-postproc
   prname: Transfer:Annie2GazetteerEN
@@ -155,7 +155,7 @@
   controller: lookupinfo
   prname: JdbcJsonLookup:lookupinfo
   name: dbDirectoryUrl
-  value: ../../bio-yodie-resources/databases/
+  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/databases/
 
 - set: prparm
   controller: lookupinfo
@@ -299,24 +299,24 @@
   controller: disambiguation-ml-training
   prname: LF:LibSVM-training
   name: saveDirectory
-  value: "../../disambiguation-libsvm"
+  value: "file:/export/data/yodie/yodie-pipeline/disambiguation-libsvm"
 ## Save directory for application is where to load the model from.
 - set: prparm
   controller: disambiguation-ml-application
   prname: LF:LibSVM-application
   name: saveDirectory
-  value: "../../disambiguation-libsvm"
+  value: "file:/export/data/yodie/yodie-pipeline/disambiguation-libsvm"
 ## Feature spec URL is where to load the feature spec config from.
 - set: prparm
   controller: disambiguation-ml-training
   prname: LF:LibSVM-training
   name: featureSpecURL
-  value: "../../disambiguation-libsvm/feature-spec.xml"
+  value: "file:/export/data/yodie/yodie-pipeline/disambiguation-libsvm/feature-spec.xml"
 - set: prparm
   controller: disambiguation-ml-application
   prname: LF:LibSVM-application
   name: featureSpecURL
-  value: "../../disambiguation-libsvm/feature-spec.xml"
+  value: "file:/export/data/yodie/yodie-pipeline/disambiguation-libsvm/feature-spec.xml"
   
 #- set: propset
 #  name: lodie.disambiguation-libsvm.SelectBestCandidate.confidenceThreshold
