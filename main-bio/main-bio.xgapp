@@ -485,7 +485,7 @@
                 </entry>
                 <entry>
                   <string>outputASName</string>
-                  <null/>
+                  <string>Shef</string>
                 </entry>
                 <entry>
                   <string>inputASName</string>
