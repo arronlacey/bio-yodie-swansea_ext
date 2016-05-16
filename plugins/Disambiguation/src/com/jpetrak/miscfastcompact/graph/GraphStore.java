@@ -22,6 +22,8 @@ public class GraphStore implements Serializable {
   //   at position chunk-index, a variable block of edge-data. Edge data
   //   is a table with two integers per row: first the id or count of the edg
   //   second the id of the to/from node
+
+  public static final long serialVersionUID = 15L;
   
   private StoreOfInts outEdges;
   private StoreOfInts inEdges;
