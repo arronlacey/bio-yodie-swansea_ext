@@ -244,9 +244,9 @@
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
   value: -1
-#- set: propset
-#  name: lodie.disambiguation-simple.mix-disamb.minScore
-#  value: -1
+- set: propset
+  name: lodie.disambiguation-simple.mix-disamb.minScore
+  value: -1
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: true

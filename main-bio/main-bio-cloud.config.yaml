@@ -65,7 +65,7 @@
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: configFileURL
-  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/gazetteer-en-bio/labels.def
+  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/en/gazetteer-en-bio/labels.def
 
 - set: prinit
   controller: gazetteer-en
@@ -155,7 +155,7 @@
   controller: lookupinfo
   prname: JdbcJsonLookup:lookupinfo
   name: dbDirectoryUrl
-  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/databases/
+  value: file:/export/data/yodie/yodie-pipeline/bio-yodie-resources/en/databases/
 
 - set: prparm
   controller: lookupinfo
@@ -246,9 +246,9 @@
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.minScore
   value: -1
-#- set: propset
-#  name: lodie.disambiguation-simple.mix-disamb.minScore
-#  value: -1
+- set: propset
+  name: lodie.disambiguation-simple.mix-disamb.minScore
+  value: -1
 - set: propset
   name: lodie.disambiguation-simple.simple-disamb.createNilMentions
   value: true

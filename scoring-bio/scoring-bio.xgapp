@@ -169,13 +169,13 @@
                 <entry>
                   <string>sspaceURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../bio-yodie-resources/semspace/tfidf-500000.sspace</urlString>
+                    <urlString>$relpath$../bio-yodie-resources/en/semspace/tfidf-500000.sspace</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../bio-yodie-resources/databases</urlString>
+                    <urlString>$relpath$../bio-yodie-resources/en/databases</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -252,7 +252,7 @@
                 <entry>
                   <string>databaseDirectory</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../bio-yodie-resources/databases</urlString>
+                    <urlString>$relpath$../bio-yodie-resources/en/databases</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
