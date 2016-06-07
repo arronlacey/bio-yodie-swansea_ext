@@ -1,0 +1,23 @@
+
+// More than 6 candidates don't show up well in the annotation tool.
+
+Phase: truncateOptions
+Input: LookupList
+Options: control = all
+
+Rule: truncateOptions
+({LookupList}):ls
+-->
+:ls{
+  Annotation lookuplist = gate.Utils.getOnlyAnn(lsAnnots);
+  AnnotationSet candidates = gate.Utils.getCoextensiveAnnotations(inputAS, lookuplist, "Lookup");
+  if(candidates.size()>6){
+   int toRemove = candidates.size()-6;
+   ArrayList candList = new ArrayList();
+   candList.addAll(candidates);
+   for(int i=0;i<toRemove;i++){
+    Annotation cand = (Annotation)candList.get(i);
+    inputAS.remove(cand);
+   }
+  } 
+}
