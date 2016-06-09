@@ -11,10 +11,33 @@ Rule: truncateOptions
 :ls{
   Annotation lookuplist = gate.Utils.getOnlyAnn(lsAnnots);
   AnnotationSet candidates = gate.Utils.getCoextensiveAnnotations(inputAS, lookuplist, "Lookup");
+  
+  //First make sure that if we have duplicate preflabels, we keep only the lowest CUI
+  HashMap<String, Annotation> bestcands = new HashMap<String, Annotation>();
+  Iterator candit = candidates.iterator();
+  while(candit.hasNext()){
+    Annotation cand = (Annotation)candit.next();
+    Annotation bestsofar = bestcands.get(cand.getFeatures().get("readable"));
+
+    if(bestsofar==null){
+      bestcands.put(cand.getFeatures().get("readable").toString(), cand);
+    } else {
+      int candcuinum = Integer.parseInt(cand.getFeatures().get("inst").toString().substring(1,8));
+      int bestsofarcuinum = Integer.parseInt(bestsofar.getFeatures().get("inst").toString().substring(1,8));
+      if(candcuinum<bestsofarcuinum){
+        //new one has a lower cui
+        bestcands.put(cand.getFeatures().get("readable").toString(), cand);
+        inputAS.remove(bestsofar);
+      } else {
+        inputAS.remove(cand);
+      }
+    }
+  }
+
+  //Now just reduce the list to max 6
   if(candidates.size()>6){
    int toRemove = candidates.size()-6;
    ArrayList candList = new ArrayList();
-   candList.addAll(candidates);
    for(int i=0;i<toRemove;i++){
     Annotation cand = (Annotation)candList.get(i);
     inputAS.remove(cand);
