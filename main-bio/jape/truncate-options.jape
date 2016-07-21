@@ -35,9 +35,11 @@ Rule: truncateOptions
   }
 
   //Now just reduce the list to max 6
-  if(candidates.size()>6){
-   int toRemove = candidates.size()-6;
+  AnnotationSet remainingcandidates = gate.Utils.getCoextensiveAnnotations(inputAS, lookuplist, "Lookup");
+  if(remainingcandidates.size()>6){
+   int toRemove = remainingcandidates.size()-6;
    ArrayList candList = new ArrayList();
+   candList.addAll(remainingcandidates);
    for(int i=0;i<toRemove;i++){
     Annotation cand = (Annotation)candList.get(i);
     inputAS.remove(cand);
