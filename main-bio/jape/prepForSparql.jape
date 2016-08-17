@@ -38,7 +38,6 @@ Rule: prepForSparql
   anatomy.add("Anatomical Structure");
 
   Set<String> disease = new HashSet<String>();
-  disease.add("Finding");
   disease.add("Injury or Poisoning");
   disease.add("Pathologic Function");
   disease.add("Disease or Syndrome");
@@ -67,6 +66,7 @@ Rule: prepForSparql
   care.add("Therapeutic or Preventive Procedure");
 
   Set<String> observation = new HashSet<String>();
+  observation.add("Finding");
   observation.add("Clinical Attribute");
   observation.add("Individual Behavior");
   observation.add("Population Group");
