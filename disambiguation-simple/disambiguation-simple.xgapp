@@ -56,6 +56,7 @@
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
                       <string>Shef</string>
+                      <string>Bio</string>
                       <string>TestOut</string>
                       <string>SimpleMixDisambiguation</string>
                     </localList>

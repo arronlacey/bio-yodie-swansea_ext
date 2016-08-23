@@ -75,6 +75,7 @@
                   <gate.util.persistence.CollectionPersistence>
                     <localList>
                       <string>Shef</string>
+                      <string>Bio</string>
                       <string>LearningFramework</string>
                       <null/>
                     </localList>
