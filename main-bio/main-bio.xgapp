@@ -459,6 +459,8 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -516,6 +518,186 @@
         </gate.util.persistence.AnalyserRunningStrategyPersistence>
         <gate.util.persistence.AnalyserRunningStrategyPersistence>
           <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.LanguageAnalyserPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>outputAnnotationSet</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>inputAnnotationSet</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>splitAnnotationType</string>
+                  <string>Split</string>
+                </entry>
+                <entry>
+                  <string>matchAtWordEndOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>longestMatchOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>spaceAnnotationType</string>
+                  <string>SpaceToken</string>
+                </entry>
+                <entry>
+                  <string>matchAtWordStartOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>containingAnnotationType</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>wordAnnotationType</string>
+                  <string>Token</string>
+                </entry>
+                <entry>
+                  <string>textFeature</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>outputAnnotationType</string>
+                  <string>Disease</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>com.jpetrak.gate.stringannotation.extendedgazetteer.ExtendedGazetteer</resourceType>
+            <resourceName>ExtGaz:disease-acronyms</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>caseConversionLanguage</string>
+                  <string>en</string>
+                </entry>
+                <entry>
+                  <string>caseSensitive</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>configFileURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$supplemental-gazetteer/disease-acronyms.def</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
+          <pr class="gate.util.persistence.LanguageAnalyserPersistence">
+            <runtimeParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>outputAnnotationSet</string>
+                  <string>Shef</string>
+                </entry>
+                <entry>
+                  <string>document</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>corpus</string>
+                  <null/>
+                </entry>
+                <entry>
+                  <string>inputAnnotationSet</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>splitAnnotationType</string>
+                  <string>Split</string>
+                </entry>
+                <entry>
+                  <string>matchAtWordEndOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>longestMatchOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>spaceAnnotationType</string>
+                  <string>SpaceToken</string>
+                </entry>
+                <entry>
+                  <string>matchAtWordStartOnly</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>containingAnnotationType</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>wordAnnotationType</string>
+                  <string>Token</string>
+                </entry>
+                <entry>
+                  <string>textFeature</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>outputAnnotationType</string>
+                  <string>Disease</string>
+                </entry>
+              </localMap>
+            </runtimeParams>
+            <resourceType>com.jpetrak.gate.stringannotation.extendedgazetteer.ExtendedGazetteer</resourceType>
+            <resourceName>ExtGaz:diseases</resourceName>
+            <initParams class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap>
+                <entry>
+                  <string>caseConversionLanguage</string>
+                  <string>en</string>
+                </entry>
+                <entry>
+                  <string>caseSensitive</string>
+                  <boolean>false</boolean>
+                </entry>
+                <entry>
+                  <string>configFileURL</string>
+                  <gate.util.persistence.PersistenceManager-URLHolder>
+                    <urlString>$relpath$supplemental-gazetteer/diseases.def</urlString>
+                  </gate.util.persistence.PersistenceManager-URLHolder>
+                </entry>
+              </localMap>
+            </initParams>
+            <features class="gate.util.persistence.MapPersistence">
+              <mapType>gate.util.SimpleFeatureMapImpl</mapType>
+              <localMap/>
+            </features>
+          </pr>
+        </gate.util.persistence.AnalyserRunningStrategyPersistence>
+        <gate.util.persistence.AnalyserRunningStrategyPersistence>
+          <runMode>1</runMode>
+          <featureName></featureName>
+          <featureValue></featureValue>
           <pr class="gate.util.persistence.PRPersistence">
             <runtimeParams class="gate.util.persistence.MapPersistence">
               <mapType>gate.util.SimpleFeatureMapImpl</mapType>
@@ -581,7 +763,9 @@
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[8]/pr"/>
         <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[9]/pr"/>
         <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[10]/pr"/>
-        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[11]/pr"/>
+        <gate.util.persistence.LanguageAnalyserPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[12]/pr"/>
+        <gate.util.persistence.PRPersistence reference="../../../strategiesList/localList/gate.util.persistence.AnalyserRunningStrategyPersistence[13]/pr"/>
       </localList>
       <collectionType>java.util.ArrayList</collectionType>
     </prList>
