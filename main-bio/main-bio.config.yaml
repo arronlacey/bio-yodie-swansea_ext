@@ -65,13 +65,12 @@
   controller: gazetteer-en
   prname: ExtGaz2:gazetteer-en:labels
   name: configFileURL
-  value: ../../bio-yodie-resources/en/gazetteer-en-bio/labels.def
+  value: ../../bio-yodie-resources/en/gazetteer-en-bio/uncased-labels.def
 
-- set: prinit
+- set: prrun
   controller: gazetteer-en
-  prname: ExtGaz2:gazetteer-en:labels
-  name: caseSensitive
-  value: false
+  prname: ExtGaz2:gazetteer-en:cased-labels
+  value: true
 
 - set: prinit
   controller: gazetteer-en
