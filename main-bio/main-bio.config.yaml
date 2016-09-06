@@ -78,6 +78,11 @@
   name: caseSensitive
   value: false
 
+- set: prrun
+  controller: gazetteer-en
+  prname: JAPE:createQueryFeature
+  value: true
+
 ##############################################################################
 ###
 ### SUBPIPELINE: gazetteer-postproc

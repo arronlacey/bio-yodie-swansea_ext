@@ -20,9 +20,12 @@ Rule: adaptFeatures_R01
   // their country.
   if(query != null && !query.isEmpty()) {
     string = query;
+    fm.put("string_orig", string);
+    fm.put("string", string);
+  } else {
+    fm.put("string_orig",string);
+    fm.put("string",string.toLowerCase());
   }
-  fm.put("string_orig",string);  
-  fm.put("string",string.toLowerCase());
   
   // remove unnecessary/unwanted features the gazetteer has created ...
   fm.remove("_firstcharCategory");
