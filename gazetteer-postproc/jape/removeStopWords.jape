@@ -11,7 +11,13 @@ Rule: removeStopWords
 :label{ 
   Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
   AnnotationSet coextensiveStops = gate.Utils.getCoextensiveAnnotations(inputAS, lookup, "Stopword");
-  if(coextensiveStops.size()>0){
+  AnnotationSet tokens = gate.Utils.getCoextensiveAnnotations(doc.getAnnotations(), lookup, "Token");
+  String kind = "";
+  if(tokens.iterator().hasNext()){
+   Annotation tok = tokens.iterator().next();
+   kind = tok.getFeatures().get("kind").toString();
+  }
+  if(coextensiveStops.size()>0 || kind.equals("number")){
     outputAS.add(lookup);
     inputAS.remove(lookup);
   }  
