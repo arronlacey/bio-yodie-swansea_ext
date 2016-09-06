@@ -1,0 +1,20 @@
+
+// We need a "query" feature containing the cased string to override the
+// next PR that will simply set it to the lower cased clean string otherwise.
+
+Phase: queryFeature
+Input: Lookup
+Options: control = all
+
+Rule: queryFeat
+({Lookup}):label
+-->
+:label{
+  Annotation lookup = gate.Utils.getOnlyAnn(labelAnnots);
+  FeatureMap fm = lookup.getFeatures();
+
+  String string = gate.Utils.cleanStringFor(doc,lookup);
+  String casedfeat = lookup.getFeatures().get("minorType").toString();
+  if(casedfeat.equals("uncased")) string = string.toLowerCase();
+  lookup.getFeatures().put("query", string);
+}
