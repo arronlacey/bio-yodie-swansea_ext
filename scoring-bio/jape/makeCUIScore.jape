@@ -1,0 +1,22 @@
+Phase: logFeatures
+Input: Lookup
+Options: control=all
+
+// If all else fails we should pick the one with the lowest CUI.
+// I'll add it as a proportional feature so it can be chucked in
+// with the others..
+
+Rule: logFeatures
+(
+ {Lookup}
+)
+:match
+-->
+{
+ Annotation match = bindings.get("match").iterator().next();
+ String cui = match.getFeatures().get("inst").toString();
+ Float cuiFl = Float.parseFloat(cui.substring(2));
+ match.getFeatures().put("scCui", (1000000-cuiFl)/1000000);
+}
+
+
