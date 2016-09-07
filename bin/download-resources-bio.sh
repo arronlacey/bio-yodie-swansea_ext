@@ -8,7 +8,7 @@
 # key, on the target server with the same userid as the current userid 
 # or the userid given as the third argument
 
-path=/export/data/gate/bio-yodie/bio-yodie-resources
+path=/export/data/gate/bio-yodie/bio-yodie-resources-1.1
 server=gateservice8.dcs.shef.ac.uk
 user=`whoami`
 
